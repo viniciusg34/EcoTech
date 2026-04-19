@@ -1,0 +1,96 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0; 
+    background-color: #FAF0E6;
+}
+.navbar {
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #8fbc8f;
+    width: 95%;
+    height: 80px;
+    padding: 0 40px;
+    border-radius: 50px;
+    position: relative;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 60px;
+}
+
+.links a{
+    text-decoration: none;
+    color:#eafdece5;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+links a:hover{
+    color: #2e7d32;
+}
+
+#ecotech {
+    color: #2e7d32;
+    text-align: center;
+}
+
+.historia,.missao,.valores {
+    background-color: #e8f5e9;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+    transition: 0.3s;
+    margin: 20px 60px;
+    color: #2e7d32;
+}
+
+.historia:hover,.missao:hover,.valores:hover{
+    transform: translateY(-5px);
+}
+
+.historia h2,.missao h2,.valores h2 {
+    color:#2e7d32;
+    text-align: center;
+}
+
+.historia h3 {
+    color: #2e7d32;
+    text-align: center;
+}
+ 
+.historia p,.missao p{
+    text-align: left;
+}
+
+@media(max-width: 940px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+    
+    }
+
+    .links {
+        position: static;
+        transform: none;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        margin-top: 10px;
+    }
+}
