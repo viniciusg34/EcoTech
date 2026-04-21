@@ -9,13 +9,22 @@
             scroll-behavior: smooth; /* Isso faz a rolagem ser suave */
         }
 
+
+        header{
+
+            display: flex;
+            align-items: self-end;
+            justify-content: center;
+            height: 183px;
+        }
+
         .navbar {
             margin: 20px auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             background-color: #8FBC8F;
-            width: 95%;
+            width: 65%;
             height: 80px;
             padding: 0 40px;
             border-radius: 50px;
@@ -25,6 +34,8 @@
         .logo {
             display: flex;
             align-items: center;
+            justify-content: center;
+            height: 100%;
         }
 
         .links {
@@ -37,7 +48,7 @@
 
         .links a {
             text-decoration: none;
-            color: #000;
+            color: #eafdece5;
             font-weight: bold;
             transition: 0.3s;
         }
