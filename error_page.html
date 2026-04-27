@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quadrado Girando</title>
+
+    <style>
+      body {
+        background: rgb(152, 43, 43);
+      }
+      .containerheadStonks {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .containerStonks {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .quadrado {
+        width: 320px;
+        height: 320px;
+        animation: girar 4s linear infinite;
+      }
+
+      .notStonks {
+        margin-top: 50px;
+        width: 520px;
+        height: 520px;
+      }
+
+      @keyframes girar {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <img src="assets/stonkshead.webp" alt="error" class="quadrado" />
+    </div>
+    <div class="containerStonks">
+      <img src="assets/notStonks.png" alt="error" class="notStonks" />
+    </div>
+  </body>
+</html>

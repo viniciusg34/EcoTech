@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="css/esqueci_senha.css" />
+    <title>Recuperar Senha</title>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="logo">
+          <a href="index.html">
+            <img src="assets/logo.png" width="100" />
+          </a>
+        </div>
+
+        <div class="links">
+          <a href="index.html">Inicio</a>
+          <a href="Sobre_nos.html">Sobre nós</a>
+        </div>
+      </nav>
+    </header>
+
+    <div class="container">
+      <div class="card">
+        <h1>Esqueci minha senha</h1>
+        <p>Digite seu e-mail para recuperar sua conta</p>
+
+        <form>
+          <input type="email" placeholder="Digite seu e-mail" required />
+          <button type="submit">Recuperar senha</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      const formSenha = document.querySelector("form");
+
+      formSenha.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const emailDigitado = document.querySelector(
+          "input[type='email']",
+        ).value;
+        const emailSalvo = localStorage.getItem("emailUsuario");
+
+        if (emailDigitado === "") {
+          alert("Digite seu e-mail!");
+          return;
+        }
+
+        if (emailDigitado === emailSalvo) {
+          alert("E-mail encontrado! Instruções enviadas.");
+        } else {
+          alert("E-mail não encontrado.");
+        }
+      });
+    </script>
+  </body>
+</html>

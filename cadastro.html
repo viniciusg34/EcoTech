@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="assets/fivecom.png" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="css/cadastro.css" />
+    <title>Cadastro - EcoTech</title>
+  </head>
+    <header class="header">
+      <div class="container nav-container">
+        <a href="index.html" class="logo">
+          <img src="assets/logo.png" alt="Logo" />
+          <span>EcoTech</span>
+        </a>
+
+        <nav class="nav">
+          <a href="index.html">Início</a>
+          <a href="sobre_nos.html">Sobre nós</a>
+          <a href="afilie_se.html" class="btn-nav">Afilie-se</a>
+        </nav>
+
+        <div class="menu-toggle" id="menu-toggle">☰</div>
+      </div>
+    </header>
+
+
+    <main class="container">
+      <section class="card">
+        <h1>Cadastro</h1>
+        <p>Crie sua conta na EcoTech</p>
+
+        <form>
+          <label for="nome">Nome completo</label>
+          <input id="nome" type="text" placeholder="Digite seu nome" required />
+
+          <label for="email">E-mail</label>
+          <input
+            id="email"
+            type="email"
+            placeholder="Digite seu e-mail"
+            required
+          />
+
+          <label for="cpf">CPF</label>
+          <input id="cpf" type="text" placeholder="Digite seu CPF" required />
+
+          <label for="nascimento">Data de nascimento</label>
+          <input id="nascimento" type="date" required />
+
+          <label for="senha">Senha</label>
+          <input
+            id="senha"
+            type="password"
+            placeholder="Digite sua senha"
+            required
+          />
+
+          <button type="submit">Cadastrar</button>
+        </form>
+
+        <a class="link-extra" href="esqueci_senha.html">Esqueci minha senha</a>
+      </section>
+    </main>
+
+    <script>
+      const formCadastro = document.querySelector("form");
+
+      formCadastro.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const nome = document.getElementById("nome").value;
+        const email = document.getElementById("email").value;
+        const cpf = document.getElementById("cpf").value;
+        const nascimento = document.getElementById("nascimento").value;
+        const senha = document.getElementById("senha").value;
+
+        if (
+          nome === "" ||
+          email === "" ||
+          cpf === "" ||
+          nascimento === "" ||
+          senha === ""
+        ) {
+          alert("Preencha todos os campos!");
+          return;
+        }
+
+        localStorage.setItem("emailUsuario", email);
+        localStorage.setItem("senhaUsuario", senha);
+
+        alert("Cadastro realizado com sucesso!");
+      });
+    </script>
+  </body>
+</html>

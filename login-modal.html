@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — EcoTech</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/login-modal.css">
+</head>
+<body>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="modal">
+    <h1>Login</h1>
+    <p>Acesse sua conta EcoTech</p>
+
+    <label for="email">E-mail</label>
+    <input type="email" id="email" placeholder="seu@email.com" autocomplete="email" />
+
+    <div class="pass-row">
+      <label for="password">Senha</label>
+      <a class="forgot" href="esqueci_senha.html">Esqueci minha senha</a>
+    </div>
+    <input type="password" id="password" placeholder="••••••••" autocomplete="current-password" />
+
+    <button class="btn-primary" onclick="handleLogin()">Entrar</button>
+
+    <div class="divider">ou</div>
+
+    <button class="btn-register" onclick="window.location.href='cadastro.html'">Criar conta</button>
+  </div>
+
+  <script>
+    let toastTimer;
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    function handleLogin() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      if (!email || !password) { showToast('Preencha todos os campos.'); return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('E-mail inválido.'); return; }
+      showToast('Entrando...');
+    }
+  </script>
+</body>
+</html>
