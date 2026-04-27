@@ -362,3 +362,87 @@ body {
     text-align: center;
   }
 }
+
+/* ================= DARK MODE ================= */
+
+body.dark {
+  background-color: #0f1a10;
+  color: #e2f0e2;
+}
+
+body.dark .cabecalho {
+  background: rgba(10, 22, 11, 0.85);
+  backdrop-filter: blur(12px);
+}
+
+body.dark .cabecalho.rolado {
+  background: rgba(10, 22, 11, 0.95);
+}
+
+body.dark .logo {
+  color: #c8e6c9;
+}
+
+body.dark .menu a {
+  color: #a7c4a7;
+}
+
+body.dark .menu a:hover {
+  color: #81c784;
+}
+
+/* BOTÕES */
+body.dark .botao-principal {
+  background: #2e7d32;
+}
+
+body.dark .botao-contorno {
+  border-color: #81c784;
+  color: #81c784;
+}
+
+body.dark .botao-contorno:hover {
+  background: #2e7d32;
+  color: #fff;
+}
+
+body.dark .etiqueta {
+  background: #1a2e1b;
+  color: #81c784;
+}
+
+body.dark .secao-principal-texto h1 {
+  color: #e2f0e2;
+}
+
+body.dark .secao-principal-texto p {
+  color: #9caea9;
+}
+
+body.dark .card-impacto,
+body.dark .card-beneficio,
+body.dark .passo {
+  background: #1a2e1b;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+body.dark .card-impacto h3,
+body.dark .card-beneficio h4 {
+  color: #81c784;
+}
+
+body.dark .card-impacto p,
+body.dark .card-beneficio p,
+body.dark .passo p {
+  color: #9caea9;
+}
+
+body.dark .beneficios h2,
+body.dark .como-funciona h2 {
+  color: #81c784;
+}
+
+
+body.dark .chamada-acao {
+  background: linear-gradient(135deg, #0f1a10, #1b5e20);
+}

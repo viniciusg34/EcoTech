@@ -13,26 +13,49 @@
   </head>
 
   <body>
-    <header>
-      <div class="logo">
-        <a href="index.html"
-          ><img
-            class="logo-img"
-            src="assets/logo.png"
-            width="100"
-            height="80"
-            alt="Logo"
-          />
+    <header class="header">
+      <div class="container nav-container">
+        <a href="index.html" class="logo">
+          <img src="assets/logo.png" alt="Logo" />
+          <span>EcoTech</span>
         </a>
-      </div>
-      <nav class="navbar">
-        <div class="links">
-          <a href="index.html">Inicio</a>
+
+        <nav class="nav">
+          <a href="index.html">Início</a>
           <a href="sobre_nos.html">Sobre nós</a>
-          <a href="#produtos">Produtos</a>
-        </div>
-      </nav>
+          <a href="afilie_se.html" class="btn-nav">Afilie-se</a>
+          <button
+            class="dark-toggle"
+            id="dark-toggle"
+            title="Alternar modo "
+            onclick="toggleDark()"
+          >
+            🌙
+          </button>
+        </nav>
+
+        <div class="menu-toggle" id="menu-toggle">☰</div>
+      </div>
     </header>
+
+    <section class="carrossel">
+      <div class="cards">
+        <button class="card" data-target="Boas-vindas">
+          <h2>🌱 Historia</h2>
+          <p>Uma breve história sobre a EcoTech.</p>
+        </button>
+
+        <button class="card" data-target="missão">
+          <h2>:recycle: Missão</h2>
+          <p>Nosso objetivos.</p>
+        </button>
+
+        <button class="card" data-target="Junte-se">
+          <h2>:earth_africa: Valores</h2>
+          <p>Mais do que uma corporação.</p>
+        </button>
+      </div>
+    </section>
 
     <main>
       <h1 id="ecotech">EcoTech</h1>
