@@ -9,12 +9,12 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
     />
     <link rel="stylesheet" href="css/sobre_nos.css" />
-    <title>Sobre Nós</title>
+    <title>Sobre Nós — EcoTech</title>
   </head>
 
   <body>
     <header class="header">
-      <div class="container nav-container">
+      <div class="nav-container">
         <a href="index.html" class="logo">
           <img src="assets/logo.png" alt="Logo" />
           <span>EcoTech</span>
@@ -22,106 +22,176 @@
 
         <nav class="nav">
           <a href="index.html">Início</a>
-          <a href="sobre_nos.html">Sobre nós</a>
+          <a href="sobre_nos.html" class="active">Sobre nós</a>
           <a href="afilie_se.html" class="btn-nav">Afilie-se</a>
-          <button
-            class="dark-toggle"
-            id="dark-toggle"
-            title="Alternar modo "
-            onclick="toggleDark()"
-          >
-            🌙
-          </button>
         </nav>
 
-        <div class="menu-toggle" id="menu-toggle">☰</div>
+        <button class="menu-toggle" id="menu-toggle">☰</button>
       </div>
     </header>
 
-    <section class="carrossel">
-      <div class="cards">
-        <button class="card" data-target="Boas-vindas">
-          <h2>🌱 Historia</h2>
-          <p>Uma breve história sobre a EcoTech.</p>
-        </button>
-
-        <button class="card" data-target="missão">
-          <h2>:recycle: Missão</h2>
-          <p>Nosso objetivos.</p>
-        </button>
-
-        <button class="card" data-target="Junte-se">
-          <h2>:earth_africa: Valores</h2>
-          <p>Mais do que uma corporação.</p>
-        </button>
-      </div>
-    </section>
-
     <main>
+      <!-- CARROSSEL DE CARDS -->
+      <section class="carrossel">
+        <div class="cards">
+          <button
+            class="card"
+            data-title="🌱 Boas vindas a EcoTech"
+            data-content="Vivemos em um momento crucial para o planeta, e acreditamos que a resposta para os desafios ambientais não está em retroceder, mas em avançar com inteligência. Unimos a ciência da ecologia com o poder da tecnologia para criar soluções que regeneram o que foi perdido e protegem o que ainda temos."
+          >
+            <h2>🌱 Boas vindas a EcoTech</h2>
+            <p>Promovemos práticas ecológicas para reduzir impactos ambientais.</p>
+          </button>
+
+          <button
+            class="card"
+            data-title="♻️ Nossa missão e serviços"
+            data-content="Nossa missão fundamental é acelerar a transição global para uma economia circular e regenerativa. Não aceitamos mais o modelo linear de extrair, produzir e descartar. Por isso, unimos ciência de dados e engenharia ecológica para criar soluções sustentáveis."
+          >
+            <h2>♻️ Nossa missão e serviços</h2>
+            <p>Transformamos resíduos em novos recursos úteis.</p>
+          </button>
+
+          <button
+            class="card"
+            data-title="🌍 Junte-se a nós"
+            data-content="O futuro não é algo que simplesmente acontece; é algo que construímos ativamente hoje. Na EcoTech, queremos unir pessoas, empresas e ideias em favor de um amanhã mais limpo e inteligente."
+          >
+            <h2>🌍 Junte-se a nós</h2>
+            <p>Construindo um planeta mais limpo e equilibrado.</p>
+          </button>
+        </div>
+      </section>
+
+      <!-- CONTEÚDO -->
       <h1 id="ecotech">EcoTech</h1>
+
       <div class="historia">
-        <h2>A EcoTech</h2>
-
-        <h3>Uma breve história sobre a EcoTech</h3>
-
-        <p>
-          EcoTech é uma empresa criada em 2026, por 9 sócios cujo os nomes são
-          ... onde cada fundador da empresa vem de áreas ambientais, os
-          fundadores buscaram a criação dessa empresa com o intuito de
-          desenvolver matéria prima por meio de reciclagem, entrando no mercado
-          de recriar novas matérias-prima em cima de resíduos industriais que
-          foram reciclados. Para poder obter assim um reaproveitamento desses
-          resíduos
-        </p>
-
-        <p>
-          A empresa enxergou a necessidade em que o mercado hoje apresenta de
-          buscar máterias com um bom custo-beneficio, onde a empresa desenvolve
-          um método único de reciclar, e com isso gera uma nova matéria bruta,
-          de forma a ser mais acessivel econômicamente, para diferentes
-          empresas.
-        </p>
-
-        <p>
-          Em 2026 a EcoTech foi reconhecida por trazer uma matéria bruta
-          renovável, ganhando assim o titulo de empresa biosustentavel, e se
-          dando mais um passso em sua curta história, a ser uma empresa
-          prestigiada no ramo de reciclar produtos, transformando-os em matéria
-          prima para reutilização e certificando que retira cada vez mais
-          poluição da natureza, gerando diversos empregos informais e formais.
-        </p>
+        <div class="historia-inner">
+          <h2>A EcoTech</h2>
+          <h3>Uma breve história sobre a EcoTech</h3>
+          <p>
+            EcoTech é uma empresa criada em 2026, por 9 sócios cujo os nomes são
+            ... onde cada fundador da empresa vem de áreas ambientais, os
+            fundadores buscaram a criação dessa empresa com o intuito de
+            desenvolver matéria prima por meio de reciclagem, entrando no mercado
+            de recriar novas matérias-prima em cima de resíduos industriais que
+            foram reciclados. Para poder obter assim um reaproveitamento desses
+            resíduos.
+          </p>
+          <p>
+            A empresa enxergou a necessidade em que o mercado hoje apresenta de
+            buscar máterias com um bom custo-benefício, onde a empresa desenvolve
+            um método único de reciclar, e com isso gera uma nova matéria bruta,
+            de forma a ser mais acessível economicamente, para diferentes empresas.
+          </p>
+          <p>
+            Em 2026 a EcoTech foi reconhecida por trazer uma matéria bruta
+            renovável, ganhando assim o título de empresa biossustentável, e se
+            dando mais um passo em sua curta história, a ser uma empresa
+            prestigiada no ramo de reciclar produtos, transformando-os em matéria
+            prima para reutilização e certificando que retira cada vez mais
+            poluição da natureza, gerando diversos empregos informais e formais.
+          </p>
+        </div>
       </div>
 
       <div class="missao">
-        <h2>Missão</h2>
-
-        <p>
-          Nossa missão é Pegar produtos que degradam a natureza, e
-          transforma-los em matéria de baixo custo. reduzindo a extração da
-          matéria direto da natureza, e que depois de utilizados seriam
-          descartados novamente a ela como residuos industrializados afetando
-          negativamente não só a ela mas toda a vida dentro do planeta.
-        </p>
+        <div class="missao-inner">
+          <h2>Missão</h2>
+          <p>
+            Nossa missão é pegar produtos que degradam a natureza, e transformá-los
+            em matéria de baixo custo, reduzindo a extração da matéria direto da
+            natureza, e que depois de utilizados seriam descartados novamente a ela
+            como resíduos industrializados afetando negativamente não só a ela mas
+            toda a vida dentro do planeta.
+          </p>
+        </div>
       </div>
 
       <div class="valores">
-        <h2>Valores</h2>
-
-        <ul>
-          <li>A empresa prega o respeito com seus colaboradores</li>
-          <li>Respeito com os animais, e a natureza de forma geral</li>
-          <li>
-            E em busca de garatir um mundo limpo e seguro para as futuras
-            gerações
-          </li>
-          <li>Educar as futuras gerações sobre o desenvolvimento</li>
-          <li>
-            E conscientizar as atuais gerações sobre a necessidade de onde
-            descartar o residuo corretamente
-          </li>
-          <li>de forma eficiente e que não afete a comunidade global</li>
-        </ul>
+        <div class="valores-inner">
+          <h2>Valores</h2>
+          <ul>
+            <li>A empresa prega o respeito com seus colaboradores</li>
+            <li>Respeito com os animais e a natureza de forma geral</li>
+            <li>Em busca de garantir um mundo limpo e seguro para as futuras gerações</li>
+            <li>Educar as futuras gerações sobre o desenvolvimento sustentável</li>
+            <li>Conscientizar as atuais gerações sobre a necessidade de descartar o resíduo corretamente</li>
+            <li>De forma eficiente e que não afete a comunidade global</li>
+          </ul>
+        </div>
       </div>
     </main>
+
+    <!-- BOTTOM SHEET -->
+    <div class="sheet-overlay" id="sheetOverlay"></div>
+
+    <div class="bottom-sheet" id="bottomSheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h2 id="sheetTitle"></h2>
+        <button class="close-sheet" id="closeSheet">&times;</button>
+      </div>
+      <div class="sheet-content" id="sheetContent"></div>
+    </div>
+
+    <script>
+      // ===== NAVBAR =====
+      const header = document.querySelector('.header');
+      const menuToggle = document.getElementById('menu-toggle');
+      const nav = document.querySelector('.nav');
+
+      window.addEventListener('scroll', () => {
+        header.classList.toggle('scrolled', window.scrollY > 20);
+      });
+
+      menuToggle.addEventListener('click', () => {
+        nav.classList.toggle('active');
+      });
+
+      nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => nav.classList.remove('active'));
+      });
+
+      // ===== BOTTOM SHEET =====
+      const bottomSheet = document.getElementById('bottomSheet');
+      const sheetOverlay = document.getElementById('sheetOverlay');
+      const sheetTitle = document.getElementById('sheetTitle');
+      const sheetContent = document.getElementById('sheetContent');
+      const closeSheet = document.getElementById('closeSheet');
+
+      function openSheet(title, content) {
+        sheetTitle.textContent = title;
+        sheetContent.innerHTML = '<p>' + content + '</p>';
+        bottomSheet.classList.add('open');
+        sheetOverlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeBottomSheet() {
+        bottomSheet.classList.remove('open');
+        sheetOverlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', () => {
+          const title = card.getAttribute('data-title');
+          const content = card.getAttribute('data-content');
+          if (title && content) {
+            openSheet(title, content);
+          }
+        });
+      });
+
+      closeSheet.addEventListener('click', closeBottomSheet);
+      sheetOverlay.addEventListener('click', closeBottomSheet);
+
+      // Fecha com Escape
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeBottomSheet();
+      });
+    </script>
   </body>
 </html>

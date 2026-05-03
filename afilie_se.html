@@ -8,24 +8,26 @@
   </head>
 
   <body>
-    <header class="cabecalho">
-      <div class="container cabecalho-interno">
+    <header class="header">
+      <div class="container nav-container">
         <a href="index.html" class="logo">
           <img src="assets/logo.png" alt="Logo" />
           <span>EcoTech</span>
         </a>
 
-        <nav class="menu">
+        <nav class="nav">
           <a href="index.html">Início</a>
           <a href="sobre_nos.html">Sobre nós</a>
-          <a href="afilie_se.html" class="botao-menu">Afilie-se</a>
+          <a href="afilie_se.html" class="btn-nav">Afilie-se</a>
+          <button class="dark-toggle" id="dark-toggle" title="Alternar modo " onclick="toggleDark()">
+            🌙
+          </button>
         </nav>
 
-        <div class="icone-menu">☰</div>
+        <div class="menu-toggle" id="menu-toggle">☰</div>
       </div>
     </header>
 
-    <!-- HERO -->
     <section class="secao-principal">
       <div class="container secao-principal-conteudo">
         

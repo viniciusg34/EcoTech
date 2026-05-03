@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="shortcut icon" href="assets/fivecom.png" type="image/x-icon" />
-
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
@@ -18,20 +17,17 @@
           <img src="assets/logo.png" alt="Logo" />
           <span>EcoTech</span>
         </a>
-
+ 
         <nav class="nav">
-          <a href="index.html">Início</a>
+          <a href="index.html" class="active">Início</a>
           <a href="sobre_nos.html">Sobre nós</a>
           <a href="afilie_se.html" class="btn-nav">Afilie-se</a>
-          <button class="dark-toggle" id="dark-toggle" title="Alternar modo " onclick="toggleDark()">
-            🌙
-          </button>
         </nav>
-
+ 
         <div class="menu-toggle" id="menu-toggle">☰</div>
       </div>
     </header>
-
+ 
     <main>
       <section>
         <div class="banner">
@@ -51,167 +47,130 @@
           </div>
         </div>
       </section>
-
-      <section class="carrossel">
-        <div class="cards">
-          <button
-            class="card"
-            data-title="🌱 Boas vindas a EcoTech"
-            data-content="Vivemos em um momento crucial para o planeta, e acreditamos que a resposta para os desafios ambientais não está em retroceder, mas em avançar com inteligência. Unimos a ciência da ecologia com o poder da tecnologia para criar soluções que regeneram o que foi perdido e protegem o que ainda temos."
-          >
+ 
+      <a href="boas_vindas.html" target="_blank" class="section-link">
+        <section id="Boas-vindas" class="content-section clickable">
+          <div class="section-inner">
             <h2>🌱 Boas vindas a EcoTech</h2>
             <p>
-              Promovemos práticas ecológicas para reduzir impactos ambientais.
+              Vivemos em um momento crucial para o planeta, e acreditamos que a
+              resposta para os desafios ambientais não está em retroceder, mas em
+              avançar com inteligência. Unimos a ciência da ecologia com o poder da
+              tecnologia para criar soluções que regeneram o que foi perdido e
+              protegem o que ainda temos. Na EcoTech, acreditamos que a tecnologia é
+              a maior aliada da natureza. Desenvolvemos soluções inteligentes para
+              transformar o descarte em recurso e a poluição em preservação.
+              Bem-vindo ao futuro sustentável.
             </p>
-          </button>
-
-          <button
-            class="card"
-            data-title="♻️ Nossa missão e serviços"
-            data-content="Nossa missão fundamental é acelerar a transição global para uma economia circular e regenerativa. Não aceitamos mais o modelo linear de extrair, produzir e descartar. Por isso, unimos ciência de dados e engenharia ecológica para criar soluções sustentáveis."
-          >
+            <span class="section-cta">Saiba mais →</span>
+          </div>
+        </section>
+      </a>
+ 
+      <a href="missao.html" target="_blank" class="section-link">
+        <section id="missão" class="content-section clickable">
+          <div class="section-inner">
             <h2>♻️ Nossa missão e serviços</h2>
-            <p>Transformamos resíduos em novos recursos úteis.</p>
-          </button>
-
-          <button
-            class="card"
-            data-title="🌍 Junte-se a nós"
-            data-content="O futuro não é algo que simplesmente acontece; é algo que construímos ativamente hoje. Na EcoTech, queremos unir pessoas, empresas e ideias em favor de um amanhã mais limpo e inteligente."
-          >
+            <p>
+              Nossa missão fundamental é acelerar a transição global para uma
+              economia circular e regenerativa. Não aceitamos mais o modelo linear
+              de 'extrair, produzir e descartar'. Por isso, unimos o rigor da
+              ciência de dados com as soluções avançadas da engenharia ecológica.
+              Nosso objetivo é projetar ecossistemas industriais e urbanos
+              inteligentes, onde o desperdício é eliminado por design e cada resíduo
+              se torna o combustível para um novo ciclo de vida, garantindo que nada
+              se perca e tudo se transforme em valor para o planeta.
+            </p>
+            <span class="section-cta">Saiba mais →</span>
+          </div>
+        </section>
+      </a>
+ 
+      <a href="junte_se.html" target="_blank" class="section-link">
+        <section id="Junte-se" class="content-section clickable">
+          <div class="section-inner">
             <h2>🌍 Junte-se a nós</h2>
-            <p>Construindo um planeta mais limpo e equilibrado.</p>
-          </button>
-        </div>
-      </section>
-
-      <section id="Boas-vindas" class="content-section">
-        <h2>🌱 Boas vindas a EcoTech</h2>
-        <p>
-          Vivemos em um momento crucial para o planeta, e acreditamos que a
-          resposta para os desafios ambientais não está em retroceder, mas em
-          avançar com inteligência. Unimos a ciência da ecologia com o poder da
-          tecnologia para criar soluções que regeneram o que foi perdido e
-          protegem o que ainda temos. Na EcoTech, acreditamos que a tecnologia é
-          a maior aliada da natureza. Desenvolvemos soluções inteligentes para
-          transformar o descarte em recurso e a poluição em preservação.
-          Bem-vindo ao futuro sustentável.
-        </p>
-      </section>
-
-      <section id="missão" class="content-section">
-        <h2>♻️ Nossa missão e serviços</h2>
-        <p>
-          Nossa missão fundamental é acelerar a transição global para uma
-          economia circular e regenerativa. Não aceitamos mais o modelo linear
-          de 'extrair, produzir e descartar'. Por isso, unimos o rigor da
-          ciência de dados com as soluções avançadas da engenharia ecológica.
-          Nosso objetivo é projetar ecossistemas industriais e urbanos
-          inteligentes, onde o desperdício é eliminado por design e cada resíduo
-          se torna o combustível para um novo ciclo de vida, garantindo que nada
-          se perca e tudo se transforme em valor para o planeta
-        </p>
-      </section>
-
-      <section id="Junte-se" class="content-section">
-        <h2>🌍 Junte-se a nós</h2>
-        <p>
-          O futuro não é algo que simplesmente acontece; é algo que construímos
-          ativamente hoje. Na EcoTech, entendemos que o tempo da espera acabou e
-          o tempo da ação inteligente começou. Seja você um entusiasta da causa
-          ambiental, uma empresa em busca de sustentabilidade real ou um
-          investidor focado em impacto positivo, nós oferecemos as ferramentas
-          tecnológicas e o conhecimento científico necessários para transformar
-          intenções em resultados concretos. Convidamos você a se unir à nossa
-          rede de inovação para projetarmos, juntos, um amanhã onde a
-          prosperidade humana e a saúde do planeta caminhem lado a lado. O
-          amanhã mais limpo que desejamos começa com as decisões que tomamos
-          agora.
-        </p>
-      </section>
+            <p>
+              O futuro não é algo que simplesmente acontece; é algo que construímos
+              ativamente hoje. Na EcoTech, entendemos que o tempo da espera acabou e
+              o tempo da ação inteligente começou. Seja você um entusiasta da causa
+              ambiental, uma empresa em busca de sustentabilidade real ou um
+              investidor focado em impacto positivo, nós oferecemos as ferramentas
+              tecnológicas e o conhecimento científico necessários para transformar
+              intenções em resultados concretos. Convidamos você a se unir à nossa
+              rede de inovação para projetarmos, juntos, um amanhã onde a
+              prosperidade humana e a saúde do planeta caminhem lado a lado.
+            </p>
+            <span class="section-cta">Saiba mais →</span>
+          </div>
+        </section>
+      </a>
     </main>
-
+ 
     <div class="sheet-overlay" id="sheetOverlay"></div>
-
     <div class="bottom-sheet" id="bottomSheet">
       <div class="sheet-handle"></div>
-
       <div class="sheet-header">
         <h2 id="sheetTitle">Título</h2>
         <button class="close-sheet" id="closeSheet">&times;</button>
       </div>
-
-      <div class="sheet-content" id="sheetContent">
-        <p>Conteúdo do painel</p>
-      </div>
+      <div class="sheet-content" id="sheetContent"></div>
     </div>
-
+ 
     <footer>
       <p>© 2026 Ecotech. Todos os direitos reservados.</p>
+      <a href="https://www.instagram.com/" target="_blank">
+        <img src="assets/instagram-logo-facebook-2-svgrepo-com.svg" width="30px" alt="Instagram" />
+      </a>
+      <a href="https://br.linkedin.com/" target="_blank">
+        <img src="assets/linkedin-logo-svgrepo-com.svg" width="30px" alt="LinkedIn" />
+      </a>
+      <a href="https://www.facebook.com/?locale=pt_BR" target="_blank">
+        <img src="assets/facebook-svgrepo-com.svg" width="30px" alt="Facebook" />
+      </a>
     </footer>
-
+ 
     <script>
-      const cards = document.querySelectorAll(".card");
-      const bottomSheet = document.getElementById("bottomSheet");
-      const sheetOverlay = document.getElementById("sheetOverlay");
-      const sheetTitle = document.getElementById("sheetTitle");
-      const sheetContent = document.getElementById("sheetContent");
-      const closeSheet = document.getElementById("closeSheet");
-
-      function openSheet(title, content) {
-        sheetTitle.textContent = title;
-        sheetContent.innerHTML = `<p>${content}</p>`;
-        bottomSheet.classList.add("open");
-        sheetOverlay.classList.add("open");
-      }
-
-      function closeBottomSheet() {
-        bottomSheet.classList.remove("open");
-        sheetOverlay.classList.remove("open");
-      }
-
-      cards.forEach((card) => {
-        card.addEventListener("click", () => {
-          const title = card.getAttribute("data-title");
-          const content = card.getAttribute("data-content");
-          const targetId = card.getAttribute("data-target");
-
-          if (title && content) {
-            openSheet(title, content);
-            return;
-          }
-
-          if (targetId) {
-            const targetSection = document.getElementById(targetId);
-            if (targetSection) {
-              targetSection.scrollIntoView({ behavior: "smooth" });
-            }
-          }
-        });
+      // Navbar scroll
+      const header = document.querySelector('.header');
+      window.addEventListener('scroll', () => {
+        header.classList.toggle('scrolled', window.scrollY > 20);
       });
-
-      closeSheet.addEventListener("click", closeBottomSheet);
-      sheetOverlay.addEventListener("click", closeBottomSheet);
-
-      document
-        .getElementById("bannerForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-          const email = document.getElementById("bannerEmail").value.trim();
-          if (email) {
-            window.location.href =
-              "cadastro.html?email=" + encodeURIComponent(email);
-          }
-        });
-
-      const toggle = document.getElementById("dark-toggle");
-
-      toggle.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
-        toggle.textContent = document.body.classList.contains("dark-mode")
-          ? "🌑"
-          : "🌙";
+ 
+      // Menu mobile
+      const menuToggle = document.getElementById('menu-toggle');
+      const nav = document.querySelector('.nav');
+      menuToggle.addEventListener('click', () => nav.classList.toggle('active'));
+      nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => nav.classList.remove('active'));
+      });
+ 
+      // Banner form → cadastro
+      document.getElementById('bannerForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const email = document.getElementById('bannerEmail').value.trim();
+        if (email) {
+          window.location.href = 'cadastro.html?email=' + encodeURIComponent(email);
+        }
+      });
+ 
+      // Bottom sheet (mantido caso precise)
+      const closeSheet = document.getElementById('closeSheet');
+      const sheetOverlay = document.getElementById('sheetOverlay');
+      const bottomSheet = document.getElementById('bottomSheet');
+ 
+      function closeBottomSheet() {
+        bottomSheet.classList.remove('open');
+        sheetOverlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+ 
+      closeSheet.addEventListener('click', closeBottomSheet);
+      sheetOverlay.addEventListener('click', closeBottomSheet);
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeBottomSheet();
       });
     </script>
   </body>
 </html>
+ 
