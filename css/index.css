@@ -47,7 +47,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s, background 0.3s;
+  transition:
+    transform 0.3s,
+    background 0.3s;
 }
 .dark-toggle:hover {
   transform: rotate(20deg) scale(1.1);
@@ -123,13 +125,26 @@ body {
 }
 
 @keyframes color-shift {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .btn-nav {
-  background: linear-gradient(135deg, #2e7d32, #1b5e20, #4caf50, #1b5e20, #2e7d32);
+  background: linear-gradient(
+    135deg,
+    #2e7d32,
+    #1b5e20,
+    #4caf50,
+    #1b5e20,
+    #2e7d32
+  );
   background-size: 300% 300%;
   background-position: 0% 50%;
   color: #e8f5e9 !important;
@@ -138,7 +153,9 @@ body {
   font-weight: 600;
   border: 1px solid rgba(27, 94, 32, 0.6);
   box-shadow: 0 4px 15px rgba(27, 94, 32, 0.35);
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
 }
 
 .btn-nav:hover {
@@ -147,7 +164,9 @@ body {
   box-shadow: 0 8px 24px rgba(27, 94, 32, 0.55);
 }
 
-.btn-nav::after { display: none; }
+.btn-nav::after {
+  display: none;
+}
 
 .menu-toggle {
   display: none;
@@ -194,7 +213,6 @@ body {
   align-items: center;
   justify-content: center;
 }
-
 
 .banner-input {
   text-align: center;
@@ -274,6 +292,301 @@ body {
   }
 }
 
+/* ── Mapa de Coleta ── */
+.map-section {
+  padding: 60px 40px;
+  margin: 20px auto;
+  max-width: 1200px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  scroll-margin-top: 100px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .map-section {
+    background-color: #1a2e1b;
+  }
+}
+
+.map-section h2 {
+  color: #2e7d32;
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .map-section h2 {
+    color: #81c784;
+  }
+}
+
+.map-section > p {
+  font-size: 1em;
+  color: #555;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+@media (prefers-color-scheme: dark) {
+  .map-section > p {
+    color: #9caea9;
+  }
+}
+
+/* Mapa wrapper — posicionamento relativo para o flutuante */
+.map-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+#collectMap {
+  width: 100%;
+  height: 480px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid rgba(46, 125, 50, 0.2);
+  box-shadow: 0 4px 20px rgba(27, 94, 32, 0.12);
+}
+
+/* Legenda FLUTUANTE sobre o mapa */
+.map-legend {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 200px;
+  z-index: 500;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 14px;
+  padding: 14px 14px 10px;
+  border: 1px solid rgba(46, 125, 50, 0.22);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.13);
+  transition: opacity 0.2s;
+}
+
+@media (prefers-color-scheme: dark) {
+  .map-legend {
+    background: rgba(13, 30, 14, 0.88);
+    border-color: rgba(129, 199, 132, 0.25);
+  }
+}
+
+/* Cabeçalho da legenda com botão de colapso */
+.legend-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.map-legend h3 {
+  font-size: 0.78em;
+  font-weight: 700;
+  color: #2e7d32;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .map-legend h3 {
+    color: #81c784;
+  }
+}
+
+/* Botão colapsar */
+.legend-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #2e7d32;
+  padding: 0 2px;
+  line-height: 1;
+  transition: transform 0.25s;
+}
+
+.legend-toggle.collapsed {
+  transform: rotate(180deg);
+}
+
+/* Corpo colapsável */
+.legend-body {
+  overflow: hidden;
+  transition:
+    max-height 0.3s ease,
+    opacity 0.3s ease;
+  max-height: 400px;
+  opacity: 1;
+}
+
+.legend-body.collapsed {
+  max-height: 0;
+  opacity: 0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 0.82em;
+  color: #333;
+  cursor: pointer;
+  padding: 5px 6px;
+  border-radius: 8px;
+  transition:
+    background 0.2s,
+    transform 0.15s;
+  user-select: none;
+}
+
+.legend-item:hover {
+  background: rgba(46, 125, 50, 0.1);
+  transform: translateX(2px);
+}
+
+.legend-item.active-filter {
+  background: rgba(46, 125, 50, 0.15);
+  font-weight: 600;
+}
+
+@media (prefers-color-scheme: dark) {
+  .legend-item {
+    color: #c5d9c6;
+  }
+  .legend-item:hover {
+    background: rgba(129, 199, 132, 0.12);
+  }
+  .legend-item.active-filter {
+    background: rgba(129, 199, 132, 0.18);
+  }
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1.5px solid rgba(0, 0, 0, 0.15);
+}
+
+/* Botão "ver todos" */
+.legend-reset {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 5px;
+  font-size: 0.76em;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  color: #2e7d32;
+  background: rgba(46, 125, 50, 0.08);
+  border: 1px solid rgba(46, 125, 50, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: center;
+}
+
+.legend-reset:hover {
+  background: rgba(46, 125, 50, 0.18);
+}
+
+/* Contador de pontos — pastilha no canto inferior esquerdo */
+.map-stats {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  z-index: 500;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.stat-pill {
+  background: rgba(13, 30, 14, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #a5d6a7;
+  font-size: 0.78em;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 50px;
+  border: 1px solid rgba(129, 199, 132, 0.3);
+}
+
+/* Leaflet popup customizado */
+.custom-popup .leaflet-popup-content-wrapper {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+  border-top: 4px solid #2e7d32;
+  padding: 0;
+  min-width: 220px;
+}
+
+.custom-popup .leaflet-popup-content {
+  margin: 0;
+  padding: 14px 16px;
+}
+
+.custom-popup .leaflet-popup-tip {
+  background: #2e7d32;
+}
+
+.popup-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95em;
+  font-weight: 600;
+  color: #1b5e20;
+  margin: 0 0 6px;
+}
+
+.popup-type {
+  display: inline-block;
+  font-size: 0.75em;
+  font-weight: 500;
+  padding: 2px 10px;
+  border-radius: 50px;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.popup-info {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.8em;
+  color: #555;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.popup-hours {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.78em;
+  color: #2e7d32;
+  font-weight: 500;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+@media (max-width: 768px) {
+  .map-section {
+    padding: 40px 20px;
+    margin: 20px;
+  }
+  .map-legend {
+    width: 100%;
+  }
+  #collectMap {
+    height: 360px;
+  }
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -293,19 +606,16 @@ body {
   text-align: left;
 }
 
-
 .card:hover {
   transform: translateY(-5px);
   background-color: #c8e6c9;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
-
 .card h2 {
   color: #2e7d32;
   margin: 0 0 10px 0;
 }
-
 
 .card p {
   color: #000;
@@ -431,7 +741,6 @@ footer {
   overflow-y: auto;
 }
 
-
 .bottom-sheet.open {
   transform: translateX(-50%) translateY(0);
 }
@@ -470,7 +779,6 @@ footer {
   line-height: 1.6;
   color: #333;
 }
-
 
 @media (min-width: 1024px) {
   .bottom-sheet {
