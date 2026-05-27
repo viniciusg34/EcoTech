@@ -1,616 +1,422 @@
 <!doctype html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="shortcut icon" href="assets/fivecom.png" type="image/x-icon" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-    />
+<html lang="pt-br" data-theme="light">
+<!--
+  ECOTECH — index.html
+  Sistema de temas: html[data-theme="light"] / html[data-theme="dark"]
+  Sem @media prefers-color-scheme, sem .dark-mode legado.
+  Preferência salva em localStorage.
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="assets/fivecom.png" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/index.css" />
+  <title>ECOTECH</title>
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
-    />
+  <!--
+    Script inline ANTES do <body> para aplicar o tema salvo
+    antes de qualquer renderização e evitar o flash de tema errado.
+  -->
+  <script>
+    (function () {
+      const saved = localStorage.getItem('eco-theme');
+      const pref  = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', pref);
+    })();
+  </script>
+</head>
 
-    <link rel="stylesheet" href="css/index.css" />
-    <title>ECOTECH</title>
-  </head>
-  <body>
-    <header class="header">
-      <div class="container nav-container">
-        <a href="index.html" class="logo">
-          <img src="assets/logo.png" alt="Logo" />
-          <span>EcoTech</span>
+<body>
+
+  <!-- ══════════════════════════════════
+       HEADER
+  ══════════════════════════════════ -->
+  <header class="header">
+    <div class="nav-container">
+
+      <!-- Logo -->
+      <a href="index.html" class="logo" aria-label="EcoTech — Página inicial">
+        <img src="assets/logo.png" alt="" />
+        <span><span class="eco">Eco</span>Tech</span>
+      </a>
+
+      <!-- Links de navegação -->
+      <nav class="nav" id="main-nav" role="navigation" aria-label="Navegação principal">
+        <a href="index.html" class="active" aria-current="page">Início</a>
+        <a href="sobre_nos.html">Sobre nós</a>
+        <a href="afilie_se.html" class="btn-nav">Afilie-se</a>
+      </nav>
+
+      <!-- Controles lado direito -->
+      <div style="display:flex;align-items:center;gap:12px;margin-left:auto;">
+
+        <!-- Toggle de tema -->
+        <button
+          class="theme-toggle"
+          id="theme-toggle"
+          aria-label="Alternar tema claro/escuro"
+          title="Alternar tema"
+        >
+          <span id="theme-icon">☀️</span>
+        </button>
+
+        <!-- Perfil -->
+        <a href="login-modal.html" class="nav-profile" aria-label="Acessar perfil">
+          <img src="assets/profile-user-account-svgrepo-com.svg" alt="Perfil do usuário" />
         </a>
 
-        <nav class="nav">
-          <a href="index.html" class="active">Início</a>
-          <a href="sobre_nos.html">Sobre nós</a>
-          <a href="afilie_se.html" class="btn-nav">Afilie-se</a>
-        </nav>
-
-        <div class="menu-toggle" id="menu-toggle">☰</div>
-        <a href="login-modal.html">
-          <img
-            src="assets/profile-user-account-svgrepo-com.svg"
-            width="50px"
-            alt="Perfil"
-          />
-        </a>
       </div>
-    </header>
 
-    <main>
-      <section>
-        <div class="banner">
-          <div class="banner-input">
-            <h2>Faça parte da EcoTech</h2>
-            <p>Digite seu e-mail e comece agora</p>
-            <form class="banner-form" id="bannerForm">
-              <input
-                type="email"
-                id="bannerEmail"
-                placeholder="seu@email.com"
-                required
-                autocomplete="email"
-              />
-              <button type="submit">Cadastrar</button>
-            </form>
-          </div>
-        </div>
-      </section>
-
-      <a href="boas_vindas.html" target="_blank" class="section-link">
-        <section id="Boas-vindas" class="content-section clickable">
-          <div class="section-inner">
-            <h2>🌱 Boas vindas a EcoTech</h2>
-            <p>
-              Vivemos em um momento crucial para o planeta, e acreditamos que a
-              resposta para os desafios ambientais não está em retroceder, mas
-              em avançar com inteligência. Unimos a ciência da ecologia com o
-              poder da tecnologia para criar soluções que regeneram o que foi
-              perdido e protegem o que ainda temos. Na EcoTech, acreditamos que
-              a tecnologia é a maior aliada da natureza. Desenvolvemos soluções
-              inteligentes para transformar o descarte em recurso e a poluição
-              em preservação. Bem-vindo ao futuro sustentável.
-            </p>
-            <span class="section-cta">Saiba mais →</span>
-          </div>
-        </section>
-      </a>
-
-      <a href="missao.html" target="_blank" class="section-link">
-        <section id="missão" class="content-section clickable">
-          <div class="section-inner">
-            <h2>♻️ Nossa missão e serviços</h2>
-            <p>
-              Nossa missão fundamental é acelerar a transição global para uma
-              economia circular e regenerativa. Não aceitamos mais o modelo
-              linear de 'extrair, produzir e descartar'. Por isso, unimos o
-              rigor da ciência de dados com as soluções avançadas da engenharia
-              ecológica. Nosso objetivo é projetar ecossistemas industriais e
-              urbanos inteligentes, onde o desperdício é eliminado por design e
-              cada resíduo se torna o combustível para um novo ciclo de vida,
-              garantindo que nada se perca e tudo se transforme em valor para o
-              planeta.
-            </p>
-            <span class="section-cta">Saiba mais →</span>
-          </div>
-        </section>
-      </a>
-
-      <!-- ══════════════ MAPA DE COLETA ══════════════ -->
-      <section id="mapa-coleta" class="map-section">
-        <h2>📍 Pontos de Coleta</h2>
-        <p>
-          Encontre o ponto de coleta seletiva mais próximo de você. Clique nos
-          marcadores para ver horários, tipos de resíduo aceitos e endereço.
-        </p>
-
-        <div class="map-wrapper">
-          <div id="collectMap"></div>
-
-          <!-- Legenda flutuante -->
-          <div class="map-legend">
-            <div class="legend-header">
-              <h3>Tipos de coleta</h3>
-              <button
-                class="legend-toggle"
-                id="legendToggle"
-                title="Colapsar legenda"
-              >
-                ▲
-              </button>
-            </div>
-            <div class="legend-body" id="legendBody">
-              <div class="legend-item" data-type="eletronico">
-                <span class="legend-dot" style="background: #e65100"></span>
-                Eletrônicos (e-lixo)
-              </div>
-              <div class="legend-item" data-type="reciclavel">
-                <span class="legend-dot" style="background: #1565c0"></span>
-                Recicláveis gerais
-              </div>
-              <div class="legend-item" data-type="organico">
-                <span class="legend-dot" style="background: #558b2f"></span>
-                Orgânicos / Compostagem
-              </div>
-              <div class="legend-item" data-type="oleo">
-                <span class="legend-dot" style="background: #f9a825"></span>
-                Óleo de cozinha
-              </div>
-              <div class="legend-item" data-type="pilhas">
-                <span class="legend-dot" style="background: #6a1b9a"></span>
-                Pilhas e baterias
-              </div>
-              <div class="legend-item" data-type="especial">
-                <span class="legend-dot" style="background: #00838f"></span>
-                Ponto completo EcoTech
-              </div>
-              <button class="legend-reset" id="legendReset">
-                ↺ Ver todos os pontos
-              </button>
-            </div>
-          </div>
-
-          <!-- Pastilhas de status flutuantes -->
-          <div class="map-stats">
-            <span class="stat-pill" id="totalPontos">— pontos</span>
-            <span class="stat-pill" id="cidadePontos">Itaguaí · RJ</span>
-          </div>
-        </div>
-      </section>
-      <!-- ══════════════ FIM MAPA ══════════════ -->
-
-      <a href="junte_se.html" target="_blank" class="section-link">
-        <section id="Junte-se" class="content-section clickable">
-          <div class="section-inner">
-            <h2>🌍 Junte-se a nós</h2>
-            <p>
-              O futuro não é algo que simplesmente acontece; é algo que
-              construímos ativamente hoje. Na EcoTech, entendemos que o tempo da
-              espera acabou e o tempo da ação inteligente começou. Seja você um
-              entusiasta da causa ambiental, uma empresa em busca de
-              sustentabilidade real ou um investidor focado em impacto positivo,
-              nós oferecemos as ferramentas tecnológicas e o conhecimento
-              científico necessários para transformar intenções em resultados
-              concretos. Convidamos você a se unir à nossa rede de inovação para
-              projetarmos, juntos, um amanhã onde a prosperidade humana e a
-              saúde do planeta caminhem lado a lado.
-            </p>
-            <span class="section-cta">Saiba mais →</span>
-          </div>
-        </section>
-      </a>
-    </main>
-
-    <div class="sheet-overlay" id="sheetOverlay"></div>
-    <div class="bottom-sheet" id="bottomSheet">
-      <div class="sheet-handle"></div>
-      <div class="sheet-header">
-        <h2 id="sheetTitle">Título</h2>
-        <button class="close-sheet" id="closeSheet">&times;</button>
+      <!-- Hambúrguer (mobile) -->
+      <div class="menu-toggle" id="menu-toggle" role="button" aria-label="Abrir menu" aria-expanded="false" tabindex="0">
+        ☰
       </div>
-      <div class="sheet-content" id="sheetContent"></div>
+
     </div>
+  </header>
 
-    <footer>
-      <p>© 2026 Ecotech. Todos os direitos reservados.</p>
-      <a href="https://www.instagram.com/" target="_blank">
-        <img
-          src="assets/instagram-logo-facebook-2-svgrepo-com.svg"
-          width="30px"
-          alt="Instagram"
-        />
+
+  <!-- ══════════════════════════════════
+       MAIN
+  ══════════════════════════════════ -->
+  <main>
+
+    <!-- ── Banner ── -->
+    <section aria-label="Cadastro rápido">
+      <div class="banner">
+        <div class="banner-input">
+          <h2 class="ecotech">Faça parte da <span class="eco">Eco</span>Tech</h2>
+          <p>Digite seu e-mail e comece agora</p>
+          <form class="banner-form" id="bannerForm" novalidate>
+            <input
+              type="email"
+              id="bannerEmail"
+              name="email"
+              placeholder="seu@email.com"
+              required
+              autocomplete="email"
+              aria-label="Seu e-mail"
+            />
+            <button type="submit">Cadastrar</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Boas-vindas ── -->
+    <section id="Boas-vindas" class="content-section" aria-labelledby="titulo-bv">
+      <h2 id="titulo-bv">🌱 Boas-vindas à EcoTech</h2>
+      <p>
+        Vivemos em um momento crucial para o planeta, e acreditamos que a
+        resposta para os desafios ambientais não está em retroceder, mas em
+        avançar com inteligência. Unimos a ciência da ecologia com o poder da
+        tecnologia para criar soluções que regeneram o que foi perdido e
+        protegem o que ainda temos. Na EcoTech, acreditamos que a tecnologia é
+        a maior aliada da natureza — transformando o descarte em recurso e a
+        poluição em preservação. Bem-vindo ao futuro sustentável.
+      </p>
+    </section>
+
+    <!-- ── Missão ── -->
+    <section id="missão" class="content-section" aria-labelledby="titulo-missao">
+      <h2 id="titulo-missao">♻️ Nossa missão e serviços</h2>
+      <p>
+        Nossa missão fundamental é acelerar a transição global para uma
+        economia circular e regenerativa. Não aceitamos o modelo linear de
+        "extrair, produzir e descartar". Por isso, unimos o rigor da ciência
+        de dados com as soluções avançadas da engenharia ecológica para
+        projetar ecossistemas industriais e urbanos inteligentes, onde o
+        desperdício é eliminado por design e cada resíduo se torna combustível
+        para um novo ciclo — garantindo que nada se perca e tudo se transforme
+        em valor para o planeta.
+      </p>
+    </section>
+
+    <!-- ── Mapa ── -->
+    <section class="map-section" aria-labelledby="titulo-mapa">
+      <h2 id="titulo-mapa">🗺️ Nossas áreas de atuação</h2>
+      <p>Conheça os pontos onde a EcoTech está presente e fazendo diferença no Rio de Janeiro.</p>
+      <div class="map-wrapper">
+        <div id="eco-map" role="region" aria-label="Mapa de atuação EcoTech"></div>
+        <div class="map-legend" id="map-legend" aria-label="Legenda do mapa"></div>
+      </div>
+    </section>
+
+    <!-- ── Junte-se ── -->
+    <section id="Junte-se" class="content-section" aria-labelledby="titulo-junte">
+      <h2 id="titulo-junte">🌍 Junte-se a nós</h2>
+      <p>
+        O futuro não é algo que simplesmente acontece — é algo que construímos
+        ativamente hoje. Na EcoTech, entendemos que o tempo da espera acabou e
+        o tempo da ação inteligente começou. Seja você um entusiasta da causa
+        ambiental, uma empresa em busca de sustentabilidade real ou um
+        investidor focado em impacto positivo: nós oferecemos as ferramentas
+        tecnológicas e o conhecimento científico para transformar intenções em
+        resultados concretos. Convidamos você a projetar conosco um amanhã onde
+        a prosperidade humana e a saúde do planeta caminhem lado a lado.
+      </p>
+    </section>
+
+  </main>
+
+
+  <!-- ══════════════════════════════════
+       FOOTER
+  ══════════════════════════════════ -->
+  <footer>
+    <p>© 2026 EcoTech. Todos os direitos reservados.</p>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
+        <img src="assets/instagram-logo-facebook-2-svgrepo-com.svg" alt="Instagram" />
       </a>
-      <a href="https://br.linkedin.com/" target="_blank">
-        <img
-          src="assets/linkedin-logo-svgrepo-com.svg"
-          width="30px"
-          alt="LinkedIn"
-        />
+      <a href="https://br.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <img src="assets/linkedin-logo-svgrepo-com.svg" alt="LinkedIn" />
       </a>
-      <a href="https://www.facebook.com/?locale=pt_BR" target="_blank">
-        <img
-          src="assets/facebook-svgrepo-com.svg"
-          width="30px"
-          alt="Facebook"
-        />
+      <a href="https://www.facebook.com/?locale=pt_BR" target="_blank" rel="noopener" aria-label="Facebook">
+        <img src="assets/facebook-svgrepo-com.svg" alt="Facebook" />
       </a>
-    </footer>
+    </div>
+  </footer>
 
-    <!-- Leaflet JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 
-    <script>
-      // ── Navbar scroll ──
-      const header = document.querySelector(".header");
-      window.addEventListener("scroll", () => {
-        header.classList.toggle("scrolled", window.scrollY > 20);
-      });
+  <!-- ══════════════════════════════════
+       BOTTOM SHEET
+  ══════════════════════════════════ -->
+  <div class="sheet-overlay" id="sheetOverlay" aria-hidden="true"></div>
+  <div
+    class="bottom-sheet"
+    id="bottomSheet"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="sheetTitle"
+    aria-hidden="true"
+  >
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <div class="sheet-header">
+      <h3 id="sheetTitle"></h3>
+      <button class="close-sheet" id="closeSheet" aria-label="Fechar">×</button>
+    </div>
+    <div class="sheet-content" id="sheetContent"></div>
+  </div>
 
-      // ── Menu mobile ──
-      const menuToggle = document.getElementById("menu-toggle");
-      const nav = document.querySelector(".nav");
-      menuToggle.addEventListener("click", () =>
-        nav.classList.toggle("active"),
-      );
-      nav.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => nav.classList.remove("active"));
-      });
 
-      // ── Banner form ──
-      document
-        .getElementById("bannerForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-          const email = document.getElementById("bannerEmail").value.trim();
-          if (email) {
-            window.location.href =
-              "cadastro.html?email=" + encodeURIComponent(email);
-          }
-        });
+  <!-- ══════════════════════════════════
+       SCRIPTS
+  ══════════════════════════════════ -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+  'use strict';
 
-      // ── Bottom sheet ──
-      const closeSheet = document.getElementById("closeSheet");
-      const sheetOverlay = document.getElementById("sheetOverlay");
-      const bottomSheet = document.getElementById("bottomSheet");
+  /* ────────────────────────────────────
+     1. TEMA — toggle light / dark
+     Controla apenas data-theme no <html>
+     e persiste em localStorage.
+  ──────────────────────────────────── */
+  const THEME_KEY  = 'eco-theme';
+  const htmlEl     = document.documentElement;
+  const themeBtn   = document.getElementById('theme-toggle');
+  const themeIcon  = document.getElementById('theme-icon');
 
-      function closeBottomSheet() {
-        bottomSheet.classList.remove("open");
-        sheetOverlay.classList.remove("open");
-        document.body.style.overflow = "";
+  function applyTheme(theme) {
+    htmlEl.setAttribute('data-theme', theme);
+    localStorage.setItem(THEME_KEY, theme);
+    themeIcon.textContent = theme === 'dark' ? '🌙' : '☀️';
+    themeBtn.setAttribute('aria-label', theme === 'dark' ? 'Mudar para tema claro' : 'Mudar para tema escuro');
+  }
+
+  // Sincroniza ícone com tema já aplicado (pelo script no <head>)
+  applyTheme(htmlEl.getAttribute('data-theme') || 'light');
+
+  themeBtn.addEventListener('click', () => {
+    const next = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+  });
+
+
+  /* ────────────────────────────────────
+     2. MENU MOBILE
+  ──────────────────────────────────── */
+  const menuToggle = document.getElementById('menu-toggle');
+  const mainNav    = document.getElementById('main-nav');
+
+  menuToggle.addEventListener('click', () => {
+    const isOpen = mainNav.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+    menuToggle.textContent = isOpen ? '✕' : '☰';
+  });
+
+  // Fechar ao clicar em link
+  mainNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mainNav.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.textContent = '☰';
+    });
+  });
+
+
+  /* ────────────────────────────────────
+     3. BOTTOM SHEET
+  ──────────────────────────────────── */
+  const bottomSheet  = document.getElementById('bottomSheet');
+  const sheetOverlay = document.getElementById('sheetOverlay');
+  const sheetTitle   = document.getElementById('sheetTitle');
+  const sheetContent = document.getElementById('sheetContent');
+  const closeSheet   = document.getElementById('closeSheet');
+
+  function openSheet(title, content) {
+    sheetTitle.textContent   = title;
+    sheetContent.innerHTML   = `<p>${content}</p>`;
+    bottomSheet.classList.add('open');
+    sheetOverlay.classList.add('open');
+    bottomSheet.setAttribute('aria-hidden', 'false');
+    sheetOverlay.setAttribute('aria-hidden', 'false');
+    closeSheet.focus();
+  }
+
+  function closeBottomSheet() {
+    bottomSheet.classList.remove('open');
+    sheetOverlay.classList.remove('open');
+    bottomSheet.setAttribute('aria-hidden', 'true');
+    sheetOverlay.setAttribute('aria-hidden', 'true');
+  }
+
+  closeSheet.addEventListener('click',   closeBottomSheet);
+  sheetOverlay.addEventListener('click', closeBottomSheet);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBottomSheet(); });
+
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => {
+      const title    = card.getAttribute('data-title');
+      const content  = card.getAttribute('data-content');
+      const targetId = card.getAttribute('data-target');
+      if (title && content) { openSheet(title, content); return; }
+      if (targetId) {
+        const el = document.getElementById(targetId);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
       }
+    });
+  });
 
-      closeSheet.addEventListener("click", closeBottomSheet);
-      sheetOverlay.addEventListener("click", closeBottomSheet);
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") closeBottomSheet();
-      });
 
-      // ════════════════════════════════════════
-      //  MAPA DE PONTOS DE COLETA — Leaflet.js
-      // ════════════════════════════════════════
+  /* ────────────────────────────────────
+     4. BANNER FORM
+  ──────────────────────────────────── */
+  document.getElementById('bannerForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const email = document.getElementById('bannerEmail').value.trim();
+    if (email) window.location.href = 'cadastro.html?email=' + encodeURIComponent(email);
+  });
 
-      // Tipos de resíduo → cor e emoji
-      const tiposConfig = {
-        eletronico: {
-          cor: "#e65100",
-          label: "Eletrônicos (e-lixo)",
-          icone: "🖥️",
-        },
-        reciclavel: {
-          cor: "#1565c0",
-          label: "Recicláveis gerais",
-          icone: "♻️",
-        },
-        organico: {
-          cor: "#558b2f",
-          label: "Orgânicos / Compostagem",
-          icone: "🍃",
-        },
-        oleo: { cor: "#f9a825", label: "Óleo de cozinha", icone: "🛢️" },
-        pilhas: { cor: "#6a1b9a", label: "Pilhas e baterias", icone: "🔋" },
-        especial: {
-          cor: "#00838f",
-          label: "Ponto completo EcoTech",
-          icone: "⭐",
-        },
-      };
 
-      // Pontos fictícios (coordenadas baseadas no centro padrão)
-      const pontos = [
-        {
-          nome: "EcoTech Hub Central",
-          lat: -22.863,
-          lng: -43.7905,
-          tipo: "especial",
-          endereco: "Ponto de Coleta",
-          horario: "Seg–Sáb 08:00–18:00",
-          aceita: ["Eletrônicos", "Recicláveis", "Óleo", "Pilhas"],
-        },
-        {
-          nome: "Ponto Verde Escola Muniz",
-          lat: -22.858,
-          lng: -43.796,
-          tipo: "reciclavel",
-          endereco: "Ponto de Coleta",
-          horario: "Seg–Sex 07:00–17:00",
-          aceita: ["Papel", "Plástico", "Vidro", "Metal"],
-        },
-        {
-          nome: "Coleta E-Lixo Porto Sul",
-          lat: -22.871,
-          lng: -43.784,
-          tipo: "eletronico",
-          endereco: "Ponto de Coleta",
-          horario: "Ter e Qui 09:00–16:00",
-          aceita: ["Celulares", "Computadores", "Cabos", "Eletrodomésticos"],
-        },
-        {
-          nome: "Compostagem Fazenda Verde",
-          lat: -22.85,
-          lng: -43.805,
-          tipo: "organico",
-          endereco: "Ponto de Coleta",
-          horario: "Seg–Dom 07:00–12:00",
-          aceita: ["Restos de alimento", "Folhas", "Borra de café"],
-        },
-        {
-          nome: "Ponto Óleo Limpo Mercado da Av.",
-          lat: -22.865,
-          lng: -43.801,
-          tipo: "oleo",
-          endereco: "Ponto de Coleta",
-          horario: "Seg–Sáb 08:00–20:00",
-          aceita: ["Óleo vegetal usado (garrafas fechadas)"],
-        },
-        {
-          nome: "Coleta Pilhas Farmácia Vida",
-          lat: -22.86,
-          lng: -43.785,
-          tipo: "pilhas",
-          endereco: "Ponto de Coleta",
-          horario: "Seg–Dom 08:00–22:00",
-          aceita: [
-            "Pilhas AA/AAA",
-            "Baterias de celular",
-            "Baterias de notebook",
-          ],
-        },
-        {
-          nome: "EcoTech Ponto Muriqui",
-          lat: -22.914,
-          lng: -43.913,
-          tipo: "especial",
-          endereco: "Ponto de Coleta",
-          horario: "Seg–Sáb 08:00–17:00",
-          aceita: ["Eletrônicos", "Recicláveis", "Pilhas", "Óleo"],
-        },
-        {
-          nome: "Ponto Verde Ibituporanga",
-          lat: -22.89,
-          lng: -43.83,
-          tipo: "reciclavel",
-          endereco: "Ponto de Coleta",
-          horario: "Seg–Sex 08:00–16:00",
-          aceita: ["Papel", "Plástico", "Vidro"],
-        },
-        {
-          nome: "Compostagem Bairro Novo",
-          lat: -22.876,
-          lng: -43.778,
-          tipo: "organico",
-          endereco: "Ponto de Coleta",
-          horario: "Qua e Sáb 07:00–11:00",
-          aceita: ["Restos de alimento", "Papelão", "Folhas secas"],
-        },
-        {
-          nome: "Coleta E-Lixo Colégio Técnico",
-          lat: -22.854,
-          lng: -43.789,
-          tipo: "eletronico",
-          endereco: "Ponto de Coleta",
-          horario: "Seg–Sex 13:00–17:00",
-          aceita: ["Eletrônicos em geral", "Impressoras", "Monitores"],
-        },
-        {
-          nome: "Ponto Óleo Escola Primavera",
-          lat: -22.868,
-          lng: -43.812,
-          tipo: "oleo",
-          endereco: "Ponto de Coleta",
-          horario: "Seg–Sex 07:30–16:30",
-          aceita: ["Óleo vegetal usado"],
-        },
-        {
-          nome: "Pilhas & Baterias Posto Eco",
-          lat: -22.872,
-          lng: -43.792,
-          tipo: "pilhas",
-          endereco: "Ponto de Coleta",
-          horario: "Seg–Dom 06:00–22:00",
-          aceita: ["Pilhas", "Baterias veiculares", "Power banks"],
-        },
-      ];
+  /* ────────────────────────────────────
+     5. MAPA LEAFLET
+  ──────────────────────────────────── */
+  const CATEGORIES = [
+    { key: 'reciclagem', label: 'Reciclagem',    color: '#2e7d32' },
+    { key: 'energia',    label: 'Energia limpa',  color: '#f9a825' },
+    { key: 'parceiro',   label: 'Parceiro',        color: '#1565c0' },
+    { key: 'projeto',    label: 'Projeto ativo',  color: '#6a1b9a' },
+    { key: 'natureza',   label: 'Área verde',     color: '#00796b' },
+  ];
 
-      // Centro padrão de fallback (Itaguaí)
-      const centroPadrao = [-22.868, -43.793];
-      let localizacaoUsuario = null;
-      let marcadorUsuario = null;
+  const POINTS = [
+    { lat:-22.9068, lng:-43.1729, name:'Central de Reciclagem RJ',    cat:'reciclagem', desc:'Centro de triagem e reciclagem urbana' },
+    { lat:-22.9519, lng:-43.2105, name:'Usina Solar Botafogo',         cat:'energia',    desc:'Geração de energia fotovoltaica' },
+    { lat:-22.8800, lng:-43.2933, name:'Parceiro LogVerde',            cat:'parceiro',   desc:'Logística reversa sustentável' },
+    { lat:-22.9122, lng:-43.1769, name:'Projeto Mangue Vivo',          cat:'projeto',    desc:'Restauração de manguezais na Baía' },
+    { lat:-22.9711, lng:-43.1823, name:'Área de Reflorestamento',      cat:'natureza',   desc:'Plantio de espécies nativas' },
+    { lat:-22.9400, lng:-43.1200, name:'Ecoponto Zona Norte',          cat:'reciclagem', desc:'Coleta de eletrônicos e resíduos' },
+    { lat:-23.0050, lng:-43.3660, name:'Parceiro EcoFrota',            cat:'parceiro',   desc:'Frota elétrica e logística verde' },
+    { lat:-22.9600, lng:-43.4000, name:'Parque Eólico Guaratiba',      cat:'energia',    desc:'Energia eólica na costa oeste' },
+  ];
 
-      // Inicializa o mapa
-      const map = L.map("collectMap", {
-        center: centroPadrao,
-        zoom: 13,
-        zoomControl: true,
-        attributionControl: true,
-      });
+  const catMap = Object.fromEntries(CATEGORIES.map(c => [c.key, c]));
 
-      L.tileLayer(
-        "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-        {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
-          subdomains: "abcd",
-          maxZoom: 19,
-        },
-      ).addTo(map);
+  const map = L.map('eco-map').setView([-22.9519, -43.2500], 11);
 
-      // ─── ÍCONES E GRUPOS DE MARCADORES ───
-      function criarIcone(tipo) {
-        const cfg = tiposConfig[tipo];
-        const cor = cfg.cor;
-        const svgStr = `
-          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="44" viewBox="0 0 36 44">
-            <filter id="sombra">
-              <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="${cor}" flood-opacity="0.4"/>
-            </filter>
-            <ellipse cx="18" cy="40" rx="6" ry="3" fill="${cor}" opacity="0.25"/>
-            <path d="M18 2 C9 2 3 8.5 3 16.5 C3 26 18 42 18 42 C18 42 33 26 33 16.5 C33 8.5 27 2 18 2Z"
-              fill="${cor}" filter="url(#sombra)"/>
-            <circle cx="18" cy="16" r="8" fill="white" opacity="0.9"/>
-            <text x="18" y="20" text-anchor="middle" font-size="10" font-family="sans-serif">${cfg.icone}</text>
-          </svg>`;
-        return L.divIcon({
-          html: svgStr,
-          className: "",
-          iconSize: [36, 44],
-          iconAnchor: [18, 44],
-          popupAnchor: [0, -44],
-        });
+  // Tile layers: light e dark — troca ao mudar o tema
+  const TILE_LIGHT = L.tileLayer(
+    'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+    { attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/">CARTO</a>', subdomains:'abcd', maxZoom:19 }
+  );
+  const TILE_DARK  = L.tileLayer(
+    'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+    { attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/">CARTO</a>', subdomains:'abcd', maxZoom:19 }
+  );
+
+  function updateMapTile() {
+    const isDark = htmlEl.getAttribute('data-theme') === 'dark';
+    if (isDark) { map.removeLayer(TILE_LIGHT); TILE_DARK.addTo(map); }
+    else         { map.removeLayer(TILE_DARK);  TILE_LIGHT.addTo(map); }
+  }
+
+  updateMapTile();
+
+  // Observer para trocar o tile quando o tema mudar
+  new MutationObserver(updateMapTile).observe(htmlEl, { attributes: true, attributeFilter: ['data-theme'] });
+
+  // Layers por categoria
+  const layerGroups = Object.fromEntries(CATEGORIES.map(c => [c.key, L.layerGroup().addTo(map)]));
+
+  function makeIcon(catKey) {
+    const { color, label } = catMap[catKey];
+    const html = `
+      <div class="marker-wrap">
+        <div class="pulse-ring" style="background:${color}28;border:1.5px solid ${color}70;"></div>
+        <div class="custom-marker" style="background:${color};">${label[0]}</div>
+      </div>`;
+    return L.divIcon({ html, className:'', iconSize:[28,28], iconAnchor:[14,14], popupAnchor:[0,-20] });
+  }
+
+  POINTS.forEach(p => {
+    const cat = catMap[p.cat];
+    const popup = `
+      <div class="popup-name">${p.name}</div>
+      <div class="popup-type">${cat.label}</div>
+      <div class="popup-desc">${p.desc}</div>`;
+    L.marker([p.lat, p.lng], { icon: makeIcon(p.cat) })
+      .bindPopup(popup, { maxWidth: 220, className: 'eco-popup' })
+      .addTo(layerGroups[p.cat]);
+  });
+
+  // Legenda clicável
+  const legendEl   = document.getElementById('map-legend');
+  const visibleCats = new Set(CATEGORIES.map(c => c.key));
+
+  legendEl.innerHTML = '<div class="map-legend-title">Categorias</div>';
+
+  CATEGORIES.forEach(cat => {
+    const item = document.createElement('div');
+    item.className = 'map-legend-item';
+    item.setAttribute('role', 'checkbox');
+    item.setAttribute('aria-checked', 'true');
+    item.setAttribute('tabindex', '0');
+    item.innerHTML = `<div class="map-legend-dot" style="background:${cat.color};"></div>${cat.label}`;
+
+    function toggle() {
+      if (visibleCats.has(cat.key)) {
+        visibleCats.delete(cat.key);
+        map.removeLayer(layerGroups[cat.key]);
+        item.classList.add('muted');
+        item.setAttribute('aria-checked', 'false');
+      } else {
+        visibleCats.add(cat.key);
+        map.addLayer(layerGroups[cat.key]);
+        item.classList.remove('muted');
+        item.setAttribute('aria-checked', 'true');
       }
+    }
 
-      // Cria os Layer Groups vazios para a legenda funcionar
-      const gruposDeMarcadores = {};
-      for (const tipo in tiposConfig) {
-        gruposDeMarcadores[tipo] = L.layerGroup().addTo(map);
-      }
+    item.addEventListener('click',   toggle);
+    item.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); } });
+    legendEl.appendChild(item);
+  });
 
-      // ─── FUNÇÃO DINÂMICA DE RENDERIZAÇÃO DE PONTOS ───
-      // Esta função calcula onde os pontos devem aparecer baseando-se no centro atual
-      function renderizarPontos(centroLat, centroLng) {
-        // Limpa os marcadores antigos do mapa
-        for (const tipo in gruposDeMarcadores) {
-          gruposDeMarcadores[tipo].clearLayers();
-        }
+  </script>
 
-        pontos.forEach((p) => {
-          // Calcula a distância relativa que o ponto original tem de Itaguaí
-          const diffLat = p.lat - centroPadrao[0];
-          const diffLng = p.lng - centroPadrao[1];
-
-          // Aplica essa mesma distância ao novo centro (sua localização)
-          const novoLat = centroLat + diffLat;
-          const novoLng = centroLng + diffLng;
-
-          const cfg = tiposConfig[p.tipo];
-          const marker = L.marker([novoLat, novoLng], {
-            icon: criarIcone(p.tipo),
-          });
-
-          const aceita = p.aceita
-            .map((a) => `<li style="margin:2px 0;">• ${a}</li>`)
-            .join("");
-
-          marker.bindPopup(
-            `
-            <div class="popup-title">${p.nome}</div>
-            <span class="popup-type" style="background:${cfg.cor};">${cfg.label}</span>
-            <p class="popup-info">
-              📌 ${p.endereco} <i>(Simulado)</i><br>
-              <strong>Aceita:</strong>
-              <ul style="list-style:none;padding:4px 0 0;margin:0;font-size:0.78em;color:#444;">${aceita}</ul>
-            </p>
-            <p class="popup-hours">🕐 ${p.horario}</p>
-          `,
-            { className: "custom-popup", maxWidth: 260 },
-          );
-
-          gruposDeMarcadores[p.tipo].addLayer(marker);
-        });
-
-        // Atualiza a interface
-        document.getElementById("totalPontos").textContent =
-          pontos.length + " pontos próximos";
-      }
-
-      // Renderiza inicialmente com o centro padrão
-      renderizarPontos(centroPadrao[0], centroPadrao[1]);
-
-      // ─── GEOLOCALIZAÇÃO DO USUÁRIO ───
-      function onLocationFound(e) {
-        localizacaoUsuario = e.latlng;
-
-        if (marcadorUsuario) {
-          marcadorUsuario.setLatLng(localizacaoUsuario);
-        } else {
-          marcadorUsuario = L.marker(localizacaoUsuario, {
-            icon: L.divIcon({
-              html: `<div style="background:#1565c0; width:14px; height:14px; border-radius:50%; border:3px solid white; box-shadow: 0 0 8px rgba(0,0,0,0.4);"></div>`,
-              className: "",
-              iconSize: [20, 20],
-              iconAnchor: [10, 10],
-            }),
-          }).addTo(map);
-          marcadorUsuario.bindPopup("<b>Você está aqui!</b>").openPopup();
-        }
-
-        document.getElementById("cidadePontos").textContent = "Perto de você";
-
-        // Magia acontecendo: re-renderiza os pontos em volta da sua localização!
-        renderizarPontos(localizacaoUsuario.lat, localizacaoUsuario.lng);
-      }
-
-      function onLocationError(e) {
-        console.warn(
-          "Acesso à localização negado ou indisponível: " + e.message,
-        );
-        map.setView(centroPadrao, 13);
-        document.getElementById("cidadePontos").textContent = "Itaguaí · RJ";
-        // Mantém os pontos no local padrão
-        renderizarPontos(centroPadrao[0], centroPadrao[1]);
-      }
-
-      map.on("locationfound", onLocationFound);
-      map.on("locationerror", onLocationError);
-
-      // Pede a localização do usuário ao abrir o site
-      map.locate({ setView: true, maxZoom: 14 });
-
-      // Evento do botão de Recentralizar
-      const btnRecenter = document.getElementById("recenterBtn");
-      if (btnRecenter) {
-        btnRecenter.addEventListener("click", () => {
-          if (localizacaoUsuario) {
-            map.setView(localizacaoUsuario, 14);
-          } else {
-            map.locate({ setView: true, maxZoom: 14 });
-          }
-        });
-      }
-
-      // ─── LÓGICA DE LIGAR/DESLIGAR NA LEGENDA ───
-      document.querySelectorAll(".legend-item").forEach((item) => {
-        item.style.cursor = "pointer";
-        item.style.transition = "opacity 0.2s";
-
-        item.addEventListener("click", () => {
-          const tipo = item.dataset.type;
-          const grupo = gruposDeMarcadores[tipo];
-
-          if (map.hasLayer(grupo)) {
-            map.removeLayer(grupo);
-            item.style.opacity = "0.4";
-          } else {
-            map.addLayer(grupo);
-            item.style.opacity = "1";
-          }
-        });
-      });
-
-      // Botão de "Ver todos os pontos" (Reset)
-      const btnReset = document.getElementById("legendReset");
-      if (btnReset) {
-        btnReset.addEventListener("click", () => {
-          document.querySelectorAll(".legend-item").forEach((item) => {
-            const tipo = item.dataset.type;
-            const grupo = gruposDeMarcadores[tipo];
-
-            if (!map.hasLayer(grupo)) {
-              map.addLayer(grupo);
-            }
-            item.style.opacity = "1";
-          });
-
-          if (localizacaoUsuario) {
-            map.setView(localizacaoUsuario, 14);
-          } else {
-            map.setView(centroPadrao, 13);
-          }
-        });
-      }
-    </script>
-  </body>
+</body>
 </html>
