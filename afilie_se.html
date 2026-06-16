@@ -9,26 +9,52 @@
 
   <body>
     <header class="header">
-      <div class="container nav-container">
-        <a href="index.html" class="logo">
-          <img src="assets/logo.png" alt="Logo" />
-          <span>EcoTech</span>
+      <div class="nav-container">
+        <a href="index.html" class="logo" aria-label="EcoTech">
+          <img src="./assets/logo.svg" alt="EcoTech" class="logo-img" />
+          <div class="logo-name"><em>Eco</em>Tech</div>
         </a>
-
-        <nav class="nav">
+        <nav class="nav" id="main-nav" aria-label="Navegação principal">
           <a href="index.html">Início</a>
+          <a href="coleta.html">Coleta ecológica</a>
           <a href="sobre_nos.html">Sobre nós</a>
-          <a href="afilie_se.html" class="btn-nav active">Afilie-se</a>
+          <a href="afilie_se.html" class="btn-nav active">Afilie-se →</a>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 1rem;
+              margin-left: auto;
+            "
+          >
+            <a
+              href="login-modal.html"
+              class="nav-profile"
+              aria-label="Acessar perfil"
+            >
+            </a>
+          </div>
         </nav>
-        
-        <div class="menu-toggle" id="menu-toggle">☰</div>
-        <a href="login-modal.html">
-          <img
-            src="assets/profile-user-account-svgrepo-com.svg"
-            width="50px"
-            alt="Descrição da Imagem"
-          />
-        </a>
+        <div class="nav-actions" style="margin-left: auto">
+          <button
+            class="theme-toggle"
+            id="theme-toggle"
+            aria-label="Alternar tema"
+          >
+            <span id="theme-icon">☀️</span>
+          </button>
+          <a href="login.html" class="icon-btn" aria-label="Perfil">👤</a>
+        </div>
+        <div
+          class="menu-toggle"
+          id="menu-toggle"
+          role="button"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+          tabindex="0"
+        >
+          ☰
+        </div>
       </div>
     </header>
 
@@ -46,7 +72,9 @@
           </p>
 
           <div class="grupo-botoes">
-            <a href="#" class="botao-principal">Quero me afiliar →</a>
+            <a href="cadastro_empresarial.html" class="botao-principal"
+              >Quero me afiliar →</a
+            >
             <a href="#" class="botao-contorno">Baixar proposta</a>
           </div>
         </div>
@@ -57,7 +85,6 @@
       </div>
     </section>
 
-    <!-- IMPACTO -->
     <section class="impacto">
       <div class="container grade-impacto">
         <div class="card-impacto">
@@ -82,7 +109,6 @@
       </div>
     </section>
 
-    <!-- BENEFÍCIOS -->
     <section class="beneficios">
       <div class="container">
         <h2>Benefícios para sua empresa</h2>
@@ -90,7 +116,7 @@
         <div class="grade-beneficios">
           <div class="card-beneficio">
             <h4>ESG NA PRÁTICA</h4>
-            <p>Fortaleça suas iniciativas ambientais.</p>
+            <p>Fortaleça suas initiatives ambientais.</p>
           </div>
 
           <div class="card-beneficio">
@@ -116,7 +142,6 @@
       </div>
     </section>
 
-    <!-- COMO FUNCIONA -->
     <section class="como-funciona">
       <div class="container">
         <h2>Como funciona a afiliação</h2>
@@ -149,7 +174,6 @@
       </div>
     </section>
 
-    <!-- CTA -->
     <section class="chamada-acao">
       <div class="container chamada-acao-conteudo">
         <div>
@@ -157,20 +181,86 @@
           <p>A sustentabilidade precisa de parceiros. Seja um você.</p>
         </div>
 
-        <a href="error_page.html" class="botao-principal">
+        <a href="cadastro_empresarial.html" class="botao-principal">
           Quero me afiliar →
         </a>
       </div>
     </section>
+
+    <footer>
+      <div class="footer-socials">
+        <a
+          href="https://www.instagram.com/"
+          target="_blank"
+          rel="noopener"
+          aria-label="Instagram"
+        >
+          <img
+            src="assets/instagram-logo-facebook-2-svgrepo-com.svg"
+            alt="Instagram"
+          />
+        </a>
+        <a
+          href="https://br.linkedin.com/"
+          target="_blank"
+          rel="noopener"
+          aria-label="LinkedIn"
+        >
+          <img src="assets/linkedin-logo-svgrepo-com.svg" alt="LinkedIn" />
+        </a>
+        <a
+          href="https://www.facebook.com/?locale=pt_BR"
+          target="_blank"
+          rel="noopener"
+          aria-label="Facebook"
+        >
+          <img src="assets/facebook-svgrepo-com.svg" alt="Facebook" />
+        </a>
+      </div>
+      <p>© 2026 EcoTech. Todos os direitos reservados.</p>
+    </footer>
   </body>
 
   <script>
-    // Menu mobile
-    const menuToggle = document.getElementById("menu-toggle");
-    const nav = document.querySelector(".nav");
-    menuToggle.addEventListener("click", () => nav.classList.toggle("active"));
-    nav.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => nav.classList.remove("active"));
+    "use strict";
+    document.addEventListener("DOMContentLoaded", () => {
+      /* ── INICIALIZAÇÃO TEMA ── */
+      (function () {
+        const saved = localStorage.getItem("eco-theme");
+        const pref =
+          saved ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+        document.documentElement.setAttribute("data-theme", pref);
+      })();
+
+      /* ── DARK MODE TOGGLE ── */
+      const themeToggle = document.getElementById("theme-toggle");
+      const themeIcon = document.getElementById("theme-icon");
+
+      // 1. Sincroniza o ícone de acordo com o tema carregado
+      const currentTheme = document.documentElement.getAttribute("data-theme");
+      themeIcon.textContent = currentTheme === "dark" ? "🌙" : "☀️";
+
+      // 2. Alterna o tema ao clicar
+      themeToggle.addEventListener("click", () => {
+        const root = document.documentElement;
+        const isDark = root.getAttribute("data-theme") === "dark";
+        const newTheme = isDark ? "light" : "dark";
+
+        // Atualiza o DOM e salva no LocalStorage
+        root.setAttribute("data-theme", newTheme);
+        localStorage.setItem("eco-theme", newTheme);
+
+        // Animação e troca de ícone
+        themeIcon.style.transform = "rotate(360deg)";
+        themeIcon.style.transition = "transform 0.3s ease";
+        setTimeout(() => {
+          themeIcon.textContent = newTheme === "dark" ? "🌙" : "☀️";
+          themeIcon.style.transform = "rotate(0deg)";
+        }, 150);
+      });
     });
   </script>
 </html>
