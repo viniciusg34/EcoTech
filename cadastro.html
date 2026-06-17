@@ -1,82 +1,204 @@
-<!doctype html>
-<html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="light">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="assets/fivecom.png" type="image/x-icon" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-    />
-    <link rel="stylesheet" href="css/cadastro.css" />
-    <title>Cadastro - EcoTech</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" />
+    <link rel="stylesheet" href="css/cadastro_empresarial.css" />
+    <title>Cadastro Empresarial — EcoTech</title>
+
+    <script>
+      (function () {
+        const saved = localStorage.getItem("eco-theme");
+        const pref =
+          saved ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+        document.documentElement.setAttribute("data-theme", pref);
+      })();
+    </script>
   </head>
   <body>
 
-    <main class="container">
-      <section class="card">
-        <h1>Cadastro</h1>
-        <p>Crie sua conta na EcoTech</p>
+    <main class="page">
+      <div class="app">
+        
+        <div class="visual-panel">
+          <div class="organic-shape"></div>
+          
+          <div class="visual-content">
+            <span class="top-tag">Cadastro Empresarial</span>
+            <h1>Cadastre sua empresa e faça parte da mudança.</h1>
+          </div>
 
-        <form>
-          <label for="nome">Nome completo</label>
-          <input id="nome" type="text" placeholder="Digite seu nome" required />
-
-          <label for="email">E-mail</label>
-          <input
-            id="email"
-            type="email"
-            placeholder="Digite seu e-mail"
-            required
+          <img
+            src="assets/image_c32c62.jpg"
+            alt="Fachada corporativa sustentável EcoTech"
+            class="building-image"
           />
+        </div>
 
-          <label for="cpf">CPF</label>
-          <input id="cpf" type="text" placeholder="Digite seu CPF" required />
+        <div class="register">
+          <div class="eco-logo">
+            <img src="assets/fivecom.png" alt="EcoTech Logo" />
+          </div>
+          
+          <h1>Cadastro Empresarial</h1>
+          <p>Preencha os dados da sua empresa para criar sua conta</p>
 
-          <label for="nascimento">Data de nascimento</label>
-          <input id="nascimento" type="date" required />
+          <form id="cadastroEmpresarialForm" action="#" method="POST">
+            
+            <div class="input-group">
+              <label for="cnpj">CNPJ</label>
+              <div class="input-box">
+                <span class="icon">💼</span>
+                <input
+                  type="text"
+                  id="cnpj"
+                  name="cnpj"
+                  placeholder="00.000.000/0000-00"
+                  required
+                  autocomplete="off"
+                  maxlength="18"
+                />
+              </div>
+            </div>
 
-          <label for="senha">Senha</label>
-          <input
-            id="senha"
-            type="password"
-            placeholder="Digite sua senha"
-            required
-          />
+            <div class="input-group">
+              <label for="nome_empresa">Nome Completo da Empresa</label>
+              <div class="input-box">
+                <span class="icon">🏢</span>
+                <input
+                  type="text"
+                  id="nome_empresa"
+                  name="nome_empresa"
+                  placeholder="Digite o nome completo da empresa"
+                  required
+                  autocomplete="organization"
+                />
+              </div>
+            </div>
 
-          <button type="submit">Cadastrar</button>
-        </form>
+            <div class="input-group">
+              <label for="endereco">Endereço</label>
+              <div class="input-box">
+                <span class="icon">📍</span>
+                <input
+                  type="text"
+                  id="endereco"
+                  name="endereco"
+                  placeholder="Rua, número, bairro, cidade, Estado, CEP"
+                  required
+                  autocomplete="street-address"
+                />
+              </div>
+            </div>
 
-        <a class="link-extra" href="esqueci_senha.html">Esqueci minha senha</a>
-      </section>
+            <div class="input-group">
+              <label for="razao_social">Razão Social</label>
+              <div class="input-box">
+                <span class="icon">📄</span>
+                <input
+                  type="text"
+                  id="razao_social"
+                  name="razao_social"
+                  placeholder="Digite a razão social da empresa"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="email">E-mail</label>
+              <div class="input-box">
+                <span class="icon">✉️</span>
+                <input
+                  type="type"
+                  id="email"
+                  name="email"
+                  placeholder="exemplo@empresa.com.br"
+                  required
+                  autocomplete="email"
+                />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="password">Senha</label>
+              <div class="input-box">
+                <span class="icon">🔒</span>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Crie uma senha segura"
+                  required
+                  autocomplete="new-password"
+                />
+                <span class="eye" id="btnTogglePassword">👁️</span>
+              </div>
+            </div>
+
+            <div class="terms-card">
+              <label class="terms-label">
+                <input type="checkbox" required />
+                <span>Declaro que li e aceito os <a href="#">Termos de Uso</a> e as <a href="#">Políticas de Privacidade</a> da EcoTech.</span>
+              </label>
+            </div>
+
+            <button type="submit">Criar Conta</button>
+
+            <small>Já possui uma conta? <a href="login.html">Entrar</a></small>
+          </form>
+        </div>
+
+      </div>
     </main>
 
+    <div class="toast" id="toastMessage">Cadastro enviado com sucesso!</div>
+
     <script>
-      const formCadastro = document.querySelector("form");
+      "use strict";
 
-      formCadastro.addEventListener("submit", function (event) {
-        event.preventDefault();
+      /* MÁSCARA AUTOMÁTICA PARA CNPJ */
+      const cnpjInput = document.getElementById("cnpj");
+      if (cnpjInput) {
+        cnpjInput.addEventListener("input", (e) => {
+          let value = e.target.value.replace(/\D/g, "");
+          if (value.length > 14) value = value.slice(0, 14);
 
-        const nome = document.getElementById("nome").value;
-        const email = document.getElementById("email").value;
-        const cpf = document.getElementById("cpf").value;
-        const nascimento = document.getElementById("nascimento").value;
-        const senha = document.getElementById("senha").value;
+          value = value.replace(/^(\d{2})(\d)/, "$1.$2");
+          value = value.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
+          value = value.replace(/\.(\d{3})(\d)/, ".$1/$2");
+          value = value.replace(/(\d{4})(\d)/, "$1-$2");
 
-        if (
-          nome === "" ||
-          email === "" ||
-          cpf === "" ||
-          nascimento === "" ||
-          senha === ""
-        ) {
-          alert("Preencha todos os campos!");
-          return;
-        }
+          e.target.value = value;
+        });
+      }
 
-        localStorage.setItem("emailUsuario", email);
-        localStorage.setItem("senhaUsuario", senha);
+      /* EXIBIÇÃO INTERATIVA DA SENHA */
+      const btnTogglePassword = document.getElementById("btnTogglePassword");
+      const passwordInput = document.getElementById("password");
 
-        alert("Cadastro realizado com sucesso!");
+      if (btnTogglePassword && passwordInput) {
+        btnTogglePassword.addEventListener("click", () => {
+          const isPassword = passwordInput.type === "password";
+          passwordInput.type = isPassword ? "text" : "password";
+          btnTogglePassword.textContent = isPassword ? "🙈" : "👁️";
+        });
+      }
+
+      /* INTERCEPTAÇÃO DO FORMULÁRIO E TOAST */
+      document.getElementById("cadastroEmpresarialForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const toast = document.getElementById("toastMessage");
+        toast.classList.add("show");
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 4000);
       });
     </script>
   </body>
