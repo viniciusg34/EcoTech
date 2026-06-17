@@ -191,7 +191,9 @@
               do Rio de Janeiro e Costa Verde
             </p>
           </div>
-          <div class="map-wrapper">
+
+          <!-- map-wrapper agora tem ID para o fullscreen controlar -->
+          <div class="map-wrapper" id="map-wrapper">
             <div id="eco-map"></div>
             <div
               id="distance-balloon"
@@ -199,15 +201,30 @@
               aria-live="polite"
             ></div>
             <div id="map-legend" class="map-legend"></div>
+
+            <!-- BOTÃO TELA CHEIA -->
+            <button
+              id="fullscreen-btn"
+              class="map-fullscreen-btn"
+              aria-label="Expandir mapa em tela cheia"
+              title="Tela cheia"
+            >
+              <svg id="fs-icon-expand" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 3 21 3 21 9"/>
+                <polyline points="9 21 3 21 3 15"/>
+                <line x1="21" y1="3" x2="14" y2="10"/>
+                <line x1="3" y1="21" x2="10" y2="14"/>
+              </svg>
+              <svg id="fs-icon-compress" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                <polyline points="4 14 10 14 10 20"/>
+                <polyline points="20 10 14 10 14 4"/>
+                <line x1="10" y1="14" x2="3" y2="21"/>
+                <line x1="21" y1="3" x2="14" y2="10"/>
+              </svg>
+            </button>
           </div>
-          <p
-            style="
-              text-align: center;
-              margin-top: 20px;
-              font-size: 0.9rem;
-              color: var(--ink-3);
-            "
-          >
+
+          <p class="map-hint">
             📍 Clique nos marcadores para ver os detalhes | Filtre por categoria
             na legenda | Muitos pontos aceitam mais de um tipo de material
           </p>
@@ -315,102 +332,32 @@
           style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))"
         >
           <div class="info-card" style="text-align: center; padding: 24px">
-            <strong
-              style="
-                color: var(--sage-600);
-                font-size: 1.1rem;
-                display: block;
-                margin-bottom: 8px;
-              "
-              >🥤 Plástico PET (1kg)</strong
-            >
-            <span style="color: var(--ink-2); font-weight: 600"
-              >🔹 12 pontos</span
-            >
+            <strong style="color: var(--sage-600); font-size: 1.1rem; display: block; margin-bottom: 8px;">🥤 Plástico PET (1kg)</strong>
+            <span style="color: var(--ink-2); font-weight: 600">🔹 12 pontos</span>
           </div>
           <div class="info-card" style="text-align: center; padding: 24px">
-            <strong
-              style="
-                color: var(--sage-600);
-                font-size: 1.1rem;
-                display: block;
-                margin-bottom: 8px;
-              "
-              >📦 Papelão (1kg)</strong
-            >
-            <span style="color: var(--ink-2); font-weight: 600"
-              >🔹 8 pontos</span
-            >
+            <strong style="color: var(--sage-600); font-size: 1.1rem; display: block; margin-bottom: 8px;">📦 Papelão (1kg)</strong>
+            <span style="color: var(--ink-2); font-weight: 600">🔹 8 pontos</span>
           </div>
           <div class="info-card" style="text-align: center; padding: 24px">
-            <strong
-              style="
-                color: var(--sage-600);
-                font-size: 1.1rem;
-                display: block;
-                margin-bottom: 8px;
-              "
-              >🥫 Latinhas (1kg)</strong
-            >
-            <span style="color: var(--ink-2); font-weight: 600"
-              >🔹 20 pontos</span
-            >
+            <strong style="color: var(--sage-600); font-size: 1.1rem; display: block; margin-bottom: 8px;">🥫 Latinhas (1kg)</strong>
+            <span style="color: var(--ink-2); font-weight: 600">🔹 20 pontos</span>
           </div>
           <div class="info-card" style="text-align: center; padding: 24px">
-            <strong
-              style="
-                color: var(--sage-600);
-                font-size: 1.1rem;
-                display: block;
-                margin-bottom: 8px;
-              "
-              >🍾 Vidro (1kg)</strong
-            >
-            <span style="color: var(--ink-2); font-weight: 600"
-              >🔹 6 pontos</span
-            >
+            <strong style="color: var(--sage-600); font-size: 1.1rem; display: block; margin-bottom: 8px;">🍾 Vidro (1kg)</strong>
+            <span style="color: var(--ink-2); font-weight: 600">🔹 6 pontos</span>
           </div>
           <div class="info-card" style="text-align: center; padding: 24px">
-            <strong
-              style="
-                color: var(--sage-600);
-                font-size: 1.1rem;
-                display: block;
-                margin-bottom: 8px;
-              "
-              >💻 Eletrônicos (un)</strong
-            >
-            <span style="color: var(--ink-2); font-weight: 600"
-              >🔹 25 pontos</span
-            >
+            <strong style="color: var(--sage-600); font-size: 1.1rem; display: block; margin-bottom: 8px;">💻 Eletrônicos (un)</strong>
+            <span style="color: var(--ink-2); font-weight: 600">🔹 25 pontos</span>
           </div>
           <div class="info-card" style="text-align: center; padding: 24px">
-            <strong
-              style="
-                color: var(--sage-600);
-                font-size: 1.1rem;
-                display: block;
-                margin-bottom: 8px;
-              "
-              >🪵 Madeira (1kg)</strong
-            >
-            <span style="color: var(--ink-2); font-weight: 600"
-              >🔹 5 pontos</span
-            >
+            <strong style="color: var(--sage-600); font-size: 1.1rem; display: block; margin-bottom: 8px;">🪵 Madeira (1kg)</strong>
+            <span style="color: var(--ink-2); font-weight: 600">🔹 5 pontos</span>
           </div>
           <div class="info-card" style="text-align: center; padding: 24px">
-            <strong
-              style="
-                color: var(--sage-600);
-                font-size: 1.1rem;
-                display: block;
-                margin-bottom: 8px;
-              "
-              >🛢️ Óleo (1 litro)</strong
-            >
-            <span style="color: var(--ink-2); font-weight: 600"
-              >🔹 15 pontos</span
-            >
+            <strong style="color: var(--sage-600); font-size: 1.1rem; display: block; margin-bottom: 8px;">🛢️ Óleo (1 litro)</strong>
+            <span style="color: var(--ink-2); font-weight: 600">🔹 15 pontos</span>
           </div>
         </div>
       </div>
@@ -473,26 +420,7 @@
     </div>
 
     <!-- TOAST NOTIFICATION -->
-    <div
-      id="toastMessage"
-      style="
-        position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: var(--sage-500);
-        color: white;
-        padding: 14px 28px;
-        border-radius: var(--br-pill);
-        z-index: 1000;
-        opacity: 0;
-        transition: 0.3s;
-        pointer-events: none;
-        font-weight: 600;
-        font-family: &quot;Plus Jakarta Sans&quot;, sans-serif;
-        box-shadow: var(--sh-md);
-      "
-    ></div>
+    <div id="toastMessage" class="toast-message"></div>
 
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -514,18 +442,15 @@
         const themeToggle = document.getElementById("theme-toggle");
         const themeIcon = document.getElementById("theme-icon");
 
-        const currentTheme =
-          document.documentElement.getAttribute("data-theme");
+        const currentTheme = document.documentElement.getAttribute("data-theme");
         themeIcon.textContent = currentTheme === "dark" ? "🌙" : "☀️";
 
         themeToggle.addEventListener("click", () => {
           const root = document.documentElement;
           const isDark = root.getAttribute("data-theme") === "dark";
           const newTheme = isDark ? "light" : "dark";
-
           root.setAttribute("data-theme", newTheme);
           localStorage.setItem("eco-theme", newTheme);
-
           themeIcon.style.transform = "rotate(360deg)";
           themeIcon.style.transition = "transform 0.3s ease";
           setTimeout(() => {
@@ -539,223 +464,64 @@
         const mainNav = document.getElementById("main-nav");
         if (menuToggleBtn && mainNav) {
           menuToggleBtn.addEventListener("click", () => {
-            mainNav.classList.toggle("open");
+            const isOpen = mainNav.classList.toggle("open");
+            menuToggleBtn.setAttribute("aria-expanded", isOpen);
+          });
+          // fecha ao clicar fora
+          document.addEventListener("click", (e) => {
+            if (!menuToggleBtn.contains(e.target) && !mainNav.contains(e.target)) {
+              mainNav.classList.remove("open");
+              menuToggleBtn.setAttribute("aria-expanded", "false");
+            }
           });
         }
 
         /* ── MAPA ── */
         const htmlEl = document.documentElement;
         const CATEGORIES = [
-          { key: "metal", label: "Metal", color: "#f9a825" },
-          { key: "papel", label: "Papel", color: "#66bb6a" },
-          { key: "vidro", label: "Vidro", color: "#42a5f5" },
-          { key: "plastico", label: "Plástico", color: "#ef5350" },
+          { key: "metal",       label: "Metal",       color: "#f9a825" },
+          { key: "papel",       label: "Papel",       color: "#66bb6a" },
+          { key: "vidro",       label: "Vidro",       color: "#42a5f5" },
+          { key: "plastico",    label: "Plástico",    color: "#ef5350" },
           { key: "eletronicos", label: "Eletrônicos", color: "#ab47bc" },
-          { key: "madeira", label: "Madeira", color: "#8d6e63" },
+          { key: "madeira",     label: "Madeira",     color: "#8d6e63" },
         ];
         const catByKey = (key) => CATEGORIES.find((c) => c.key === key);
 
-        // Pontos de coleta com materiais mistos no Rio de Janeiro + Costa Verde
         const POINTS = [
-          // Mangaratiba & Costa Verde
-          {
-            lat: -22.9597,
-            lng: -44.0406,
-            code: "ECO-01",
-            name: "Centro Recicla Mangaratiba",
-            cats: ["papel", "madeira"],
-            desc: "Papelão, caixotes e restos de madeira",
-          },
-          {
-            lat: -22.9245,
-            lng: -43.9538,
-            code: "ECO-02",
-            name: "EcoPonto Vila Muriqui",
-            cats: ["metal", "plastico"],
-            desc: "Latinhas, ferragens e embalagens plásticas",
-          },
-          {
-            lat: -22.9291,
-            lng: -43.886,
-            code: "ECO-03",
-            name: "Itacuruçá Plásticos",
-            cats: ["plastico", "vidro"],
-            desc: "Garrafas PET, tampinhas e potes de vidro",
-          },
-          {
-            lat: -23.0188,
-            lng: -44.2081,
-            code: "ECO-04",
-            name: "Jacareí Vidros",
-            cats: ["vidro", "metal"],
-            desc: "Potes de vidro e sucata metálica",
-          },
-
-          // Zona Central
-          {
-            lat: -22.9068,
-            lng: -43.1729,
-            code: "ECO-05",
-            name: "EcoCentro Metal",
-            cats: ["metal", "madeira"],
-            desc: "Sucata de metal e paletes de madeira",
-          },
-          {
-            lat: -22.9122,
-            lng: -43.1769,
-            code: "ECO-06",
-            name: "Vidro Lapa",
-            cats: ["vidro", "papel"],
-            desc: "Garrafas de vidro e papelão",
-          },
-
-          // Zona Sul
-          {
-            lat: -22.9519,
-            lng: -43.2105,
-            code: "ECO-07",
-            name: "EcoPapel Botafogo",
-            cats: ["papel", "madeira", "plastico"],
-            desc: "Papel, móveis quebrados e embalagens plásticas",
-          },
-          {
-            lat: -22.9711,
-            lng: -43.1823,
-            code: "ECO-08",
-            name: "TechRecicla Copacabana",
-            cats: ["eletronicos", "metal"],
-            desc: "Eletrônicos, pilhas e sucata metálica",
-          },
-          {
-            lat: -22.9836,
-            lng: -43.2044,
-            code: "ECO-09",
-            name: "Ipanema Plásticos",
-            cats: ["plastico", "vidro"],
-            desc: "PET, sacolas e frascos de vidro",
-          },
-
-          // Zona Norte
-          {
-            lat: -22.9329,
-            lng: -43.2372,
-            code: "ECO-10",
-            name: "Tijuca Sustentável",
-            cats: ["papel", "madeira"],
-            desc: "Jornais, caixas e restos de obra em madeira",
-          },
-          {
-            lat: -22.9015,
-            lng: -43.2801,
-            code: "ECO-11",
-            name: "Méier Metais",
-            cats: ["metal", "eletronicos"],
-            desc: "Latinhas, ferros e pequenos eletrônicos",
-          },
-          {
-            lat: -22.876,
-            lng: -43.3364,
-            code: "ECO-12",
-            name: "Madureira Vidros",
-            cats: ["vidro", "plastico"],
-            desc: "Cacos de vidro e plásticos diversos",
-          },
-          {
-            lat: -22.8122,
-            lng: -43.2144,
-            code: "ECO-13",
-            name: "Ilha Eco-Tech",
-            cats: ["eletronicos", "metal", "plastico"],
-            desc: "Eletroeletrônicos, metais e plásticos",
-          },
-
-          // Zona Oeste
-          {
-            lat: -23.0003,
-            lng: -43.3658,
-            code: "ECO-14",
-            name: "Barra PET Coleta",
-            cats: ["plastico", "papel"],
-            desc: "Embalagens plásticas e papelão",
-          },
-          {
-            lat: -23.0181,
-            lng: -43.4682,
-            code: "ECO-15",
-            name: "Recreio Vidros",
-            cats: ["vidro", "madeira"],
-            desc: "Vidros, potes e madeira de móveis",
-          },
-          {
-            lat: -22.8752,
-            lng: -43.465,
-            code: "ECO-16",
-            name: "Bangu Eletrônicos",
-            cats: ["eletronicos", "metal"],
-            desc: "Cabos, pilhas, baterias e sucata",
-          },
-          {
-            lat: -22.8986,
-            lng: -43.5598,
-            code: "ECO-17",
-            name: "Campo Grande Plast",
-            cats: ["plastico", "vidro"],
-            desc: "Reciclagem de plásticos e vidros",
-          },
-          {
-            lat: -22.9678,
-            lng: -43.3888,
-            code: "ECO-18",
-            name: "Jacarepaguá Papéis",
-            cats: ["papel", "madeira", "metal"],
-            desc: "Papelão comercial, madeira e ferragens",
-          },
-
-          // Niterói e Baixada
-          {
-            lat: -22.9056,
-            lng: -43.1065,
-            code: "ECO-19",
-            name: "Icaraí Metais (Niterói)",
-            cats: ["metal", "vidro"],
-            desc: "Alumínio, metais diversos e vidro",
-          },
-          {
-            lat: -22.8269,
-            lng: -43.0538,
-            code: "ECO-20",
-            name: "São Gonçalo Plásticos",
-            cats: ["plastico", "papel"],
-            desc: "PET e papelão",
-          },
-          {
-            lat: -22.7562,
-            lng: -43.4607,
-            code: "ECO-21",
-            name: "Nova Iguaçu Vidros",
-            cats: ["vidro", "metal", "madeira"],
-            desc: "Potes de vidro, sucata e madeira",
-          },
-          {
-            lat: -22.7856,
-            lng: -43.3117,
-            code: "ECO-22",
-            name: "Duque de Caxias Papel",
-            cats: ["papel", "plastico"],
-            desc: "Cooperativa de papelão e plásticos",
-          },
+          { lat: -22.9597, lng: -44.0406, code: "ECO-01", name: "Centro Recicla Mangaratiba",    cats: ["papel", "madeira"],              desc: "Papelão, caixotes e restos de madeira" },
+          { lat: -22.9245, lng: -43.9538, code: "ECO-02", name: "EcoPonto Vila Muriqui",         cats: ["metal", "plastico"],             desc: "Latinhas, ferragens e embalagens plásticas" },
+          { lat: -22.9291, lng: -43.886,  code: "ECO-03", name: "Itacuruçá Plásticos",           cats: ["plastico", "vidro"],             desc: "Garrafas PET, tampinhas e potes de vidro" },
+          { lat: -23.0188, lng: -44.2081, code: "ECO-04", name: "Jacareí Vidros",                cats: ["vidro", "metal"],                desc: "Potes de vidro e sucata metálica" },
+          { lat: -22.9068, lng: -43.1729, code: "ECO-05", name: "EcoCentro Metal",               cats: ["metal", "madeira"],              desc: "Sucata de metal e paletes de madeira" },
+          { lat: -22.9122, lng: -43.1769, code: "ECO-06", name: "Vidro Lapa",                    cats: ["vidro", "papel"],                desc: "Garrafas de vidro e papelão" },
+          { lat: -22.9519, lng: -43.2105, code: "ECO-07", name: "EcoPapel Botafogo",             cats: ["papel", "madeira", "plastico"],  desc: "Papel, móveis quebrados e embalagens plásticas" },
+          { lat: -22.9711, lng: -43.1823, code: "ECO-08", name: "TechRecicla Copacabana",        cats: ["eletronicos", "metal"],          desc: "Eletrônicos, pilhas e sucata metálica" },
+          { lat: -22.9836, lng: -43.2044, code: "ECO-09", name: "Ipanema Plásticos",             cats: ["plastico", "vidro"],             desc: "PET, sacolas e frascos de vidro" },
+          { lat: -22.9329, lng: -43.2372, code: "ECO-10", name: "Tijuca Sustentável",            cats: ["papel", "madeira"],              desc: "Jornais, caixas e restos de obra em madeira" },
+          { lat: -22.9015, lng: -43.2801, code: "ECO-11", name: "Méier Metais",                  cats: ["metal", "eletronicos"],          desc: "Latinhas, ferros e pequenos eletrônicos" },
+          { lat: -22.876,  lng: -43.3364, code: "ECO-12", name: "Madureira Vidros",              cats: ["vidro", "plastico"],             desc: "Cacos de vidro e plásticos diversos" },
+          { lat: -22.8122, lng: -43.2144, code: "ECO-13", name: "Ilha Eco-Tech",                 cats: ["eletronicos", "metal", "plastico"], desc: "Eletroeletrônicos, metais e plásticos" },
+          { lat: -23.0003, lng: -43.3658, code: "ECO-14", name: "Barra PET Coleta",              cats: ["plastico", "papel"],             desc: "Embalagens plásticas e papelão" },
+          { lat: -23.0181, lng: -43.4682, code: "ECO-15", name: "Recreio Vidros",                cats: ["vidro", "madeira"],              desc: "Vidros, potes e madeira de móveis" },
+          { lat: -22.8752, lng: -43.465,  code: "ECO-16", name: "Bangu Eletrônicos",             cats: ["eletronicos", "metal"],          desc: "Cabos, pilhas, baterias e sucata" },
+          { lat: -22.8986, lng: -43.5598, code: "ECO-17", name: "Campo Grande Plast",            cats: ["plastico", "vidro"],             desc: "Reciclagem de plásticos e vidros" },
+          { lat: -22.9678, lng: -43.3888, code: "ECO-18", name: "Jacarepaguá Papéis",            cats: ["papel", "madeira", "metal"],     desc: "Papelão comercial, madeira e ferragens" },
+          { lat: -22.9056, lng: -43.1065, code: "ECO-19", name: "Icaraí Metais (Niterói)",       cats: ["metal", "vidro"],                desc: "Alumínio, metais diversos e vidro" },
+          { lat: -22.8269, lng: -43.0538, code: "ECO-20", name: "São Gonçalo Plásticos",         cats: ["plastico", "papel"],             desc: "PET e papelão" },
+          { lat: -22.7562, lng: -43.4607, code: "ECO-21", name: "Nova Iguaçu Vidros",            cats: ["vidro", "metal", "madeira"],     desc: "Potes de vidro, sucata e madeira" },
+          { lat: -22.7856, lng: -43.3117, code: "ECO-22", name: "Duque de Caxias Papel",         cats: ["papel", "plastico"],             desc: "Cooperativa de papelão e plásticos" },
         ];
 
-        // Centralizado para englobar Mangaratiba e Rio de Janeiro
         const map = L.map("eco-map").setView([-22.9, -43.6], 9);
 
         const TILE_LIGHT = L.tileLayer(
           "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-          { attribution: "© OpenStreetMap" },
+          { attribution: "© OpenStreetMap" }
         );
         const TILE_DARK = L.tileLayer(
           "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-          { attribution: "© OpenStreetMap" },
+          { attribution: "© OpenStreetMap" }
         );
 
         function updateMapTile() {
@@ -795,7 +561,7 @@
           });
         }
 
-        /* ── MARCADORES (cada ponto pode ter vários materiais) ── */
+        /* ── MARCADORES ── */
         const markerRefs = [];
 
         POINTS.forEach((p) => {
@@ -814,32 +580,14 @@
               <p style="margin:0 0 8px; font-size:11px; letter-spacing:0.5px; color:var(--ink-3);">CÓDIGO: ${p.code}</p>
               <p style="margin:0 0 8px; font-size:12px; color:var(--ink-3);">${p.desc}</p>
               <div style="margin-bottom:12px;">${catBadges}</div>
-              <a
-                href="${gmapsUrl}"
-                target="_blank"
-                rel="noopener"
-                style="
-                  display:inline-flex;
-                  align-items:center;
-                  gap:6px;
-                  background:${accentColor};
-                  color:white;
-                  padding:7px 14px;
-                  border-radius:20px;
-                  text-decoration:none;
-                  font-size:12px;
-                  font-weight:600;
-                  transition: transform 0.2s;
-                "
-                onmouseover="this.style.transform='translateY(-2px)'"
-                onmouseout="this.style.transform='translateY(0)'"
+              <a href="${gmapsUrl}" target="_blank" rel="noopener"
+                style="display:inline-flex;align-items:center;gap:6px;background:${accentColor};color:white;padding:7px 14px;border-radius:20px;text-decoration:none;font-size:12px;font-weight:600;"
               >🗺️ Abrir Rota</a>
             </div>
           `;
 
-          const marker = L.marker([p.lat, p.lng], {
-            icon: buildIcon(p.cats),
-          }).bindPopup(popupContent, { maxWidth: 260 });
+          const marker = L.marker([p.lat, p.lng], { icon: buildIcon(p.cats) })
+            .bindPopup(popupContent, { maxWidth: 260 });
           marker.addTo(map);
           markerRefs.push({ marker, point: p });
         });
@@ -864,17 +612,16 @@
         /* ── LEGENDA / FILTRO ── */
         const legendEl = document.getElementById("map-legend");
         let visibleCats = new Set(CATEGORIES.map((c) => c.key));
-        legendEl.innerHTML =
-          "<strong style='font-family: Lora, serif; font-size: 1rem;'>🗑️ Filtro</strong><br>";
+        legendEl.innerHTML = "<strong style='font-family: Lora, serif; font-size: 1rem;'>🗑️ Filtro</strong><br>";
 
         CATEGORIES.forEach((cat) => {
           const item = document.createElement("div");
           item.style.cssText =
             "display:flex; align-items:center; gap:8px; margin-top:8px; cursor:pointer; font-size: 0.9rem; font-weight: 500; color: var(--ink-2); transition: opacity 0.2s;";
           item.innerHTML = `
-        <span style="background:${cat.color}; width:14px; height:14px; border-radius:50%; display:inline-block;"></span>
-        ${cat.label}
-      `;
+            <span style="background:${cat.color}; width:14px; height:14px; border-radius:50%; display:inline-block; flex-shrink:0;"></span>
+            ${cat.label}
+          `;
           item.onclick = () => {
             if (visibleCats.has(cat.key)) {
               visibleCats.delete(cat.key);
@@ -899,8 +646,8 @@
           const a =
             Math.sin(dLat / 2) ** 2 +
             Math.cos((lat1 * Math.PI) / 180) *
-              Math.cos((lat2 * Math.PI) / 180) *
-              Math.sin(dLon / 2) ** 2;
+            Math.cos((lat2 * Math.PI) / 180) *
+            Math.sin(dLon / 2) ** 2;
           return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         }
 
@@ -921,12 +668,8 @@
               let nearestDist = Infinity;
               POINTS.forEach((p) => {
                 const d = haversineKm(latitude, longitude, p.lat, p.lng);
-                if (d < nearestDist) {
-                  nearestDist = d;
-                  nearest = p;
-                }
+                if (d < nearestDist) { nearestDist = d; nearest = p; }
               });
-
               if (userMarker) map.removeLayer(userMarker);
               userMarker = L.marker([latitude, longitude], {
                 icon: L.divIcon({
@@ -934,10 +677,7 @@
                   iconSize: [16, 16],
                   className: "",
                 }),
-              })
-                .addTo(map)
-                .bindPopup("Você está aqui");
-
+              }).addTo(map).bindPopup("Você está aqui");
               renderBalloon(`
                 <div class="balloon-text">
                   <strong>${nearestDist.toFixed(1)} km</strong>
@@ -945,9 +685,7 @@
                 </div>
                 <button class="balloon-refresh" id="refreshLocation" aria-label="Atualizar localização">🔄</button>
               `);
-              document
-                .getElementById("refreshLocation")
-                .addEventListener("click", locateUser);
+              document.getElementById("refreshLocation").addEventListener("click", locateUser);
             },
             () => {
               renderBalloon(`
@@ -956,11 +694,9 @@
                 </div>
                 <button class="balloon-refresh is-text" id="retryLocation">Tentar de novo</button>
               `);
-              document
-                .getElementById("retryLocation")
-                .addEventListener("click", locateUser);
+              document.getElementById("retryLocation").addEventListener("click", locateUser);
             },
-            { enableHighAccuracy: true, timeout: 8000 },
+            { enableHighAccuracy: true, timeout: 8000 }
           );
         }
         locateUser();
@@ -980,16 +716,11 @@
             goToPoint(p);
             showMessage(`📍 Ponto encontrado: ${p.name} (${p.code})`);
           } else {
-            showMessage(
-              "❌ Código não encontrado. Verifique e tente novamente.",
-              true,
-            );
+            showMessage("❌ Código não encontrado. Verifique e tente novamente.", true);
           }
         }
         searchCodeBtn.addEventListener("click", runCodeSearch);
-        codeInput.addEventListener("keydown", (e) => {
-          if (e.key === "Enter") runCodeSearch();
-        });
+        codeInput.addEventListener("keydown", (e) => { if (e.key === "Enter") runCodeSearch(); });
 
         /* ── ESCANEAMENTO DE CÓDIGO (QR) ── */
         const scanModal = document.getElementById("scanModal");
@@ -1002,8 +733,7 @@
         let scanLoopId = null;
 
         if (!supportsBarcodeDetector) {
-          scanCodeBtn.title =
-            "Leitura automática não suportada neste navegador — digite o código manualmente";
+          scanCodeBtn.title = "Leitura automática não suportada neste navegador — digite o código manualmente";
         }
 
         function closeScanModal() {
@@ -1019,19 +749,15 @@
         async function openScanModal() {
           scanModal.hidden = false;
           if (!supportsBarcodeDetector) {
-            scanStatus.textContent =
-              "Seu navegador não suporta leitura automática. Digite o código no campo de busca.";
+            scanStatus.textContent = "Seu navegador não suporta leitura automática. Digite o código no campo de busca.";
             return;
           }
           scanStatus.textContent = "Aponte a câmera para o QR code do Ecoponto";
           try {
-            scanStream = await navigator.mediaDevices.getUserMedia({
-              video: { facingMode: "environment" },
-            });
+            scanStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
             scanVideo.srcObject = scanStream;
             await scanVideo.play();
             const detector = new BarcodeDetector({ formats: ["qr_code"] });
-
             const loop = async () => {
               if (!scanStream) return;
               try {
@@ -1044,35 +770,51 @@
                     goToPoint(p);
                     showMessage(`📍 Ponto encontrado: ${p.name} (${p.code})`);
                   } else {
-                    showMessage(
-                      "❌ Código lido não corresponde a nenhum ponto.",
-                      true,
-                    );
+                    showMessage("❌ Código lido não corresponde a nenhum ponto.", true);
                   }
                   return;
                 }
-              } catch (err) {
-                /* ignora erros de detecção por quadro */
-              }
+              } catch (err) { /* ignora erros de detecção por quadro */ }
               scanLoopId = requestAnimationFrame(loop);
             };
             scanLoopId = requestAnimationFrame(loop);
           } catch (err) {
-            scanStatus.textContent =
-              "Não foi possível acessar a câmera. Digite o código manualmente.";
+            scanStatus.textContent = "Não foi possível acessar a câmera. Digite o código manualmente.";
           }
         }
 
         scanCodeBtn.addEventListener("click", openScanModal);
         closeScanModalBtn.addEventListener("click", closeScanModal);
-        scanModal.addEventListener("click", (e) => {
-          if (e.target === scanModal) closeScanModal();
+        scanModal.addEventListener("click", (e) => { if (e.target === scanModal) closeScanModal(); });
+
+        /* ── TELA CHEIA DO MAPA ── */
+        const mapWrapper = document.getElementById("map-wrapper");
+        const fullscreenBtn = document.getElementById("fullscreen-btn");
+        const fsIconExpand = document.getElementById("fs-icon-expand");
+        const fsIconCompress = document.getElementById("fs-icon-compress");
+        let isFullscreen = false;
+
+        function toggleFullscreen() {
+          isFullscreen = !isFullscreen;
+          mapWrapper.classList.toggle("map-fullscreen", isFullscreen);
+          document.body.classList.toggle("map-fullscreen-active", isFullscreen);
+          fsIconExpand.style.display = isFullscreen ? "none" : "";
+          fsIconCompress.style.display = isFullscreen ? "" : "none";
+          fullscreenBtn.setAttribute("aria-label", isFullscreen ? "Sair da tela cheia" : "Expandir mapa em tela cheia");
+          fullscreenBtn.setAttribute("title", isFullscreen ? "Sair da tela cheia" : "Tela cheia");
+          // Força o Leaflet a recalcular o tamanho após a transição
+          setTimeout(() => map.invalidateSize(), 320);
+        }
+
+        fullscreenBtn.addEventListener("click", toggleFullscreen);
+
+        // ESC fecha tela cheia
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && isFullscreen) toggleFullscreen();
         });
 
         /* ── SISTEMA DE PONTOS ── */
-        let userPoints = parseInt(
-          localStorage.getItem("ecotech_points") || "0",
-        );
+        let userPoints = parseInt(localStorage.getItem("ecotech_points") || "0");
         const pointsSpan = document.getElementById("userPoints");
         const simulateBtn = document.getElementById("simulateDisposal");
         const toast = document.getElementById("toastMessage");
@@ -1080,12 +822,8 @@
         function showMessage(msg, isError = false) {
           toast.textContent = msg;
           toast.style.background = isError ? "#d32f2f" : "var(--sage-500)";
-          toast.style.opacity = "1";
-          toast.style.transform = "translate(-50%, -10px)";
-          setTimeout(() => {
-            toast.style.opacity = "0";
-            toast.style.transform = "translate(-50%, 0)";
-          }, 2500);
+          toast.classList.add("visible");
+          setTimeout(() => toast.classList.remove("visible"), 2500);
         }
 
         function updatePointsUI() {
@@ -1113,10 +851,7 @@
               updatePointsUI();
               showMessage(`🎉 Parabéns! Você resgatou: ${name}!`);
             } else {
-              showMessage(
-                `❌ Pontos insuficientes para ${name}. Recicle mais!`,
-                true,
-              );
+              showMessage(`❌ Pontos insuficientes para ${name}. Recicle mais!`, true);
             }
           });
         });

@@ -337,6 +337,22 @@
           }, 150);
         });
 
+        /* ── MENU ── */
+        const menuToggle = document.getElementById("menu-toggle");
+        const mainNav = document.getElementById("main-nav");
+        menuToggle.addEventListener("click", () => {
+          const open = mainNav.classList.toggle("open");
+          menuToggle.setAttribute("aria-expanded", String(open));
+          menuToggle.textContent = open ? "✕" : "☰";
+        });
+        mainNav.querySelectorAll("a").forEach((a) =>
+          a.addEventListener("click", () => {
+            mainNav.classList.remove("open");
+            menuToggle.setAttribute("aria-expanded", "false");
+            menuToggle.textContent = "☰";
+          }),
+        );
+
         /* ── BOTTOM SHEET ── */
         const bottomSheet = document.getElementById("bottomSheet");
         const sheetOverlay = document.getElementById("sheetOverlay");

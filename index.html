@@ -610,7 +610,6 @@
         );
         statNums.forEach((el) => statObs.observe(el));
 
-        /* ── FAQ ── */
         document.querySelectorAll(".faq-q").forEach((q) => {
           const activate = () => {
             const item = q.parentElement;
@@ -633,7 +632,6 @@
           });
         });
 
-        /* ── FORM ── */
         document
           .getElementById("bannerForm")
           .addEventListener("submit", function (e) {
@@ -644,7 +642,6 @@
                 "cadastro.html?email=" + encodeURIComponent(email);
           });
 
-        /* ── BOTTOM SHEET ── */
         const bottomSheet = document.getElementById("bottomSheet");
         const sheetOverlay = document.getElementById("sheetOverlay");
         const sheetTitle = document.getElementById("sheetTitle");
@@ -669,10 +666,7 @@
           if (e.key === "Escape") closeBS();
         });
 
-        /* ── MAPA SINCRONIZADO COM COLETA.HTML ── */
         const htmlEl = document.documentElement;
-
-        // Categorias ajustadas (iguais ao da página Coleta)
         const CATEGORIES = [
           { key: "metal", label: "Metal", color: "#f9a825" },
           { key: "papel", label: "Papel", color: "#66bb6a" },
@@ -681,7 +675,6 @@
           { key: "eletronicos", label: "Eletrônicos", color: "#ab47bc" },
         ];
 
-        // Mapeamento abrangente de pontos no Rio de Janeiro + Mangaratiba
         const POINTS = [
           // Mangaratiba & Costa Verde
           {
