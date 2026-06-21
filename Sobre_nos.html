@@ -87,7 +87,7 @@
           <button
             class="card"
             data-title="🌱 Uma breve história sobre a EcoTech"
-            data-content="EcoTech é uma empresa criada em 2026, por 9 sócios... onde cada fundador da empresa vem de áreas ambientais, os fundadores buscaram a criação dessa empresa com o intuito de desenvolver matéria prima por meio de reciclagem."
+            data-content="EcoTech é uma projeto de faculdade criado em 2026, por um grupo formado por 10 alunos da turma de ADS da faculdade UNISUAM de Campo Grande. Tudo começou com a ideia de criar uma site para incentivar a população a reciclar. Sendo o intermeio entre quem recicla com a pessoa, empresa ou instituição que esteja coletando os materiais."
           >
             <h2>🌱 A EcoTech</h2>
             <p>Conheça a nossa trajetória e origens no mercado.</p>
@@ -96,7 +96,7 @@
           <button
             class="card"
             data-title="♻️ Nossa Missão"
-            data-content="Nossa missão é pegar produtos que degradam a natureza, e transformá-los em matéria de baixo custo, reduzindo a extração da matéria direto da natureza."
+            data-content="Nossa missão é pegar produtos que degradam a natureza, e transformá-los em matéria de baixo custo, reduzindo a extração da matéria direto da natureza. Assim, melhorando"
           >
             <h2>♻️ Missão</h2>
             <p>Nosso propósito fundamental e impacto ecológico.</p>
@@ -292,6 +292,9 @@
         linkDocumento1: "#",
         linkDocumento2: "#",
         linkDocumento3: "#",
+        nomeArquivoDocumento1: "diretrizes-sustentabilidade-inclusao.txt",
+        nomeArquivoDocumento2: "acordo-conduta-ambiental.txt",
+        nomeArquivoDocumento3: "estatuto-governanca-verde.txt",
         porcentagemEficacia: 98,
         totalProjetos: 45,
         toneladasRecicladas: 1500,
@@ -405,12 +408,40 @@
           CONFIG_ECOTECH.descricaoBanner;
 
         // Injeção de links nos documentos
-        document.getElementById("doc-link-1").href =
-          CONFIG_ECOTECH.linkDocumento1;
-        document.getElementById("doc-link-2").href =
-          CONFIG_ECOTECH.linkDocumento2;
-        document.getElementById("doc-link-3").href =
-          CONFIG_ECOTECH.linkDocumento3;
+        function configurarDownloadTxt(idLink, nomeArquivo) {
+          const link = document.getElementById(idLink);
+          if (!link) return;
+
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+
+          const conteudo = ""; // conteúdo em branco por enquanto
+          const blob = new Blob([conteudo], { type: "text/plain" });
+          const url = URL.createObjectURL(blob);
+
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = nomeArquivo;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+
+          URL.revokeObjectURL(url);
+          });
+        }
+
+configurarDownloadTxt(
+  "doc-link-1",
+  CONFIG_ECOTECH.nomeArquivoDocumento1,
+);
+configurarDownloadTxt(
+  "doc-link-2",
+  CONFIG_ECOTECH.nomeArquivoDocumento2,
+);
+configurarDownloadTxt(
+  "doc-link-3",
+  CONFIG_ECOTECH.nomeArquivoDocumento3,
+);
 
         const progressBar = document.getElementById("progressBar");
         const percentageNumber = document.getElementById("percentageNumber");
