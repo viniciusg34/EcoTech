@@ -96,7 +96,7 @@
           <button
             class="card"
             data-title="♻️ Nossa Missão"
-            data-content="Nossa missão é pegar produtos que degradam a natureza, e transformá-los em matéria de baixo custo, reduzindo a extração da matéria direto da natureza. Assim, melhorando"
+            data-content="Nossa missão é pegar produtos que degradam a natureza, e transformá-los em matéria de baixo custo, reduzindo a extração da matéria direto da natureza. Assim, reduzindo a quantidade de materias não degradaveis na flora da nossa nação."
           >
             <h2>♻️ Missão</h2>
             <p>Nosso propósito fundamental e impacto ecológico.</p>
@@ -105,7 +105,7 @@
           <button
             class="card"
             data-title="🎯 Nossos Valores"
-            data-content="• A empresa prega o respeito com seus colaboradores[QUEBRA]• Respeito com os animais e a natureza de forma geral"
+            data-content="• A empresa prega o respeito com seus colaboradores[QUEBRA]• Respeito com os animais e a natureza de forma geral[QUEBRA]• Excelência com Integridade: Buscamos alta performance com transparência e ética.[QUEBRA]• Inovação Responsável: Progresso aliado à sustentabilidade e bem-estar.[QUEBRA]• Colaboração e União: Valorizamos o trabalho em equipe para o sucesso coletivo."
           >
             <h2>🎯 Valores</h2>
             <p>Os pilares éticos que guiam nossas ações.</p>
@@ -283,18 +283,11 @@
     <script>
       "use strict";
 
-      // 1. Configurações da página definidas antes da execução
       const CONFIG_ECOTECH = {
         badgeTexto: "Inovação Verde",
         tituloBanner: "Construindo um amanhã sustentável",
         descricaoBanner:
           "Soluções ecológicas para a indústria moderna através da reciclagem e tecnologia de ponta.",
-        linkDocumento1: "#",
-        linkDocumento2: "#",
-        linkDocumento3: "#",
-        nomeArquivoDocumento1: "diretrizes-sustentabilidade-inclusao.txt",
-        nomeArquivoDocumento2: "acordo-conduta-ambiental.txt",
-        nomeArquivoDocumento3: "estatuto-governanca-verde.txt",
         porcentagemEficacia: 98,
         totalProjetos: 45,
         toneladasRecicladas: 1500,
@@ -303,9 +296,7 @@
         hectaresProtegidos: 350,
       };
 
-      // 2. Todos os scripts encapsulados em um único evento de DOMContentLoaded
       document.addEventListener("DOMContentLoaded", () => {
-        /* ── INICIALIZAÇÃO TEMA ── */
         (function () {
           const saved = localStorage.getItem("eco-theme");
           const pref =
@@ -316,10 +307,8 @@
           document.documentElement.setAttribute("data-theme", pref);
         })();
 
-        /* ── DARK MODE TOGGLE ── */
         const themeToggle = document.getElementById("theme-toggle");
         const themeIcon = document.getElementById("theme-icon");
-
         const currentTheme =
           document.documentElement.getAttribute("data-theme");
         themeIcon.textContent = currentTheme === "dark" ? "🌙" : "☀️";
@@ -340,7 +329,6 @@
           }, 150);
         });
 
-        /* ── MENU ── */
         const menuToggle = document.getElementById("menu-toggle");
         const mainNav = document.getElementById("main-nav");
         menuToggle.addEventListener("click", () => {
@@ -356,7 +344,6 @@
           }),
         );
 
-        /* ── BOTTOM SHEET ── */
         const bottomSheet = document.getElementById("bottomSheet");
         const sheetOverlay = document.getElementById("sheetOverlay");
         const sheetTitle = document.getElementById("sheetTitle");
@@ -398,8 +385,6 @@
         if (sheetOverlay)
           sheetOverlay.addEventListener("click", closeBottomSheet);
 
-        /* ── RENDERIZAÇÃO E ANIMAÇÃO DOS DADOS ── */
-        // Injeção do Hero
         document.getElementById("hero-badge").textContent =
           CONFIG_ECOTECH.badgeTexto;
         document.getElementById("hero-title").textContent =
@@ -407,52 +392,15 @@
         document.getElementById("hero-desc").textContent =
           CONFIG_ECOTECH.descricaoBanner;
 
-        // Injeção de links nos documentos
-        function configurarDownloadTxt(idLink, nomeArquivo) {
-          const link = document.getElementById(idLink);
-          if (!link) return;
-
-        link.addEventListener("click", (event) => {
-          event.preventDefault();
-
-          const conteudo = ""; // conteúdo em branco por enquanto
-          const blob = new Blob([conteudo], { type: "text/plain" });
-          const url = URL.createObjectURL(blob);
-
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = nomeArquivo;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-
-          URL.revokeObjectURL(url);
-          });
-        }
-
-configurarDownloadTxt(
-  "doc-link-1",
-  CONFIG_ECOTECH.nomeArquivoDocumento1,
-);
-configurarDownloadTxt(
-  "doc-link-2",
-  CONFIG_ECOTECH.nomeArquivoDocumento2,
-);
-configurarDownloadTxt(
-  "doc-link-3",
-  CONFIG_ECOTECH.nomeArquivoDocumento3,
-);
+        document.getElementById("doc-link-1").href = "assets/EcoTech_Diretrizes_Sustentabilidade_Inclusao.pdf";
+        document.getElementById("doc-link-2").href = "assets/EcoTech_Acordo_Conduta_Ambiental.pdf";
+        document.getElementById("doc-link-3").href = "assets/EcoTech_Estatuto_Governanca_Verde.pdf";
 
         const progressBar = document.getElementById("progressBar");
-        const percentageNumber = document.getElementById("percentageNumber");
-        const cardCounter = document.getElementById("hero-projects");
-
-        // Dispara barra verde
         setTimeout(() => {
           progressBar.style.width = `${CONFIG_ECOTECH.porcentagemEficacia}%`;
         }, 400);
 
-        // Função genérica para animar contadores inteiros
         function animarContador(
           elementoId,
           valorAlvo,
@@ -474,7 +422,6 @@ configurarDownloadTxt(
           }, 20);
         }
 
-        // Iniciar animações simultâneas
         animarContador("percentageNumber", CONFIG_ECOTECH.porcentagemEficacia);
         animarContador(
           "hero-projects",
@@ -496,7 +443,6 @@ configurarDownloadTxt(
           "+",
         );
 
-        /* ── NEWSLETTER ── */
         document
           .getElementById("newsletterForm")
           .addEventListener("submit", (e) => {
