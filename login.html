@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="assets/fivecom.png" type="image/x-icon" />
   <title>Login — EcoTech</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./css/login.css" />
+  <script src="./auth.js"></script>
 </head>
 
 <body>
@@ -96,7 +98,7 @@
     }
 
     function handleLogin() {
-      const email = document.getElementById("email").value.trim();
+      const email = document.getElementById("email").value.trim().toLowerCase();
       const password = document.getElementById("password").value;
 
       // Validação se os campos estão preenchidos
@@ -111,13 +113,33 @@
         return;
       }
 
-      // Exibe a mensagem de carregamento no toast
-      showToast("Entrando...");
+      // Verifica as credenciais no localStorage
+      // 1) Primeiro tenta como conta de pessoa física
+      const usuario = autenticarUsuario(email, password);
+      if (usuario) {
+        criarSessao("usuario", { nome: usuario.nome, email: usuario.email });
+        showToast("Entrando...");
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1000);
+        return;
+      }
 
-      // Aguarda 1 segundo para dar um efeito realista e redireciona para a página principal (index.html)
-      setTimeout(() => {
-        window.location.href = "index.html";
-      }, 1000);
+      // 2) Se não encontrou, tenta como conta de empresa
+      const empresa = autenticarEmpresa(email, password);
+      if (empresa) {
+        criarSessao("empresa", {
+          nomeEmpresa: empresa.nomeEmpresa,
+          email: empresa.email,
+        });
+        showToast("Entrando...");
+        setTimeout(() => {
+          window.location.href = "empresa.html";
+        }, 1000);
+        return;
+      }
+
+      showToast("E-mail ou senha incorretos.");
     }
   </script>
 </body>

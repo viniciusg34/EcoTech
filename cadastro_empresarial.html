@@ -11,6 +11,7 @@
     />
     <link rel="stylesheet" href="css/cadastro_empresarial.css" />
     <title>Cadastro Empresarial — EcoTech</title>
+    <script src="./auth.js"></script>
 
     <script>
       (function () {
@@ -37,11 +38,7 @@
           </div>
 
           <img
-<<<<<<< HEAD
-            src="assets/imagem empresarial.png"
-=======
             src="assets/predio-sustentavel.jpg"
->>>>>>> main
             alt="Fachada corporativa sustentável EcoTech"
             class="building-img"
           />
@@ -166,6 +163,8 @@
       </div>
     </main>
 
+    <div class="toast" id="toast"></div>
+
     <script>
       "use strict";
 
@@ -233,13 +232,96 @@
       }
 
       /* 5. INTERCEPTAÇÃO E VALIDAÇÃO DO FORMULÁRIO */
+      function showToast(msg) {
+        const toast = document.getElementById("toast");
+        toast.textContent = msg;
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 3000);
+      }
+
+      function validarCNPJ(cnpj) {
+        cnpj = cnpj.replace(/\D/g, "");
+        return cnpj.length === 14;
+      }
+
+      function senhaSegura(senha) {
+        return (
+          senha.length >= 8 &&
+          /[A-Z]/.test(senha) &&
+          /[a-z]/.test(senha) &&
+          /\d/.test(senha)
+        );
+      }
+
       document
         .getElementById("cadastroEmpresarialForm")
         .addEventListener("submit", (e) => {
           e.preventDefault();
-          alert(
+
+          const cnpj = cnpjInput.value.trim();
+          const nomeEmpresa = document
+            .getElementById("nome_empresa")
+            .value.trim();
+          const endereco = document.getElementById("endereco").value.trim();
+          const razaoSocial = document
+            .getElementById("razao_social")
+            .value.trim();
+          const email = document
+            .getElementById("email")
+            .value.trim()
+            .toLowerCase();
+          const senha = passwordInput.value;
+
+          if (
+            !cnpj ||
+            !nomeEmpresa ||
+            !endereco ||
+            !razaoSocial ||
+            !email ||
+            !senha
+          ) {
+            showToast("Preencha todos os campos.");
+            return;
+          }
+
+          if (!validarCNPJ(cnpj)) {
+            showToast("CNPJ inválido. Use o formato 00.000.000/0000-00.");
+            return;
+          }
+
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            showToast("E-mail inválido.");
+            return;
+          }
+
+          if (!senhaSegura(senha)) {
+            showToast(
+              "A senha precisa ter 8+ caracteres, maiúscula, minúscula e número.",
+            );
+            return;
+          }
+
+          if (emailEmpresaExiste(email)) {
+            showToast("Este e-mail já está cadastrado.");
+            return;
+          }
+
+          cadastrarEmpresa({
+            cnpj,
+            nomeEmpresa,
+            endereco,
+            razaoSocial,
+            email,
+            senha,
+          });
+
+          showToast(
             "Cadastro enviado com sucesso! Bem-vindo à rede de parceiros sustentáveis EcoTech.",
           );
+
+          setTimeout(() => {
+            window.location.href = "login.html";
+          }, 1800);
         });
     </script>
   </body>
