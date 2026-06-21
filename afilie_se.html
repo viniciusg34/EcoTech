@@ -116,7 +116,6 @@
         <div class="grade-beneficios">
           <div class="card-beneficio">
             <h4>ESG NA PRÁTICA</h4>
-            <p>Fortaleça suas iniciativas ambientais.</p>
             <p>Fortaleça suas initiatives ambientais.</p>
           </div>
 
@@ -257,5 +256,21 @@
         }, 150);
       });
     });
+
+    /* ── MENU ── */
+    const menuToggle = document.getElementById("menu-toggle");
+    const mainNav = document.getElementById("main-nav");
+    menuToggle.addEventListener("click", () => {
+      const open = mainNav.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(open));
+      menuToggle.textContent = open ? "✕" : "☰";
+    });
+    mainNav.querySelectorAll("a").forEach((a) =>
+      a.addEventListener("click", () => {
+        mainNav.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.textContent = "☰";
+      }),
+    );
   </script>
 </html>

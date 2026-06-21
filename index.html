@@ -610,7 +610,10 @@
         );
         statNums.forEach((el) => statObs.observe(el));
 
+<<<<<<< HEAD
         /* ── FAQ ── */
+=======
+>>>>>>> main
         document.querySelectorAll(".faq-q").forEach((q) => {
           const activate = () => {
             const item = q.parentElement;
@@ -633,7 +636,10 @@
           });
         });
 
+<<<<<<< HEAD
         /* ── FORM ── */
+=======
+>>>>>>> main
         document
           .getElementById("bannerForm")
           .addEventListener("submit", function (e) {
@@ -644,7 +650,10 @@
                 "cadastro.html?email=" + encodeURIComponent(email);
           });
 
+<<<<<<< HEAD
         /* ── BOTTOM SHEET ── */
+=======
+>>>>>>> main
         const bottomSheet = document.getElementById("bottomSheet");
         const sheetOverlay = document.getElementById("sheetOverlay");
         const sheetTitle = document.getElementById("sheetTitle");
@@ -669,6 +678,7 @@
           if (e.key === "Escape") closeBS();
         });
 
+<<<<<<< HEAD
         /* ── MAPA SINCRONIZADO COM COLETA.HTML ── */
         const htmlEl = document.documentElement;
 
@@ -941,6 +951,276 @@
         legendEl.innerHTML =
           "<strong style='font-size: 1rem; color: var(--ink);'>🗑️ Filtro</strong><br>";
 
+=======
+        const htmlEl = document.documentElement;
+        const CATEGORIES = [
+          { key: "metal", label: "Metal", color: "#f9a825" },
+          { key: "papel", label: "Papel", color: "#66bb6a" },
+          { key: "vidro", label: "Vidro", color: "#42a5f5" },
+          { key: "plastico", label: "Plástico", color: "#ef5350" },
+          { key: "eletronicos", label: "Eletrônicos", color: "#ab47bc" },
+        ];
+
+        const POINTS = [
+          // Mangaratiba & Costa Verde
+          {
+            lat: -22.9597,
+            lng: -44.0406,
+            name: "Centro Recicla Mangaratiba",
+            cat: "papel",
+            desc: "Papelão e embalagens no centro",
+          },
+          {
+            lat: -22.9245,
+            lng: -43.9538,
+            name: "EcoPonto Vila Muriqui",
+            cat: "metal",
+            desc: "Latinhas e metais diversos",
+          },
+          {
+            lat: -22.9291,
+            lng: -43.886,
+            name: "Itacuruçá Plásticos",
+            cat: "plastico",
+            desc: "Garrafas PET e tampinhas",
+          },
+          {
+            lat: -23.0188,
+            lng: -44.2081,
+            name: "Jacareí Vidros",
+            cat: "vidro",
+            desc: "Potes e garrafas de vidro",
+          },
+
+          // Zona Central
+          {
+            lat: -22.9068,
+            lng: -43.1729,
+            name: "EcoCentro Metal",
+            cat: "metal",
+            desc: "Coleta de metais e sucata",
+          },
+          {
+            lat: -22.9122,
+            lng: -43.1769,
+            name: "Vidro Lapa",
+            cat: "vidro",
+            desc: "Garrafas e frascos de vidro",
+          },
+
+          // Zona Sul
+          {
+            lat: -22.9519,
+            lng: -43.2105,
+            name: "EcoPapel Botafogo",
+            cat: "papel",
+            desc: "Papel, papelão e revistas",
+          },
+          {
+            lat: -22.9711,
+            lng: -43.1823,
+            name: "TechRecicla Copacabana",
+            cat: "eletronicos",
+            desc: "Eletrônicos e pilhas",
+          },
+          {
+            lat: -22.9836,
+            lng: -43.2044,
+            name: "Ipanema Plásticos",
+            cat: "plastico",
+            desc: "Ponto de coleta PET",
+          },
+
+          // Zona Norte
+          {
+            lat: -22.9329,
+            lng: -43.2372,
+            name: "Tijuca Sustentável",
+            cat: "papel",
+            desc: "Jornais e caixas",
+          },
+          {
+            lat: -22.9015,
+            lng: -43.2801,
+            name: "Méier Metais",
+            cat: "metal",
+            desc: "Latinhas e ferros",
+          },
+          {
+            lat: -22.876,
+            lng: -43.3364,
+            name: "Madureira Vidros",
+            cat: "vidro",
+            desc: "Cacos e garrafas",
+          },
+          {
+            lat: -22.8122,
+            lng: -43.2144,
+            name: "Ilha Eco-Tech",
+            cat: "eletronicos",
+            desc: "Descarte de eletroeletrônicos",
+          },
+
+          // Zona Oeste
+          {
+            lat: -23.0003,
+            lng: -43.3658,
+            name: "Barra PET Coleta",
+            cat: "plastico",
+            desc: "Embalagens plásticas diversas",
+          },
+          {
+            lat: -23.0181,
+            lng: -43.4682,
+            name: "Recreio Vidros",
+            cat: "vidro",
+            desc: "Vidros e potes",
+          },
+          {
+            lat: -22.8752,
+            lng: -43.465,
+            name: "Bangu Eletrônicos",
+            cat: "eletronicos",
+            desc: "Cabos, pilhas e baterias",
+          },
+          {
+            lat: -22.8986,
+            lng: -43.5598,
+            name: "Campo Grande Plast",
+            cat: "plastico",
+            desc: "Reciclagem de plásticos",
+          },
+          {
+            lat: -22.9678,
+            lng: -43.3888,
+            name: "Jacarepaguá Papéis",
+            cat: "papel",
+            desc: "Papelão comercial",
+          },
+
+          // Niterói e Baixada
+          {
+            lat: -22.9056,
+            lng: -43.1065,
+            name: "Icaraí Metais (Niterói)",
+            cat: "metal",
+            desc: "Alumínio e metais diversos",
+          },
+          {
+            lat: -22.8269,
+            lng: -43.0538,
+            name: "São Gonçalo Plásticos",
+            cat: "plastico",
+            desc: "Posto de coleta de PET",
+          },
+          {
+            lat: -22.7562,
+            lng: -43.4607,
+            name: "Nova Iguaçu Vidros",
+            cat: "vidro",
+            desc: "Potes e embalagens",
+          },
+          {
+            lat: -22.7856,
+            lng: -43.3117,
+            name: "Duque de Caxias Papel",
+            cat: "papel",
+            desc: "Cooperativa de papelão",
+          },
+        ];
+
+        // Centralizado para englobar Mangaratiba e Rio de Janeiro
+        const map = L.map("eco-map").setView([-22.9, -43.6], 9);
+
+        const TILE_LIGHT = L.tileLayer(
+          "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+          { attribution: "© OpenStreetMap" },
+        );
+        const TILE_DARK = L.tileLayer(
+          "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+          { attribution: "© OpenStreetMap" },
+        );
+
+        function updateMapTile() {
+          if (htmlEl.getAttribute("data-theme") === "dark") {
+            map.removeLayer(TILE_LIGHT);
+            TILE_DARK.addTo(map);
+          } else {
+            map.removeLayer(TILE_DARK);
+            TILE_LIGHT.addTo(map);
+          }
+        }
+        updateMapTile();
+
+        new MutationObserver(updateMapTile).observe(htmlEl, {
+          attributes: true,
+          attributeFilter: ["data-theme"],
+        });
+
+        /* ── MARCADORES COM POPUP ── */
+        const layerGroups = {};
+        CATEGORIES.forEach((c) => {
+          layerGroups[c.key] = L.layerGroup().addTo(map);
+        });
+
+        CATEGORIES.forEach((cat) => {
+          const color = cat.color;
+          const icon = L.divIcon({
+            html: `<div style="
+          background:${color};
+          width:28px; height:28px;
+          border-radius:50%;
+          display:flex; align-items:center; justify-content:center;
+          color:white; font-weight:bold;
+          border:2px solid white;
+          box-shadow:0 2px 6px rgba(0,0,0,0.3);
+        ">${cat.label[0]}</div>`,
+            iconSize: [28, 28],
+            className: "",
+          });
+
+          POINTS.filter((p) => p.cat === cat.key).forEach((p) => {
+            const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}`;
+            const popupContent = `
+          <div style="min-width:180px; font-family:'Plus Jakarta Sans', 'Poppins', sans-serif;">
+            <p style="margin:0 0 4px; font-size:14px; font-weight:700; color:var(--ink);">${p.name}</p>
+            <p style="margin:0 0 12px; font-size:12px; color:var(--ink-3);">${p.desc}</p>
+            <a
+              href="${gmapsUrl}"
+              target="_blank"
+              rel="noopener"
+              style="
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                background:${color};
+                color:white;
+                padding:7px 14px;
+                border-radius:20px;
+                text-decoration:none;
+                font-size:12px;
+                font-weight:600;
+                transition: transform 0.2s;
+              "
+              onmouseover="this.style.transform='translateY(-2px)'"
+              onmouseout="this.style.transform='translateY(0)'"
+            >🗺️ Abrir Rota</a>
+          </div>
+        `;
+
+            L.marker([p.lat, p.lng], { icon })
+              .bindPopup(popupContent, { maxWidth: 240 })
+              .addTo(layerGroups[cat.key]);
+          });
+        });
+
+        /* ── LEGENDA / FILTRO ── */
+        const legendEl = document.getElementById("map-legend");
+        let visibleCats = new Set(CATEGORIES.map((c) => c.key));
+        legendEl.innerHTML =
+          "<strong style='font-size: 1rem; color: var(--ink);'>🗑️ Filtro</strong><br>";
+
+>>>>>>> main
         CATEGORIES.forEach((cat) => {
           const item = document.createElement("div");
           item.style.cssText =
