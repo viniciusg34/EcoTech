@@ -8,7 +8,6 @@
     />
     <title>EcoTech | Coleta Inteligente de Recicláveis</title>
 
-    <!-- Leaflet mapa CSS -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -62,32 +61,6 @@
     </header>
 
     <main>
-      <!-- HERO -->
-      <section class="hero-coleta">
-        <h1>Coleta Inteligente</h1>
-        <p>
-          Transforme resíduos em recursos. Ganhe pontos, troque por brindes e
-          faça parte da mudança sustentável no Rio de Janeiro!
-        </p>
-      </section>
-
-      <!-- STATS -->
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-number">45</div>
-          <div class="stat-label">Toneladas recicladas no RJ</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">22</div>
-          <div class="stat-label">Pontos de coleta ativos</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">1.2k</div>
-          <div class="stat-label">Usuários ativos</div>
-        </div>
-      </div>
-
-      <!-- GUIA DE COLETA -->
       <div class="content-section">
         <div class="section-header">
           <h2>📋 Guia Completo de Coleta Seletiva</h2>
@@ -181,7 +154,6 @@
         </div>
       </div>
 
-      <!-- MAPA -->
       <div class="map-section">
         <div class="map-container">
           <div class="section-header">
@@ -251,22 +223,6 @@
           </button>
         </div>
 
-          <!-- BUSCA POR CÓDIGO DO PONTO -->
-          <div class="code-search-box">
-            <label for="pointCodeInput"
-              >🔎 Localizar Ecoponto pelo código</label
-            >
-            <div class="code-search-row">
-              <input
-                type="text"
-                id="pointCodeInput"
-                placeholder="Ex: ECO-07"
-                maxlength="12"
-                autocomplete="off"
-              />
-              <button type="button" id="searchCodeBtn" class="btn-code-search">
-                Buscar
-              </button>
         <div class="page active" id="page-scanner" role="tabpanel">
           <div class="scanner-page">
             <h1>📷 Escanear Produto</h1>
@@ -337,10 +293,6 @@
                 de coleta mais próximo.
               </div>
               <button
-                type="button"
-                id="scanCodeBtn"
-                class="btn-code-scan"
-                aria-label="Escanear código do ponto de coleta"
                 class="btn-primary"
                 style="margin-top: 16px; width: 100%; justify-content: center"
                 onclick="clearScan()"
@@ -348,10 +300,6 @@
                 ♻️ Escanear outro produto
               </button>
             </div>
-            <p class="code-search-hint">
-              Cada Ecoponto físico exibe um código (e um QR code) na placa de
-              identificação.
-            </p>
 
             <div class="history-list">
               <h3>🕐 Últimas validações</h3>
@@ -359,16 +307,7 @@
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- SISTEMA DE RECOMPENSAS -->
-      <div class="content-section">
-        <div class="reward-banner">
-          <div class="reward-info">
-            <h2>🎮 Sistema de Pontos EcoTech</h2>
-            <p>
-              A cada descarte consciente, você acumula pontos e troca por
-              brindes exclusivos!
         <div class="page" id="page-recompensas" role="tabpanel">
           <div class="rewards-page">
             <h1>🎁 Recompensas</h1>
@@ -376,12 +315,6 @@
               Troque seus EcoCoins por descontos nas melhores lojas do Rio de
               Janeiro
             </p>
-          </div>
-          <div class="points-badge">
-            <div
-              style="font-size: 0.85rem; font-weight: 700; letter-spacing: 1px"
-            >
-              MEUS PONTOS
             <div class="rewards-filters">
               <button
                 class="filter-btn active"
@@ -414,46 +347,10 @@
                 🎭 Lazer
               </button>
             </div>
-            <div class="points" id="userPoints">0</div>
             <div class="rewards-grid" id="rewards-grid"></div>
           </div>
-          <button class="btn-reward" id="simulateDisposal">
-            ➕ Simular Descarte (+10 pts)
-          </button>
         </div>
 
-        <div class="reward-list" id="rewardStore">
-          <div
-            class="reward-item"
-            data-cost="50"
-            data-name="Eco Garrafa Térmica"
-          >
-            <h4>🥤 Eco Garrafa</h4>
-            <p>50 pontos</p>
-          </div>
-          <div
-            class="reward-item"
-            data-cost="100"
-            data-name="Sementes de Árvores Nativas"
-          >
-            <h4>🌱 Kit Sementes</h4>
-            <p>100 pontos</p>
-          </div>
-          <div
-            class="reward-item"
-            data-cost="180"
-            data-name="Sacola Retornável EcoTech"
-          >
-            <h4>🛍️ Sacola Sustentável</h4>
-            <p>180 pontos</p>
-          </div>
-          <div
-            class="reward-item"
-            data-cost="300"
-            data-name="Voucher R$50 + Brinde"
-          >
-            <h4>🎁 Vale Presente</h4>
-            <p>300 pontos</p>
         <div class="page" id="page-historico" role="tabpanel">
           <div class="history-page">
             <h1>📋 Histórico de Pontos</h1>
@@ -462,7 +359,6 @@
         </div>
       </div>
 
-      <!-- TABELA DE PONTUAÇÃO -->
       <div class="content-section">
         <div class="section-header">
           <h2>📊 Tabela de Pontuação por Material</h2>
@@ -574,7 +470,6 @@
       </div>
     </main>
 
-    <!-- FOOTER -->
     <footer>
       <div class="footer-brand">
         <div class="footer-leaf">🌿</div>
@@ -612,47 +507,6 @@
       <p>© 2026 EcoTech. Todos os direitos reservados.</p>
     </footer>
 
-    <!-- MODAL DE ESCANEAMENTO DE CÓDIGO -->
-    <div id="scanModal" class="scan-modal" hidden>
-      <div class="scan-modal-content">
-        <button
-          id="closeScanModal"
-          class="scan-modal-close"
-          aria-label="Fechar"
-        >
-          ✕
-        </button>
-        <h3>📷 Escanear código do Ecoponto</h3>
-        <video id="scanVideo" playsinline muted></video>
-        <p id="scanStatus" class="scan-status">
-          Aponte a câmera para o QR code do Ecoponto
-        </p>
-      </div>
-    </div>
-
-    <!-- TOAST NOTIFICATION -->
-    <div
-      id="toastMessage"
-      style="
-        position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: var(--sage-500);
-        color: white;
-        padding: 14px 28px;
-        border-radius: var(--br-pill);
-        z-index: 1000;
-        opacity: 0;
-        transition: 0.3s;
-        pointer-events: none;
-        font-weight: 600;
-        font-family: &quot;Plus Jakarta Sans&quot;, sans-serif;
-        box-shadow: var(--sh-md);
-      "
-    ></div>
-
-    <!-- SCRIPTS -->
     <div id="toast"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -980,7 +834,6 @@
         const markerRefs = [];
 
         POINTS.forEach((p) => {
-          const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}`;
           const gmapsUrl = `https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`;
           const catBadges = p.cats
             .map((k) => {
@@ -1161,20 +1014,11 @@
           const p = findPointByCode(codeInput.value);
           if (p) {
             goToPoint(p);
-            showMessage(`📍 Ponto encontrado: ${p.name} (${p.code})`);
             showToast(`📍 Ponto encontrado: ${p.name} (${p.code})`);
           } else {
-            showMessage(
-              "❌ Código não encontrado. Verifique e tente novamente.",
-              true,
-            );
             showToast("❌ Código não encontrado. Verifique e tente novamente.");
           }
         }
-        searchCodeBtn.addEventListener("click", runCodeSearch);
-        codeInput.addEventListener("keydown", (e) => {
-          if (e.key === "Enter") runCodeSearch();
-        });
 
         if (searchCodeBtn && codeInput) {
           searchCodeBtn.addEventListener("click", runCodeSearch);
@@ -1193,7 +1037,6 @@
         let scanStream = null;
         let scanLoopId = null;
 
-        if (!supportsBarcodeDetector) {
         if (!supportsBarcodeDetector && scanCodeBtn) {
           scanCodeBtn.title =
             "Leitura automática não suportada neste navegador — digite o código manualmente";
@@ -1214,14 +1057,11 @@
           if (!scanModal) return;
           scanModal.hidden = false;
           if (!supportsBarcodeDetector) {
-            scanStatus.textContent =
-              "Seu navegador não suporta leitura automática. Digite o código no campo de busca.";
             if (scanStatus)
               scanStatus.textContent =
                 "Seu navegador não suporta leitura automática. Digite o código no campo de busca.";
             return;
           }
-          scanStatus.textContent = "Aponte a câmera para o QR code do Ecoponto";
           if (scanStatus)
             scanStatus.textContent =
               "Aponte a câmera para o QR code do Ecoponto";
@@ -1229,8 +1069,6 @@
             scanStream = await navigator.mediaDevices.getUserMedia({
               video: { facingMode: "environment" },
             });
-            scanVideo.srcObject = scanStream;
-            await scanVideo.play();
             if (scanVideo) {
               scanVideo.srcObject = scanStream;
               await scanVideo.play();
@@ -1240,17 +1078,6 @@
             const loop = async () => {
               if (!scanStream) return;
               try {
-                const codes = await detector.detect(scanVideo);
-                if (codes.length > 0) {
-                  const value = codes[0].rawValue;
-                  const p = findPointByCode(value);
-                  closeScanModal();
-                  if (p) {
-                    goToPoint(p);
-                    showMessage(`📍 Ponto encontrado: ${p.name} (${p.code})`);
-                  } else {
-                      true,
-                    );
                 if (scanVideo) {
                   const codes = await detector.detect(scanVideo);
                   if (codes.length > 0) {
@@ -1267,7 +1094,6 @@
                     }
                     return;
                   }
-                  return;
                 }
               } catch (err) {
                 /* ignora erros de detecção por quadro */
@@ -1276,19 +1102,12 @@
             };
             scanLoopId = requestAnimationFrame(loop);
           } catch (err) {
-            scanStatus.textContent =
-              "Não foi possível acessar a câmera. Digite o código manualmente.";
             if (scanStatus)
               scanStatus.textContent =
                 "Não foi possível acessar a câmera. Digite o código manualmente.";
           }
         }
 
-        scanCodeBtn.addEventListener("click", openScanModal);
-        closeScanModalBtn.addEventListener("click", closeScanModal);
-        scanModal.addEventListener("click", (e) => {
-          if (e.target === scanModal) closeScanModal();
-        });
         if (scanCodeBtn) scanCodeBtn.addEventListener("click", openScanModal);
         if (closeScanModalBtn)
           closeScanModalBtn.addEventListener("click", closeScanModal);
@@ -1304,21 +1123,8 @@
         );
         const pointsSpan = document.getElementById("userPoints");
         const simulateBtn = document.getElementById("simulateDisposal");
-        const toast = document.getElementById("toastMessage");
-
-        function showMessage(msg, isError = false) {
-          toast.textContent = msg;
-          toast.style.background = isError ? "#d32f2f" : "var(--sage-500)";
-          toast.style.opacity = "1";
-          toast.style.transform = "translate(-50%, -10px)";
-          setTimeout(() => {
-            toast.style.opacity = "0";
-            toast.style.transform = "translate(-50%, 0)";
-          }, 2500);
-        }
 
         function updatePointsUI() {
-          pointsSpan.innerText = userPoints;
           if (pointsSpan) pointsSpan.innerText = userPoints;
           localStorage.setItem("ecotech_points", userPoints);
           document.querySelectorAll(".reward-item").forEach((el) => {
@@ -1328,11 +1134,6 @@
           });
         }
 
-        simulateBtn.addEventListener("click", () => {
-          userPoints += 10;
-          updatePointsUI();
-          showMessage("✅ +10 pontos! Continue reciclando!");
-        });
         if (simulateBtn) {
           simulateBtn.addEventListener("click", () => {
             userPoints += 10;
@@ -1348,13 +1149,8 @@
             if (userPoints >= cost) {
               userPoints -= cost;
               updatePointsUI();
-              showMessage(`🎉 Parabéns! Você resgatou: ${name}!`);
               showToast(`🎉 Parabéns! Você resgatou: ${name}!`);
             } else {
-              showMessage(
-                `❌ Pontos insuficientes para ${name}. Recicle mais!`,
-                true,
-              );
               showToast(`❌ Pontos insuficientes para ${name}. Recicle mais!`);
             }
           });

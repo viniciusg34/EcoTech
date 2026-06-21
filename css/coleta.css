@@ -588,7 +588,6 @@ body {
 /* ── Balão de distância até o ponto mais próximo ── */
 .map-balloon {
   position: absolute;
-  top: 20px;
   top: 400px;
   left: 20px;
   z-index: 1000;
@@ -839,7 +838,6 @@ body {
 }
 
 /* ══════════════════════════════
-   SISTEMA DE RECOMPENSAS
    TABS — Scanner / Recompensas / Histórico
    (alternam entre si; uma visível por vez)
 ══════════════════════════════ */
@@ -1572,7 +1570,6 @@ footer p {
     padding: 120px 16px 70px;
   }
   .content-section,
-  .map-section {
   .map-section,
   .tools-section {
     padding: 40px 16px;
@@ -1594,7 +1591,6 @@ footer p {
   .map-balloon {
     max-width: calc(100% - 40px);
   }
-}
   .scanner-box {
     padding: 26px 18px;
   }
