@@ -211,6 +211,45 @@
             📍 Clique nos marcadores para ver os detalhes | Filtre por categoria
             na legenda | Muitos pontos aceitam mais de um tipo de material
           </p>
+        </div>
+      </div>
+      <div class="tools-section">
+        <div
+          class="tools-tabbar"
+          role="tablist"
+          aria-label="Ferramentas EcoTech"
+        >
+          <button
+            type="button"
+            class="tools-tab active"
+            role="tab"
+            aria-selected="true"
+            aria-controls="page-scanner"
+            data-target="page-scanner"
+          >
+            📷 Scanner
+          </button>
+          <button
+            type="button"
+            class="tools-tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="page-recompensas"
+            data-target="page-recompensas"
+          >
+            🎁 Recompensas
+          </button>
+          <button
+            type="button"
+            class="tools-tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="page-historico"
+            data-target="page-historico"
+          >
+            📋 Histórico
+          </button>
+        </div>
 
           <!-- BUSCA POR CÓDIGO DO PONTO -->
           <div class="code-search-box">
@@ -228,19 +267,96 @@
               <button type="button" id="searchCodeBtn" class="btn-code-search">
                 Buscar
               </button>
+        <div class="page active" id="page-scanner" role="tabpanel">
+          <div class="scanner-page">
+            <h1>📷 Escanear Produto</h1>
+            <p class="subtitle">
+              Escaneie o código de barras da embalagem reciclável para ganhar
+              EcoCoins
+            </p>
+
+            <div class="scanner-box">
+              <div id="video-container" style="display: none">
+                <video id="video" autoplay muted playsinline></video>
+                <div class="scanner-overlay"></div>
+                <div class="scan-line"></div>
+                <div class="scanner-corners"></div>
+              </div>
+              <div id="scanner-placeholder" style="padding: 20px">
+                <div style="font-size: 64px; margin-bottom: 12px">📦</div>
+                <p style="color: var(--ink-3); font-size: 14px">
+                  Clique em <strong>Iniciar Scanner</strong> para usar a
+                  câmera<br />ou insira o código manualmente
+                </p>
+              </div>
+              <div class="scanner-btn-row">
+                <button
+                  class="btn-primary"
+                  onclick="startScanner()"
+                  id="btn-start"
+                >
+                  📷 Iniciar Scanner
+                </button>
+                <button
+                  class="btn-secondary"
+                  onclick="stopScanner()"
+                  id="btn-stop"
+                  style="display: none"
+                >
+                  ⏹ Parar
+                </button>
+              </div>
+              <div class="manual-input-row">
+                <input
+                  type="text"
+                  id="manual-code"
+                  placeholder="Digite o código de barras..."
+                  maxlength="14"
+                />
+                <button
+                  class="btn-primary"
+                  onclick="
+                    validateCode(document.getElementById('manual-code').value)
+                  "
+                >
+                  Validar
+                </button>
+              </div>
+            </div>
+
+            <div class="scan-result" id="scan-result">
+              <div class="result-icon" id="result-icon">✅</div>
+              <div class="result-title" id="result-title">
+                Produto Validado!
+              </div>
+              <div class="result-points" id="result-points">
+                🪙 +50 EcoCoins ganhos!
+              </div>
+              <div class="result-desc" id="result-desc">
+                Embalagem reciclável detectada. Descarte corretamente no ponto
+                de coleta mais próximo.
+              </div>
               <button
                 type="button"
                 id="scanCodeBtn"
                 class="btn-code-scan"
                 aria-label="Escanear código do ponto de coleta"
+                class="btn-primary"
+                style="margin-top: 16px; width: 100%; justify-content: center"
+                onclick="clearScan()"
               >
-                📷 Escanear
+                ♻️ Escanear outro produto
               </button>
             </div>
             <p class="code-search-hint">
               Cada Ecoponto físico exibe um código (e um QR code) na placa de
               identificação.
             </p>
+
+            <div class="history-list">
+              <h3>🕐 Últimas validações</h3>
+              <div id="scan-history"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -253,6 +369,12 @@
             <p>
               A cada descarte consciente, você acumula pontos e troca por
               brindes exclusivos!
+        <div class="page" id="page-recompensas" role="tabpanel">
+          <div class="rewards-page">
+            <h1>🎁 Recompensas</h1>
+            <p class="subtitle">
+              Troque seus EcoCoins por descontos nas melhores lojas do Rio de
+              Janeiro
             </p>
           </div>
           <div class="points-badge">
@@ -260,8 +382,40 @@
               style="font-size: 0.85rem; font-weight: 700; letter-spacing: 1px"
             >
               MEUS PONTOS
+            <div class="rewards-filters">
+              <button
+                class="filter-btn active"
+                onclick="filterRewards(this, 'todos')"
+              >
+                Todos
+              </button>
+              <button class="filter-btn" onclick="filterRewards(this, 'food')">
+                🍔 Alimentação
+              </button>
+              <button
+                class="filter-btn"
+                onclick="filterRewards(this, 'transport')"
+              >
+                🚌 Transporte
+              </button>
+              <button class="filter-btn" onclick="filterRewards(this, 'shop')">
+                🛍️ Compras
+              </button>
+              <button
+                class="filter-btn"
+                onclick="filterRewards(this, 'health')"
+              >
+                💊 Saúde
+              </button>
+              <button
+                class="filter-btn"
+                onclick="filterRewards(this, 'leisure')"
+              >
+                🎭 Lazer
+              </button>
             </div>
             <div class="points" id="userPoints">0</div>
+            <div class="rewards-grid" id="rewards-grid"></div>
           </div>
           <button class="btn-reward" id="simulateDisposal">
             ➕ Simular Descarte (+10 pts)
@@ -300,6 +454,10 @@
           >
             <h4>🎁 Vale Presente</h4>
             <p>300 pontos</p>
+        <div class="page" id="page-historico" role="tabpanel">
+          <div class="history-page">
+            <h1>📋 Histórico de Pontos</h1>
+            <div id="timeline-list"></div>
           </div>
         </div>
       </div>
@@ -495,7 +653,10 @@
     ></div>
 
     <!-- SCRIPTS -->
+    <div id="toast"></div>
+
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/@zxing/library@latest"></script>
     <script>
       "use strict";
       document.addEventListener("DOMContentLoaded", () => {
@@ -542,6 +703,26 @@
             mainNav.classList.toggle("open");
           });
         }
+
+        /* ── ABAS: Scanner / Recompensas / Histórico ── */
+        const tabs = document.querySelectorAll(".tools-tab");
+        const pages = document.querySelectorAll(".page");
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            const targetId = tab.dataset.target;
+
+            tabs.forEach((t) => {
+              t.classList.remove("active");
+              t.setAttribute("aria-selected", "false");
+            });
+            tab.classList.add("active");
+            tab.setAttribute("aria-selected", "true");
+
+            pages.forEach((p) => {
+              p.classList.toggle("active", p.id === targetId);
+            });
+          });
+        });
 
         /* ── MAPA ── */
         const htmlEl = document.documentElement;
@@ -800,6 +981,7 @@
 
         POINTS.forEach((p) => {
           const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}`;
+          const gmapsUrl = `https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`;
           const catBadges = p.cats
             .map((k) => {
               const c = catByKey(k);
@@ -975,21 +1157,31 @@
         const searchCodeBtn = document.getElementById("searchCodeBtn");
 
         function runCodeSearch() {
+          if (!codeInput) return;
           const p = findPointByCode(codeInput.value);
           if (p) {
             goToPoint(p);
             showMessage(`📍 Ponto encontrado: ${p.name} (${p.code})`);
+            showToast(`📍 Ponto encontrado: ${p.name} (${p.code})`);
           } else {
             showMessage(
               "❌ Código não encontrado. Verifique e tente novamente.",
               true,
             );
+            showToast("❌ Código não encontrado. Verifique e tente novamente.");
           }
         }
         searchCodeBtn.addEventListener("click", runCodeSearch);
         codeInput.addEventListener("keydown", (e) => {
           if (e.key === "Enter") runCodeSearch();
         });
+
+        if (searchCodeBtn && codeInput) {
+          searchCodeBtn.addEventListener("click", runCodeSearch);
+          codeInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") runCodeSearch();
+          });
+        }
 
         /* ── ESCANEAMENTO DE CÓDIGO (QR) ── */
         const scanModal = document.getElementById("scanModal");
@@ -1002,11 +1194,13 @@
         let scanLoopId = null;
 
         if (!supportsBarcodeDetector) {
+        if (!supportsBarcodeDetector && scanCodeBtn) {
           scanCodeBtn.title =
             "Leitura automática não suportada neste navegador — digite o código manualmente";
         }
 
         function closeScanModal() {
+          if (!scanModal) return;
           scanModal.hidden = true;
           if (scanLoopId) cancelAnimationFrame(scanLoopId);
           scanLoopId = null;
@@ -1017,19 +1211,30 @@
         }
 
         async function openScanModal() {
+          if (!scanModal) return;
           scanModal.hidden = false;
           if (!supportsBarcodeDetector) {
             scanStatus.textContent =
               "Seu navegador não suporta leitura automática. Digite o código no campo de busca.";
+            if (scanStatus)
+              scanStatus.textContent =
+                "Seu navegador não suporta leitura automática. Digite o código no campo de busca.";
             return;
           }
           scanStatus.textContent = "Aponte a câmera para o QR code do Ecoponto";
+          if (scanStatus)
+            scanStatus.textContent =
+              "Aponte a câmera para o QR code do Ecoponto";
           try {
             scanStream = await navigator.mediaDevices.getUserMedia({
               video: { facingMode: "environment" },
             });
             scanVideo.srcObject = scanStream;
             await scanVideo.play();
+            if (scanVideo) {
+              scanVideo.srcObject = scanStream;
+              await scanVideo.play();
+            }
             const detector = new BarcodeDetector({ formats: ["qr_code"] });
 
             const loop = async () => {
@@ -1044,10 +1249,23 @@
                     goToPoint(p);
                     showMessage(`📍 Ponto encontrado: ${p.name} (${p.code})`);
                   } else {
-                    showMessage(
-                      "❌ Código lido não corresponde a nenhum ponto.",
                       true,
                     );
+                if (scanVideo) {
+                  const codes = await detector.detect(scanVideo);
+                  if (codes.length > 0) {
+                    const value = codes[0].rawValue;
+                    const p = findPointByCode(value);
+                    closeScanModal();
+                    if (p) {
+                      goToPoint(p);
+                      showToast(`📍 Ponto encontrado: ${p.name} (${p.code})`);
+                    } else {
+                      showToast(
+                        "❌ Código lido não corresponde a nenhum ponto.",
+                      );
+                    }
+                    return;
                   }
                   return;
                 }
@@ -1060,6 +1278,9 @@
           } catch (err) {
             scanStatus.textContent =
               "Não foi possível acessar a câmera. Digite o código manualmente.";
+            if (scanStatus)
+              scanStatus.textContent =
+                "Não foi possível acessar a câmera. Digite o código manualmente.";
           }
         }
 
@@ -1068,6 +1289,14 @@
         scanModal.addEventListener("click", (e) => {
           if (e.target === scanModal) closeScanModal();
         });
+        if (scanCodeBtn) scanCodeBtn.addEventListener("click", openScanModal);
+        if (closeScanModalBtn)
+          closeScanModalBtn.addEventListener("click", closeScanModal);
+        if (scanModal) {
+          scanModal.addEventListener("click", (e) => {
+            if (e.target === scanModal) closeScanModal();
+          });
+        }
 
         /* ── SISTEMA DE PONTOS ── */
         let userPoints = parseInt(
@@ -1090,6 +1319,7 @@
 
         function updatePointsUI() {
           pointsSpan.innerText = userPoints;
+          if (pointsSpan) pointsSpan.innerText = userPoints;
           localStorage.setItem("ecotech_points", userPoints);
           document.querySelectorAll(".reward-item").forEach((el) => {
             const cost = parseInt(el.dataset.cost);
@@ -1103,6 +1333,13 @@
           updatePointsUI();
           showMessage("✅ +10 pontos! Continue reciclando!");
         });
+        if (simulateBtn) {
+          simulateBtn.addEventListener("click", () => {
+            userPoints += 10;
+            updatePointsUI();
+            showToast("✅ +10 pontos! Continue reciclando!");
+          });
+        }
 
         document.querySelectorAll(".reward-item").forEach((el) => {
           el.addEventListener("click", () => {
@@ -1112,17 +1349,377 @@
               userPoints -= cost;
               updatePointsUI();
               showMessage(`🎉 Parabéns! Você resgatou: ${name}!`);
+              showToast(`🎉 Parabéns! Você resgatou: ${name}!`);
             } else {
               showMessage(
                 `❌ Pontos insuficientes para ${name}. Recicle mais!`,
                 true,
               );
+              showToast(`❌ Pontos insuficientes para ${name}. Recicle mais!`);
             }
           });
         });
 
         updatePointsUI();
+
+        /* ── INIT GERAL (scanner / recompensas / histórico) ── */
+        renderScanHistory();
+        renderRewardsGrid();
+        renderTimeline();
       });
+
+      /* ══════════════════════════════
+         DADOS — Scanner / Recompensas / Histórico
+      ══════════════════════════════ */
+      let scanHistory = [
+        {
+          code: "7896004004777",
+          name: "Garrafa PET 500ml",
+          pts: 30,
+          icon: "🧴",
+          time: "Há 2h",
+        },
+        {
+          code: "7891234567890",
+          name: "Lata de Alumínio",
+          pts: 40,
+          icon: "🥫",
+          time: "Há 5h",
+        },
+        {
+          code: "7896666000014",
+          name: "Caixa de Papelão",
+          pts: 20,
+          icon: "📦",
+          time: "Ontem",
+        },
+      ];
+
+      let timeline = [
+        {
+          type: "earn",
+          icon: "📷",
+          desc: "Garrafa PET escaneada",
+          pts: "+30",
+          time: "Hoje 14h22",
+        },
+        {
+          type: "earn",
+          icon: "📷",
+          desc: "Lata de Alumínio escaneada",
+          pts: "+40",
+          time: "Hoje 09h15",
+        },
+        {
+          type: "redeem",
+          icon: "🎁",
+          desc: "Cupom McDonald's usado",
+          pts: "-200",
+          time: "Ontem",
+        },
+        {
+          type: "earn",
+          icon: "📷",
+          desc: "Caixa de Papelão",
+          pts: "+20",
+          time: "Ontem 11h00",
+        },
+        {
+          type: "earn",
+          icon: "🔋",
+          desc: "Pilha AA descartada",
+          pts: "+80",
+          time: "Seg 16h30",
+        },
+        {
+          type: "redeem",
+          icon: "🎫",
+          desc: "Metrô Rio - Passe usado",
+          pts: "-150",
+          time: "Sáb",
+        },
+        {
+          type: "earn",
+          icon: "💻",
+          desc: "Celular antigo reciclado",
+          pts: "+100",
+          time: "Sex 10h00",
+        },
+      ];
+
+      const rewardsCatalog = [
+        {
+          cat: "food",
+          icon: "🍔",
+          name: "Cupom McDonald's",
+          desc: "20% OFF em combos",
+          cost: 200,
+        },
+        {
+          cat: "food",
+          icon: "☕",
+          name: "Café Grátis",
+          desc: "Starbucks ou cafeteria parceira",
+          cost: 80,
+        },
+        {
+          cat: "transport",
+          icon: "🎫",
+          name: "Passe Metrô Rio",
+          desc: "1 viagem gratuita",
+          cost: 150,
+        },
+        {
+          cat: "food",
+          icon: "🥤",
+          name: "Eco Garrafa",
+          desc: "Starbucks ou cafeteria parceira",
+          cost: 120,
+        },
+        {
+          cat: "health",
+          icon: "🌱",
+          name: "Kit Sementes",
+          desc: "Sementes de Árvores Nativas",
+          cost: 100,
+        },
+        {
+          cat: "shop",
+          icon: "🛍️",
+          name: "bolsa Ecotech",
+          desc: "Sacola Sustentável da Ecotech",
+          cost: 180,
+        },
+        {
+          cat: "transport",
+          icon: "🚲",
+          name: "Bike Itaú 1h",
+          desc: "1 hora de uso grátis",
+          cost: 90,
+        },
+        {
+          cat: "shop",
+          icon: "🛍️",
+          name: "Vale Compras R$30",
+          desc: "Lojas parceiras EcoTech",
+          cost: 300,
+        },
+        {
+          cat: "shop",
+          icon: "👕",
+          name: "Camiseta Sustentável",
+          desc: "Algodão orgânico reciclado",
+          cost: 220,
+        },
+        {
+          cat: "health",
+          icon: "💊",
+          name: "Desconto Farmácia",
+          desc: "15% OFF em medicamentos",
+          cost: 120,
+        },
+        {
+          cat: "leisure",
+          icon: "🎭",
+          name: "Ingresso de Cinema",
+          desc: "Meia-entrada em qualquer sessão",
+          cost: 250,
+        },
+      ];
+
+      let stream = null;
+      async function startScanner() {
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: "environment" },
+          });
+          const video = document.getElementById("video");
+          video.srcObject = stream;
+          document.getElementById("video-container").style.display = "block";
+          document.getElementById("scanner-placeholder").style.display = "none";
+          document.getElementById("btn-start").style.display = "none";
+          document.getElementById("btn-stop").style.display = "flex";
+          if (window.ZXing) {
+            const formats = [
+              window.ZXing.BarcodeFormat.EAN_13,
+              window.ZXing.BarcodeFormat.QR_CODE,
+              window.ZXing.BarcodeFormat.CODE_128,
+            ];
+            const hints = new Map();
+            hints.set(window.ZXing.DecodeHintType.POSSIBLE_FORMATS, formats);
+            const reader = new window.ZXing.BrowserMultiFormatReader(hints);
+            reader.decodeFromVideoDevice(null, "video", function (result) {
+              if (result) {
+                validateCode(result.getText());
+                stopScanner();
+              }
+            });
+          }
+        } catch (e) {
+          showToast("❌ Câmera não disponível. Use o campo manual.");
+        }
+      }
+
+      function stopScanner() {
+        if (stream) stream.getTracks().forEach((t) => t.stop());
+        document.getElementById("video-container").style.display = "none";
+        document.getElementById("scanner-placeholder").style.display = "block";
+        document.getElementById("btn-start").style.display = "flex";
+        document.getElementById("btn-stop").style.display = "none";
+      }
+
+      const productDB = {
+        7896004004777: {
+          name: "Garrafa PET 500ml",
+          pts: 30,
+          icon: "🧴",
+          mat: "Plástico PET",
+        },
+        7891234567890: {
+          name: "Lata de Alumínio 350ml",
+          pts: 40,
+          icon: "🥫",
+          mat: "Alumínio",
+        },
+        7896666000014: {
+          name: "Caixa de Papelão",
+          pts: 20,
+          icon: "📦",
+          mat: "Papelão",
+        },
+        7899000001234: {
+          name: "Vidro de Conserva",
+          pts: 35,
+          icon: "🫙",
+          mat: "Vidro",
+        },
+        7891910000197: {
+          name: "Pilha Alcalina AA",
+          pts: 80,
+          icon: "🔋",
+          mat: "Pilha/Bateria",
+        },
+        7896000000001: {
+          name: "Embalagem Tetra Pak",
+          pts: 25,
+          icon: "🧃",
+          mat: "Tetra Pak",
+        },
+      };
+
+      function validateCode(code) {
+        if (!code || code.length < 8) {
+          showToast("❌ Código inválido");
+          return;
+        }
+        const product = productDB[code] || {
+          name: "Embalagem Reciclável",
+          pts: 30,
+          icon: "♻️",
+          mat: "Reciclável",
+        };
+        const result = document.getElementById("scan-result");
+        document.getElementById("result-icon").textContent = product.icon;
+        document.getElementById("result-title").textContent =
+          product.name + " — Validado!";
+        document.getElementById("result-points").textContent =
+          "🪙 +" + product.pts + " EcoCoins ganhos!";
+        document.getElementById("result-desc").textContent =
+          "Material: " +
+          product.mat +
+          ". Descarte no ponto de coleta EcoTech mais próximo para confirmar e receber seus pontos.";
+        result.classList.add("show");
+
+        scanHistory.unshift({
+          code,
+          name: product.name,
+          pts: product.pts,
+          icon: product.icon,
+          time: "Agora",
+        });
+        timeline.unshift({
+          type: "earn",
+          icon: "📷",
+          desc: product.name + " escaneado",
+          pts: "+" + product.pts,
+          time: "Agora",
+        });
+        renderScanHistory();
+        renderTimeline();
+        document.getElementById("manual-code").value = "";
+        stopScanner();
+      }
+
+      function clearScan() {
+        document.getElementById("scan-result").classList.remove("show");
+      }
+
+      function renderScanHistory() {
+        const el = document.getElementById("scan-history");
+        if (!el) return;
+        el.innerHTML = scanHistory
+          .slice(0, 5)
+          .map(
+            (h) => `
+    <div class="history-item">
+      <div class="history-icon">${h.icon}</div>
+      <div class="history-info"><strong>${h.name}</strong><small>${h.code} • ${h.time}</small></div>
+      <div class="history-pts">+${h.pts}🪙</div>
+    </div>`,
+          )
+          .join("");
+      }
+
+      function renderRewardsGrid(filter = "todos") {
+        const el = document.getElementById("rewards-grid");
+        if (!el) return;
+        const items =
+          filter === "todos"
+            ? rewardsCatalog
+            : rewardsCatalog.filter((r) => r.cat === filter);
+        el.innerHTML = items
+          .map(
+            (r) => `
+    <div class="reward-card">
+      <h4>${r.icon} ${r.name}</h4>
+      <p>${r.desc}</p>
+      <p style="margin-top:8px; font-weight:700; color:var(--sage-600);">${r.cost} pontos</p>
+    </div>`,
+          )
+          .join("");
+      }
+
+      function filterRewards(btn, cat) {
+        document
+          .querySelectorAll(".filter-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        renderRewardsGrid(cat);
+      }
+
+      function renderTimeline() {
+        const el = document.getElementById("timeline-list");
+        if (!el) return;
+        el.innerHTML = timeline
+          .map(
+            (t) => `
+    <div class="timeline-item ${t.type === "redeem" ? "redeem" : ""}">
+      <div class="timeline-icon">${t.icon}</div>
+      <div class="timeline-info"><strong>${t.desc}</strong><small>${t.time}</small></div>
+      <div class="timeline-pts">${t.pts}🪙</div>
+    </div>`,
+          )
+          .join("");
+      }
+
+      function showToast(msg) {
+        const t = document.getElementById("toast");
+        if (t) {
+          t.textContent = msg;
+          t.classList.add("show");
+          setTimeout(() => t.classList.remove("show"), 2800);
+        }
+      }
     </script>
   </body>
 </html>
