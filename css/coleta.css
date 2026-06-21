@@ -92,6 +92,13 @@
     hue-rotate(80deg);
 }
 
+[data-theme="dark"] .nav-container {
+  background: rgba(30, 37, 31, 0.82);
+}
+[data-theme="dark"] .map-legend {
+  background: rgba(30, 37, 31, 0.95);
+}
+
 html {
   scroll-behavior: smooth;
   font-size: 16px;
@@ -108,12 +115,7 @@ body {
     color 0.3s;
 }
 
-[data-theme="dark"] .nav-container {
-  background: rgba(30, 37, 31, 0.82);
-}
-[data-theme="dark"] .map-legend {
-  background: rgba(30, 37, 31, 0.95);
-}
+
 
 /* ══════════════════════════════
    HEADER / NAV
