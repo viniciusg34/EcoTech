@@ -1,25 +1,17 @@
-<!DOCTYPE html>
-<html lang="pt-br" data-theme="light">
+<!doctype html>
+<html lang="pt-BR">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="assets/fivecom.png" type="image/x-icon" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" />
-    <link rel="stylesheet" href="css/cadastro_empresarial.css" />
-    <title>Cadastro Empresarial — EcoTech</title>
+    <link rel="shortcut icon" href="./assets/fivecom.png" type="image/x-icon" />
+    <title>Cadastro — EcoTech</title>
 
-    <script>
-      (function () {
-        const saved = localStorage.getItem("eco-theme");
-        const pref =
-          saved ||
-          (window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light");
-        document.documentElement.setAttribute("data-theme", pref);
-      })();
-    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/cadastro.css" />
+    <script src="./auth.js"></script>
   </head>
 
   <body>
@@ -245,61 +237,129 @@
 
             <div class="terms-card">
               <label class="terms-label">
-                <input type="checkbox" required />
-                <span>Declaro que li e aceito os <a href="#">Termos de Uso</a> e as <a href="#">Políticas de Privacidade</a> da EcoTech.</span>
+                <input type="checkbox" id="aceitarTermos" />
+
+                <span>
+                  Ao criar uma conta, você concorda com nossos
+                  <a
+                    href="https://www.termsfeed.com/live/7f2df7c4-3d8c-4c6a-b5b8-2e9f8b4c8f95"
+                    target="_blank"
+                  >
+                    Termos e Condições
+                  </a>
+                  e nossa Política de Privacidade.
+                </span>
               </label>
             </div>
 
-            <button type="submit">Criar Conta</button>
-
-            <small>Já possui uma conta? <a href="login.html">Entrar</a></small>
+            <button type="submit">Cadastrar</button>
           </form>
-        </div>
 
-      </div>
+          <small>Já tem uma conta? <a href="login.html">Entrar</a></small>
+        </section>
+      </section>
     </main>
 
-    <div class="toast" id="toastMessage">Cadastro enviado com sucesso!</div>
+    <div class="toast" id="toast"></div>
 
     <script>
-      "use strict";
+      let toastTimer;
 
-      /* MÁSCARA AUTOMÁTICA PARA CNPJ */
-      const cnpjInput = document.getElementById("cnpj");
-      if (cnpjInput) {
-        cnpjInput.addEventListener("input", (e) => {
-          let value = e.target.value.replace(/\D/g, "");
-          if (value.length > 14) value = value.slice(0, 14);
-
-          value = value.replace(/^(\d{2})(\d)/, "$1.$2");
-          value = value.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
-          value = value.replace(/\.(\d{3})(\d)/, ".$1/$2");
-          value = value.replace(/(\d{4})(\d)/, "$1-$2");
-
-          e.target.value = value;
-        });
-      }
-
-      /* EXIBIÇÃO INTERATIVA DA SENHA */
-      const btnTogglePassword = document.getElementById("btnTogglePassword");
-      const passwordInput = document.getElementById("password");
-
-      if (btnTogglePassword && passwordInput) {
-        btnTogglePassword.addEventListener("click", () => {
-          const isPassword = passwordInput.type === "password";
-          passwordInput.type = isPassword ? "text" : "password";
-          btnTogglePassword.textContent = isPassword ? "🙈" : "👁️";
-        });
-      }
-
-      /* INTERCEPTAÇÃO DO FORMULÁRIO E TOAST */
-      document.getElementById("cadastroEmpresarialForm").addEventListener("submit", (e) => {
-        e.preventDefault();
-        const toast = document.getElementById("toastMessage");
+      function showToast(msg) {
+        const toast = document.getElementById("toast");
+        toast.textContent = msg;
         toast.classList.add("show");
-        setTimeout(() => {
+
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
           toast.classList.remove("show");
-        }, 4000);
+        }, 3000);
+      }
+
+      function togglePassword(id) {
+        const campo = document.getElementById(id);
+
+        campo.type = campo.type === "password" ? "text" : "password";
+      }
+
+      function setCookie(name, value, days) {
+        const date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        document.cookie =
+          encodeURIComponent(name) +
+          "=" +
+          encodeURIComponent(value) +
+          "; expires=" +
+          date.toUTCString() +
+          "; path=/; SameSite=Lax";
+      }
+
+      function cleanText(value) {
+        return value.trim().replace(/\s+/g, " ");
+      }
+
+      function formatCPF(value) {
+        return value
+          .replace(/\D/g, "")
+          .replace(/(\d{3})(\d)/, "$1.$2")
+          .replace(/(\d{3})(\d)/, "$1.$2")
+          .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+      }
+
+      function validarCPF(cpf) {
+        cpf = cpf.replace(/\D/g, "");
+
+        if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) {
+          return false;
+        }
+
+        let soma = 0;
+        let resto;
+
+        for (let i = 1; i <= 9; i++) {
+          soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+        }
+
+        resto = (soma * 10) % 11;
+        if (resto === 10 || resto === 11) resto = 0;
+        if (resto !== parseInt(cpf.substring(9, 10))) return false;
+
+        soma = 0;
+
+        for (let i = 1; i <= 10; i++) {
+          soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+        }
+
+        resto = (soma * 10) % 11;
+        if (resto === 10 || resto === 11) resto = 0;
+
+        return resto === parseInt(cpf.substring(10, 11));
+      }
+
+      function calcularIdade(dataNascimento) {
+        const hoje = new Date();
+        const nascimento = new Date(dataNascimento);
+        let idade = hoje.getFullYear() - nascimento.getFullYear();
+        const mes = hoje.getMonth() - nascimento.getMonth();
+
+        if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
+          idade--;
+        }
+
+        return idade;
+      }
+
+      function senhaSegura(senha) {
+        return (
+          senha.length >= 8 &&
+          /[A-Z]/.test(senha) &&
+          /[a-z]/.test(senha) &&
+          /\d/.test(senha)
+        );
+      }
+
+      document.getElementById("cpf").addEventListener("input", function () {
+        this.value = formatCPF(this.value);
       });
 
       document
@@ -348,6 +408,11 @@
             return;
           }
 
+          if (senha !== confirmarSenha) {
+            showToast("As senhas não coincidem.");
+            return;
+          }
+
           const aceitarTermos = document.getElementById("aceitarTermos");
 
           if (!aceitarTermos.checked) {
@@ -355,16 +420,20 @@
             return;
           }
 
-          const usuario = {
+          if (emailUsuarioExiste(email)) {
+            showToast("Este e-mail já está cadastrado.");
+            return;
+          }
+
+          cadastrarUsuario({
             nome,
             email,
             cpf,
             nomeMae,
             nascimento,
-            criadoEm: new Date().toISOString(),
-          };
+            senha,
+          });
 
-          localStorage.setItem("usuarioEcoTech", JSON.stringify(usuario));
           sessionStorage.setItem("cadastroValidado", "true");
 
           setCookie("ecoTechEmail", email, 7);
