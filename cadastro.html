@@ -17,7 +17,123 @@
   <body>
     <main class="page">
       <section class="app">
+    <main class="page">
+      <div class="app">
+        
+        <div class="visual-panel">
+          <div class="organic-shape"></div>
+          
+          <div class="visual-content">
+            <span class="top-tag">Cadastro Empresarial</span>
+            <h1>Cadastre sua empresa e faça parte da mudança.</h1>
+          </div>
 
+          <img
+            src="assets/image_c32c62.jpg"
+            alt="Fachada corporativa sustentável EcoTech"
+            class="building-image"
+          />
+        </div>
+
+        <div class="register">
+          <div class="eco-logo">
+            <img src="assets/fivecom.png" alt="EcoTech Logo" />
+          </div>
+          
+          <h1>Cadastro Empresarial</h1>
+          <p>Preencha os dados da sua empresa para criar sua conta</p>
+
+          <form id="cadastroEmpresarialForm" action="#" method="POST">
+            
+            <div class="input-group">
+              <label for="cnpj">CNPJ</label>
+              <div class="input-box">
+                <span class="icon">💼</span>
+                <input
+                  type="text"
+                  id="cnpj"
+                  name="cnpj"
+                  placeholder="00.000.000/0000-00"
+                  required
+                  autocomplete="off"
+                  maxlength="18"
+                />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="nome_empresa">Nome Completo da Empresa</label>
+              <div class="input-box">
+                <span class="icon">🏢</span>
+                <input
+                  type="text"
+                  id="nome_empresa"
+                  name="nome_empresa"
+                  placeholder="Digite o nome completo da empresa"
+                  required
+                  autocomplete="organization"
+                />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="endereco">Endereço</label>
+              <div class="input-box">
+                <span class="icon">📍</span>
+                <input
+                  type="text"
+                  id="endereco"
+                  name="endereco"
+                  placeholder="Rua, número, bairro, cidade, Estado, CEP"
+                  required
+                  autocomplete="street-address"
+                />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="razao_social">Razão Social</label>
+              <div class="input-box">
+                <span class="icon">📄</span>
+                <input
+                  type="text"
+                  id="razao_social"
+                  name="razao_social"
+                  placeholder="Digite a razão social da empresa"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="email">E-mail</label>
+              <div class="input-box">
+                <span class="icon">✉️</span>
+                <input
+                  type="type"
+                  id="email"
+                  name="email"
+                  placeholder="exemplo@empresa.com.br"
+                  required
+                  autocomplete="email"
+                />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="password">Senha</label>
+              <div class="input-box">
+                <span class="icon">🔒</span>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Crie uma senha segura"
+                  required
+                  autocomplete="new-password"
+                />
+                <span class="eye" id="btnTogglePassword">👁️</span>
+              </div>
         <section class="register">
           <div class="eco-logo">
             <img src="./assets/logo.svg" alt="EcoTech" />
