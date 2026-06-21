@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+    <defs>
+        <linearGradient id="leaf1" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#2E7D32" />
+            <stop offset="100%" stop-color="#4CAF50" />
+        </linearGradient>
+        <linearGradient id="leaf2" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#1B5E20" />
+            <stop offset="100%" stop-color="#388E3C" />
+        </linearGradient>
+        <linearGradient id="leaf3" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#388E3C" />
+            <stop offset="100%" stop-color="#81C784" />
+        </linearGradient>
+        <linearGradient id="leaf4" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#4CAF50" />
+            <stop offset="100%" stop-color="#A5D6A7" />
+        </linearGradient>
+        <style>
+            .tech-line { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+            .font-title { font-family: 'Montserrat', 'Segoe UI', 'Helvetica Neue', sans-serif; font-weight: 800; font-size: 76px; }
+            .font-slogan { font-family: 'Montserrat', 'Segoe UI', 'Helvetica Neue', sans-serif; font-weight: 500; font-size: 24px; fill: #455A64; }
+        </style>
+    </defs>
+
+    <!-- Fundo Transparente -->
+    <rect width="100%" height="100%" fill="transparent" />
+
+    <!-- Árvore (Centro: 400, 380) -->
+    <g transform="translate(400, 380)">
+        
+        <!-- Base e Raízes (Verdes Escuros) -->
+        <path d="M -40 120 C -10 60, -20 10, 0 -10 C 20 10, 10 60, 40 120 Z" fill="#1B5E20" />
+        <path d="M -40 120 Q -80 130 -120 150 Q -60 140 -10 110" fill="#0D5302" />
+        <path d="M 40 120 Q 80 130 120 150 Q 60 140 10 110" fill="#0D5302" />
+        <path d="M -140 140 Q 0 120 140 140 L 100 145 Q 0 130 -100 145 Z" fill="#0A3D02" />
+        
+        <!-- Lado Esquerdo: Folhas Geométricas (Natureza) -->
+        <!-- Folha 1 -->
+        <path d="M 0 -10 Q -60 -30 -80 -90 Q -20 -70 0 -10" fill="url(#leaf1)" />
+        <!-- Folha 2 -->
+        <path d="M -20 -50 Q -80 -90 -80 -160 Q -10 -130 -20 -50" fill="url(#leaf2)" />
+        <!-- Folha 3 -->
+        <path d="M -10 -100 Q -50 -160 -20 -230 Q 30 -170 -10 -100" fill="url(#leaf3)" />
+        <!-- Folha 4 -->
+        <path d="M 0 10 Q -50 0 -60 -50 Q -10 -30 0 10" fill="url(#leaf4)" />
+        <!-- Folha 5 -->
+        <path d="M -30 -20 Q -90 -20 -110 -70 Q -50 -50 -30 -20" fill="url(#leaf1)" />
+        <!-- Folha 6 -->
+        <path d="M -40 -100 Q -110 -110 -120 -170 Q -60 -150 -40 -100" fill="url(#leaf2)" />
+        <!-- Folhinha na raiz -->
+        <g transform="translate(-90, 130) scale(0.3)">
+            <path d="M 0 0 Q -40 -40 0 -80 Q 40 -40 0 0" fill="#4CAF50" />
+        </g>
+
+        <!-- Lado Direito: Circuitos (Tecnologia) -->
+        <g class="tech-line">
+            <!-- Ramo Principal 1 -->
+            <polyline points="0,-10 30,-40 90,-40 130,-80" stroke="#0288D1" stroke-width="5" />
+            <circle cx="130" cy="-80" r="6" fill="#00BCD4" stroke="none" />
+            
+            <!-- Ramo Principal 2 -->
+            <polyline points="-5,-50 20,-75 80,-75 110,-105" stroke="#0288D1" stroke-width="5" />
+            <circle cx="110" cy="-105" r="6" fill="#00BCD4" stroke="none" />
+
+            <!-- Ramo Principal 3 -->
+            <polyline points="-10,-90 15,-115 60,-115 100,-155 130,-155" stroke="#0097A7" stroke-width="5" />
+            <circle cx="130" cy="-155" r="7" fill="#00E5FF" stroke="none" />
+            
+            <!-- Ramo Secundário 1.1 -->
+            <polyline points="50,-40 80,-10 120,-10" stroke="#0097A7" stroke-width="3" />
+            <circle cx="120" cy="-10" r="4" fill="#00E5FF" stroke="none" />
+            
+            <!-- Ramo Secundário 2.1 -->
+            <polyline points="40,-75 70,-45 110,-45" stroke="#00BCD4" stroke-width="3" />
+            <circle cx="110" cy="-45" r="4" fill="#0288D1" stroke="none" />
+
+            <!-- Ramo Secundário 3.1 -->
+            <polyline points="30,-115 60,-145 90,-145" stroke="#00E5FF" stroke-width="4" />
+            <circle cx="90" cy="-145" r="5" fill="#00838F" stroke="none" />
+
+            <!-- Ramo Secundário 3.2 -->
+            <polyline points="100,-155 120,-175 150,-175" stroke="#00BCD4" stroke-width="3" />
+            <circle cx="150" cy="-175" r="4" fill="#00E5FF" stroke="none" />
+            
+            <!-- Ramo Alto -->
+            <polyline points="-5,-130 15,-150 50,-150 80,-180 110,-180" stroke="#0288D1" stroke-width="4" />
+            <circle cx="110" cy="-180" r="5" fill="#00BCD4" stroke="none" />
+            
+            <!-- CPU / Nós de Dados (Chips) -->
+            <g stroke="none">
+                <rect x="122" y="-88" width="16" height="16" fill="#01579B" rx="2" />
+                <path d="M 122 -84 L 118 -84 M 122 -80 L 118 -80 M 138 -84 L 142 -84 M 138 -80 L 142 -80" stroke="#01579B" stroke-width="1.5" />
+                
+                <rect x="102" y="-113" width="16" height="16" fill="#006064" rx="2" />
+                
+                <rect x="120" y="-163" width="20" height="20" fill="#004D40" rx="3" />
+                <circle cx="130" cy="-153" r="3" fill="#80CBC4" />
+                
+                <rect x="117" y="-13" width="6" height="6" fill="#00838F" />
+            </g>
+            
+            <!-- Partículas flutuantes -->
+            <circle cx="140" cy="-120" r="2" fill="#4DD0E1" stroke="none" />
+            <circle cx="80" cy="-200" r="3" fill="#81D4FA" stroke="none" />
+            <circle cx="160" cy="-40" r="2" fill="#00BCD4" stroke="none" />
+            
+            <!-- Símbolo Wi-Fi / Conexão na raiz direita -->
+            <g transform="translate(90, 130) scale(0.5)">
+                <path d="M -30 0 A 30 30 0 0 1 30 0" fill="none" stroke="#00BCD4" stroke-width="6" />
+                <path d="M -15 15 A 15 15 0 0 1 15 15" fill="none" stroke="#00BCD4" stroke-width="6" />
+                <circle cx="0" cy="30" r="6" fill="#00BCD4" stroke="none" />
+            </g>
+        </g>
+    </g>
+</svg>

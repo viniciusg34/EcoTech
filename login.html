@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — EcoTech</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/login.css" />
+</head>
+
+<body>
+<main class="page">
+    <section class="app">
+      <section class="content">
+        <section class="hero">
+          <span class="tag">Nossa Essência</span>
+
+          <h1>A união de<br>dados, ciência<br>e amor pela<br>terra.</h1>
+
+          <p>
+            Somos uma equipe dedicada a criar soluções tecnológicas para a
+            preservação ambiental e o monitoramento do nosso planeta.
+          </p>
+
+          <div class="stat-card">
+            <strong>85%</strong>
+            <p>de eficiência<br>em nossos<br>projetos</p>
+          </div>
+
+          <div class="hero-card">
+            <div>♧</div>
+            <p>Tecnologia e ciência trabalhando juntas por um futuro sustentável.</p>
+          </div>
+        </section>
+
+        <section class="login">
+          <div class="eco-logo">
+            <img src="./assets/logo.svg" alt="EcoTech">
+          </div>
+
+          <h2>Bem-vindo de volta!</h2>
+          <p>Faça login para acessar sua conta<br>e acompanhar nossos projetos.</p>
+
+          <label for="email">E-mail</label>
+          <div class="input-box">
+            <span>✉</span>
+            <input type="email" id="email" placeholder="seu@email.com" />
+          </div>
+
+          <label for="password">Senha</label>
+          <div class="input-box">
+            <span>🔒</span>
+            <input type="password" id="password" placeholder="••••••••" />
+            <span class="eye" onclick="togglePassword()">◎</span>
+          </div>
+
+          <div class="options">
+            <label>
+              <input type="checkbox" />
+              Lembrar-me
+            </label>
+
+            <a href="esqueci_senha.html">Esqueceu sua senha?</a>
+          </div>
+
+          <button class="primary" onclick="handleLogin()">Entrar</button>
+
+          <small style="display: block; margin-top: 20px; text-align: center;">
+            Ainda não tem uma conta? <a href="cadastro.html">cadastre-se</a>
+          </small>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    let toastTimer;
+
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.textContent = msg;
+      toast.classList.add("show");
+
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
+    }
+
+    function togglePassword() {
+      const password = document.getElementById("password");
+      password.type = password.type === "password" ? "text" : "password";
+    }
+
+    function handleLogin() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      // Validação se os campos estão preenchidos
+      if (!email || !password) {
+        showToast("Preencha todos os campos.");
+        return;
+      }
+
+      // Validação do formato do e-mail usando expressão regular
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showToast("E-mail inválido.");
+        return;
+      }
+
+      // Exibe a mensagem de carregamento no toast
+      showToast("Entrando...");
+
+      // Aguarda 1 segundo para dar um efeito realista e redireciona para a página principal (index.html)
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

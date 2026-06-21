@@ -1,83 +1,527 @@
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="assets/fivecom.png" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" />
+    <link rel="stylesheet" href="css/cadastro_empresarial.css" />
+    <title>Cadastro Empresarial — EcoTech</title>
+
+    <script>
+      (function () {
+        const saved = localStorage.getItem("eco-theme");
+        const pref =
+          saved ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+        document.documentElement.setAttribute("data-theme", pref);
+      })();
+    </script>
+=======
 <!doctype html>
-<html lang="pt-br">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="shortcut icon" href="assets/fivecom.png" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./assets/fivecom.png" type="image/x-icon" />
+    <title>Cadastro — EcoTech</title>
+
     <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
     />
-    <link rel="stylesheet" href="css/cadastro.css" />
-    <title>Cadastro - EcoTech</title>
+    <link rel="stylesheet" href="./css/cadastro.css" />
+>>>>>>> main
   </head>
+
   <body>
+    <main class="page">
+      <section class="app">
 
-    <main class="container">
-      <section class="card">
-        <h1>Cadastro</h1>
-        <p>Crie sua conta na EcoTech</p>
+<<<<<<< HEAD
+    <main class="page">
+      <div class="app">
+        
+        <div class="visual-panel">
+          <div class="organic-shape"></div>
+          
+          <div class="visual-content">
+            <span class="top-tag">Cadastro Empresarial</span>
+            <h1>Cadastre sua empresa e faça parte da mudança.</h1>
+          </div>
 
-        <form>
-          <label for="nome">Nome completo</label>
-          <input id="nome" type="text" placeholder="Digite seu nome" required />
-
-          <label for="email">E-mail</label>
-          <input
-            id="email"
-            type="email"
-            placeholder="Digite seu e-mail"
-            required
+          <img
+            src="assets/image_c32c62.jpg"
+            alt="Fachada corporativa sustentável EcoTech"
+            class="building-image"
           />
+        </div>
 
-          <label for="cpf">CPF</label>
-          <input id="cpf" type="text" placeholder="Digite seu CPF" required />
+        <div class="register">
+          <div class="eco-logo">
+            <img src="assets/fivecom.png" alt="EcoTech Logo" />
+          </div>
+          
+          <h1>Cadastro Empresarial</h1>
+          <p>Preencha os dados da sua empresa para criar sua conta</p>
 
-          <label for="nascimento">Data de nascimento</label>
-          <input id="nascimento" type="date" required />
+          <form id="cadastroEmpresarialForm" action="#" method="POST">
+            
+            <div class="input-group">
+              <label for="cnpj">CNPJ</label>
+              <div class="input-box">
+                <span class="icon">💼</span>
+                <input
+                  type="text"
+                  id="cnpj"
+                  name="cnpj"
+                  placeholder="00.000.000/0000-00"
+                  required
+                  autocomplete="off"
+                  maxlength="18"
+                />
+              </div>
+            </div>
 
-          <label for="senha">Senha</label>
-          <input
-            id="senha"
-            type="password"
-            placeholder="Digite sua senha"
-            required
-          />
+            <div class="input-group">
+              <label for="nome_empresa">Nome Completo da Empresa</label>
+              <div class="input-box">
+                <span class="icon">🏢</span>
+                <input
+                  type="text"
+                  id="nome_empresa"
+                  name="nome_empresa"
+                  placeholder="Digite o nome completo da empresa"
+                  required
+                  autocomplete="organization"
+                />
+              </div>
+            </div>
 
-          <button type="submit">Cadastrar</button>
-        </form>
+            <div class="input-group">
+              <label for="endereco">Endereço</label>
+              <div class="input-box">
+                <span class="icon">📍</span>
+                <input
+                  type="text"
+                  id="endereco"
+                  name="endereco"
+                  placeholder="Rua, número, bairro, cidade, Estado, CEP"
+                  required
+                  autocomplete="street-address"
+                />
+              </div>
+            </div>
 
-        <a class="link-extra" href="esqueci_senha.html">Esqueci minha senha</a>
+            <div class="input-group">
+              <label for="razao_social">Razão Social</label>
+              <div class="input-box">
+                <span class="icon">📄</span>
+                <input
+                  type="text"
+                  id="razao_social"
+                  name="razao_social"
+                  placeholder="Digite a razão social da empresa"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="email">E-mail</label>
+              <div class="input-box">
+                <span class="icon">✉️</span>
+                <input
+                  type="type"
+                  id="email"
+                  name="email"
+                  placeholder="exemplo@empresa.com.br"
+                  required
+                  autocomplete="email"
+                />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="password">Senha</label>
+              <div class="input-box">
+                <span class="icon">🔒</span>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Crie uma senha segura"
+                  required
+                  autocomplete="new-password"
+                />
+                <span class="eye" id="btnTogglePassword">👁️</span>
+              </div>
+=======
+        <section class="register">
+          <div class="eco-logo">
+            <img src="./assets/logo.svg" alt="EcoTech" />
+          </div>
+
+          <h1>Crie sua conta!</h1>
+          <p>
+            Cadastre-se para acompanhar nossos projetos<br />e fazer parte da
+            EcoTech.
+          </p>
+
+          <form id="formCadastro" autocomplete="off">
+            <!-- EMAIL -->
+            <label for="email">E-mail</label>
+            <div class="input-box">
+              <span>✉</span>
+              <input
+                id="email"
+                type="email"
+                placeholder="seu@email.com"
+                maxlength="120"
+                required
+              />
+            </div>
+
+            <!-- CPF -->
+            <label for="cpf">CPF</label>
+            <div class="input-box">
+              <span>▣</span>
+              <input
+                id="cpf"
+                type="text"
+                placeholder="000.000.000-00"
+                maxlength="14"
+                required
+              />
+            </div>
+
+            <!-- NOME COMPLETO -->
+            <label for="nome">Nome completo</label>
+            <div class="input-box">
+              <span>👤</span>
+              <input
+                id="nome"
+                type="text"
+                placeholder="Digite seu nome completo"
+                maxlength="80"
+                required
+              />
+            </div>
+
+            <!-- NOME DA MÃE -->
+            <label for="nomeMae">Nome da mãe</label>
+            <div class="input-box">
+              <span>👩</span>
+              <input
+                id="nomeMae"
+                type="text"
+                placeholder="Digite o nome da sua mãe"
+                maxlength="80"
+                required
+              />
+            </div>
+
+            <!-- DATA DE NASCIMENTO -->
+            <label for="nascimento">Sua data de nascimento</label>
+            <div class="input-box">
+              <span>📅</span>
+              <input id="nascimento" type="date" required />
+            </div>
+
+            <!-- SENHA -->
+            <label for="senha">Senha</label>
+            <div class="input-box">
+              <span>🔒</span>
+              <input
+                id="senha"
+                type="password"
+                placeholder="Digite sua senha"
+                maxlength="32"
+                required
+              />
+              <span class="eye" onclick="togglePassword('senha')">◎</span>
+            </div>
+
+            <!-- CONFIRMAR SENHA -->
+            <label for="confirmarSenha">Confirmar senha</label>
+            <div class="input-box">
+              <span>🔐</span>
+              <input
+                id="confirmarSenha"
+                type="password"
+                placeholder="Digite novamente sua senha"
+                maxlength="32"
+                required
+              />
+              <span class="eye" onclick="togglePassword('confirmarSenha')"
+                >◎</span
+              >
+>>>>>>> main
+            </div>
+
+            <div class="terms-card">
+              <label class="terms-label">
+<<<<<<< HEAD
+                <input type="checkbox" required />
+                <span>Declaro que li e aceito os <a href="#">Termos de Uso</a> e as <a href="#">Políticas de Privacidade</a> da EcoTech.</span>
+              </label>
+            </div>
+
+            <button type="submit">Criar Conta</button>
+
+            <small>Já possui uma conta? <a href="login.html">Entrar</a></small>
+          </form>
+        </div>
+
+      </div>
+    </main>
+
+    <div class="toast" id="toastMessage">Cadastro enviado com sucesso!</div>
+
+    <script>
+      "use strict";
+
+      /* MÁSCARA AUTOMÁTICA PARA CNPJ */
+      const cnpjInput = document.getElementById("cnpj");
+      if (cnpjInput) {
+        cnpjInput.addEventListener("input", (e) => {
+          let value = e.target.value.replace(/\D/g, "");
+          if (value.length > 14) value = value.slice(0, 14);
+
+          value = value.replace(/^(\d{2})(\d)/, "$1.$2");
+          value = value.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
+          value = value.replace(/\.(\d{3})(\d)/, ".$1/$2");
+          value = value.replace(/(\d{4})(\d)/, "$1-$2");
+
+          e.target.value = value;
+        });
+      }
+
+      /* EXIBIÇÃO INTERATIVA DA SENHA */
+      const btnTogglePassword = document.getElementById("btnTogglePassword");
+      const passwordInput = document.getElementById("password");
+
+      if (btnTogglePassword && passwordInput) {
+        btnTogglePassword.addEventListener("click", () => {
+          const isPassword = passwordInput.type === "password";
+          passwordInput.type = isPassword ? "text" : "password";
+          btnTogglePassword.textContent = isPassword ? "🙈" : "👁️";
+        });
+      }
+
+      /* INTERCEPTAÇÃO DO FORMULÁRIO E TOAST */
+      document.getElementById("cadastroEmpresarialForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const toast = document.getElementById("toastMessage");
+        toast.classList.add("show");
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 4000);
+=======
+                <input type="checkbox" id="aceitarTermos" />
+
+                <span>
+                  Ao criar uma conta, você concorda com nossos
+                  <a
+                    href="https://www.termsfeed.com/live/7f2df7c4-3d8c-4c6a-b5b8-2e9f8b4c8f95"
+                    target="_blank"
+                  >
+                    Termos e Condições
+                  </a>
+                  e nossa Política de Privacidade.
+                </span>
+              </label>
+            </div>
+
+            <button type="submit">Cadastrar</button>
+          </form>
+
+          <small>Já tem uma conta? <a href="login.html">Entrar</a></small>
+        </section>
       </section>
     </main>
 
+    <div class="toast" id="toast"></div>
+
     <script>
-      const formCadastro = document.querySelector("form");
+      let toastTimer;
 
-      formCadastro.addEventListener("submit", function (event) {
-        event.preventDefault();
+      function showToast(msg) {
+        const toast = document.getElementById("toast");
+        toast.textContent = msg;
+        toast.classList.add("show");
 
-        const nome = document.getElementById("nome").value;
-        const email = document.getElementById("email").value;
-        const cpf = document.getElementById("cpf").value;
-        const nascimento = document.getElementById("nascimento").value;
-        const senha = document.getElementById("senha").value;
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
 
-        if (
-          nome === "" ||
-          email === "" ||
-          cpf === "" ||
-          nascimento === "" ||
-          senha === ""
-        ) {
-          alert("Preencha todos os campos!");
-          return;
+      function togglePassword(id) {
+        const campo = document.getElementById(id);
+
+        campo.type = campo.type === "password" ? "text" : "password";
+      }
+
+      function setCookie(name, value, days) {
+        const date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        document.cookie =
+          encodeURIComponent(name) +
+          "=" +
+          encodeURIComponent(value) +
+          "; expires=" +
+          date.toUTCString() +
+          "; path=/; SameSite=Lax";
+      }
+
+      function cleanText(value) {
+        return value.trim().replace(/\s+/g, " ");
+      }
+
+      function formatCPF(value) {
+        return value
+          .replace(/\D/g, "")
+          .replace(/(\d{3})(\d)/, "$1.$2")
+          .replace(/(\d{3})(\d)/, "$1.$2")
+          .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+      }
+
+      function validarCPF(cpf) {
+        cpf = cpf.replace(/\D/g, "");
+
+        if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) {
+          return false;
         }
 
-        localStorage.setItem("emailUsuario", email);
-        localStorage.setItem("senhaUsuario", senha);
+        let soma = 0;
+        let resto;
 
-        alert("Cadastro realizado com sucesso!");
+        for (let i = 1; i <= 9; i++) {
+          soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+        }
+
+        resto = (soma * 10) % 11;
+        if (resto === 10 || resto === 11) resto = 0;
+        if (resto !== parseInt(cpf.substring(9, 10))) return false;
+
+        soma = 0;
+
+        for (let i = 1; i <= 10; i++) {
+          soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+        }
+
+        resto = (soma * 10) % 11;
+        if (resto === 10 || resto === 11) resto = 0;
+
+        return resto === parseInt(cpf.substring(10, 11));
+      }
+
+      function calcularIdade(dataNascimento) {
+        const hoje = new Date();
+        const nascimento = new Date(dataNascimento);
+        let idade = hoje.getFullYear() - nascimento.getFullYear();
+        const mes = hoje.getMonth() - nascimento.getMonth();
+
+        if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
+          idade--;
+        }
+
+        return idade;
+      }
+
+      function senhaSegura(senha) {
+        return (
+          senha.length >= 8 &&
+          /[A-Z]/.test(senha) &&
+          /[a-z]/.test(senha) &&
+          /\d/.test(senha)
+        );
+      }
+
+      document.getElementById("cpf").addEventListener("input", function () {
+        this.value = formatCPF(this.value);
+>>>>>>> main
       });
+
+      document
+        .getElementById("formCadastro")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const confirmarSenha =
+            document.getElementById("confirmarSenha").value;
+          const nome = cleanText(document.getElementById("nome").value);
+          const email = cleanText(
+            document.getElementById("email").value,
+          ).toLowerCase();
+          const cpf = document.getElementById("cpf").value.trim();
+          const nomeMae = cleanText(document.getElementById("nomeMae").value);
+          const nascimento = document.getElementById("nascimento").value;
+          const senha = document.getElementById("senha").value;
+
+          if (!nome || !email || !cpf || !nomeMae || !nascimento || !senha) {
+            showToast("Preencha todos os campos.");
+            return;
+          }
+
+          if (nome.length < 3 || nomeMae.length < 3) {
+            showToast("Nome inválido.");
+            return;
+          }
+
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            showToast("E-mail inválido.");
+            return;
+          }
+
+          if (!validarCPF(cpf)) {
+            showToast("CPF inválido.");
+            return;
+          }
+
+          if (calcularIdade(nascimento) < 13) {
+            showToast("Cadastro permitido apenas para maiores de 13 anos.");
+            return;
+          }
+
+          if (!senhaSegura(senha)) {
+            showToast("Use 8 caracteres, letra maiúscula, minúscula e número.");
+            return;
+          }
+
+          const aceitarTermos = document.getElementById("aceitarTermos");
+
+          if (!aceitarTermos.checked) {
+            showToast("Você precisa aceitar os Termos e Condições.");
+            return;
+          }
+
+          const usuario = {
+            nome,
+            email,
+            cpf,
+            nomeMae,
+            nascimento,
+            criadoEm: new Date().toISOString(),
+          };
+
+          localStorage.setItem("usuarioEcoTech", JSON.stringify(usuario));
+          sessionStorage.setItem("cadastroValidado", "true");
+
+          setCookie("ecoTechEmail", email, 7);
+          setCookie("ecoTechCadastro", "ativo", 7);
+
+          showToast("Cadastro realizado com sucesso!");
+
+          setTimeout(() => {
+            window.location.href = "login.html";
+          }, 1400);
+        });
     </script>
   </body>
 </html>
