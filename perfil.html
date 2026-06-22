@@ -3,18 +3,354 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>perfil</title>
+    <title>Perfil — EcoTech</title>
     <link rel="stylesheet" href="css/perfil.css" />
+    <style>
+      /* ── Variáveis base (caso perfil.css não as defina) ── */
+      :root {
+        --card: #ffffff;
+        --border: #e8f0e8;
+        --text-muted: #6b8f6c;
+        --green: #2e7d32;
+        --green-mid: #388e3c;
+        --green-dark: #1b5e20;
+        --green-accent: #4caf50;
+        --green-pale: #e8f5e9;
+        --gold-light: #fff8e1;
+        --bg: #f5f7f5;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        font-family: 'Poppins', 'Plus Jakarta Sans', sans-serif;
+        background: var(--bg);
+        color: #1a2e1b;
+        min-height: 100vh;
+      }
+
+      /* ════════════════════════
+         MODAL BASE
+      ════════════════════════ */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.55);
+        z-index: 3000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s;
+      }
+      .modal-overlay.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .modal-box {
+        background: var(--card);
+        border-radius: 24px;
+        padding: 28px;
+        max-width: 420px;
+        width: 100%;
+        transform: translateY(24px);
+        transition: transform 0.28s cubic-bezier(0.22,1,0.36,1);
+        position: relative;
+      }
+      .modal-overlay.show .modal-box {
+        transform: translateY(0);
+      }
+      .modal-close-x {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 32px;
+        height: 32px;
+        border: none;
+        background: var(--green-pale);
+        border-radius: 50%;
+        font-size: 16px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--green-mid);
+        transition: background 0.2s;
+      }
+      .modal-close-x:hover { background: #c8e6c9; }
+
+      /* ════════════════════════
+         MODAL NOTIFICAÇÕES
+      ════════════════════════ */
+      #modal-notif .modal-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--green-dark);
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      #modal-notif .modal-subtitle {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-bottom: 22px;
+      }
+
+      .notif-options {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+      .notif-option {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 16px;
+        border-radius: 14px;
+        border: 2px solid var(--border);
+        cursor: pointer;
+        transition: border-color 0.2s, background 0.2s;
+        user-select: none;
+      }
+      .notif-option:hover { background: var(--green-pale); }
+      .notif-option.selected {
+        border-color: var(--green-accent);
+        background: var(--green-pale);
+      }
+      .notif-option-icon { font-size: 28px; flex-shrink: 0; }
+      .notif-option-text strong {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #1a2e1b;
+        margin-bottom: 2px;
+      }
+      .notif-option-text span {
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+      .notif-option-check {
+        margin-left: auto;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s, border-color 0.2s;
+      }
+      .notif-option.selected .notif-option-check {
+        background: var(--green-accent);
+        border-color: var(--green-accent);
+      }
+      .notif-option.selected .notif-option-check::after {
+        content: '✓';
+        color: #fff;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .btn-salvar {
+        width: 100%;
+        padding: 13px;
+        border: none;
+        border-radius: 14px;
+        background: var(--green-mid);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: inherit;
+        transition: background 0.2s, transform 0.1s;
+      }
+      .btn-salvar:hover { background: var(--green); }
+      .btn-salvar:active { transform: scale(0.98); }
+
+      /* ════════════════════════
+         MODAL EDITAR PERFIL
+      ════════════════════════ */
+      #modal-editar .modal-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--green-dark);
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      #modal-editar .modal-subtitle {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-bottom: 22px;
+      }
+
+      .input-group {
+        margin-bottom: 16px;
+      }
+      .input-group label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--green-dark);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .input-group input {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        font-size: 14px;
+        font-family: inherit;
+        color: #1a2e1b;
+        background: var(--bg);
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+      .input-group input:focus {
+        border-color: var(--green-accent);
+        box-shadow: 0 0 0 3px rgba(76,175,80,0.15);
+      }
+
+      .divider-modal {
+        height: 1.5px;
+        background: var(--border);
+        margin: 20px 0;
+      }
+
+      .zona-perigo {
+        background: #fff5f5;
+        border: 1.5px solid #ffcdd2;
+        border-radius: 14px;
+        padding: 16px;
+        margin-bottom: 20px;
+      }
+      .zona-perigo h4 {
+        font-size: 13px;
+        font-weight: 700;
+        color: #c62828;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .zona-perigo p {
+        font-size: 12px;
+        color: #e53935;
+        margin-bottom: 12px;
+        line-height: 1.5;
+      }
+      .btn-excluir {
+        width: 100%;
+        padding: 11px;
+        border: 1.5px solid #e53935;
+        border-radius: 12px;
+        background: transparent;
+        color: #e53935;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: inherit;
+        transition: background 0.2s, color 0.2s;
+      }
+      .btn-excluir:hover {
+        background: #e53935;
+        color: #fff;
+      }
+
+      /* ════════════════════════
+         MODAL CONFIRMAR EXCLUSÃO
+      ════════════════════════ */
+      #modal-confirm .modal-box { text-align: center; }
+      #modal-confirm .modal-icon { font-size: 52px; margin-bottom: 12px; }
+      #modal-confirm .modal-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: #c62828;
+        margin-bottom: 8px;
+      }
+      #modal-confirm .modal-subtitle {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-bottom: 24px;
+        line-height: 1.6;
+      }
+      .confirm-btns {
+        display: flex;
+        gap: 10px;
+      }
+      .btn-cancelar {
+        flex: 1;
+        padding: 12px;
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        background: transparent;
+        color: var(--text-muted);
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: inherit;
+        transition: background 0.2s;
+      }
+      .btn-cancelar:hover { background: var(--green-pale); }
+      .btn-confirmar-excluir {
+        flex: 1;
+        padding: 12px;
+        border: none;
+        border-radius: 12px;
+        background: #e53935;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: inherit;
+        transition: background 0.2s;
+      }
+      .btn-confirmar-excluir:hover { background: #c62828; }
+
+      /* ── Toast ── */
+      .eco-toast {
+        position: fixed;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        background: #1b5e20;
+        color: #fff;
+        padding: 11px 22px;
+        border-radius: 50px;
+        font-size: 13px;
+        font-weight: 500;
+        font-family: inherit;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s;
+        z-index: 9999;
+        white-space: nowrap;
+      }
+      .eco-toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    </style>
   </head>
   <body>
     <main class="page">
       <div class="page" id="page-perfil">
         <div class="profile-page">
+
+          <!-- HEADER DO PERFIL -->
           <div class="profile-header">
-            <div class="avatar">JC</div>
+            <div class="avatar" id="avatar-initials">JC</div>
             <div>
-              <div class="profile-name">João Carlos</div>
-              <div class="profile-email">joaocarlos@email.com</div>
+              <div class="profile-name" id="profile-name-display">João Carlos</div>
+              <div class="profile-email" id="profile-email-display">joaocarlos@email.com</div>
               <div class="level-badge">🌿 Reciclador Prata</div>
               <div class="coin-badge">
                 <span class="coin-icon">🪙</span>
@@ -22,126 +358,52 @@
               </div>
             </div>
           </div>
+
+          <!-- CONFIGURAÇÕES -->
           <div class="section-card">
             <h3>Configurações da Conta</h3>
-            <div class="menu-row">
+            <div class="menu-row" id="btn-editar-perfil">
               <div class="menu-row-left"><span>👤</span>Editar Perfil</div>
               <span class="menu-arrow">›</span>
             </div>
-            <div class="menu-row">
+            <div class="menu-row" id="btn-notificacoes">
               <div class="menu-row-left"><span>🔔</span>Notificações</div>
               <span class="menu-arrow">›</span>
             </div>
-            <div class="menu-row">
-              <div class="menu-row-left"><span>🔒</span>Segurança</div>
-              <span class="menu-arrow">›</span>
-            </div>
           </div>
+
+          <!-- ECOTECH -->
           <div class="section-card">
             <h3>EcoTech</h3>
             <div class="menu-row">
-              <div class="menu-row-left">
-                <span>🏆</span>Ranking de Recicladores
-              </div>
-              <span class="menu-arrow">›</span>
-            </div>
-            <div class="menu-row">
-              <div class="menu-row-left"><span>🌍</span>Impacto Ambiental</div>
-              <span class="menu-arrow">›</span>
+              <div class="menu-row-left"><span>🌍 Impacto Ambiental</a></span></div>
+              <span class="menu-arrow"><a href="https://www.inea.rj.gov.br/">›</a></span>
             </div>
           </div>
+
+          <!-- IMPACTO -->
           <div class="section-card">
             <h3>Impacto Ambiental Pessoal</h3>
-            <div
-              style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px"
-            >
-              <div
-                style="
-                  background: var(--green-pale);
-                  border-radius: 12px;
-                  padding: 14px;
-                  text-align: center;
-                "
-              >
-                <div style="font-size: 28px">🌳</div>
-                <div
-                  style="
-                    font-size: 20px;
-                    font-weight: 700;
-                    color: var(--green-mid);
-                  "
-                >
-                  12
-                </div>
-                <div style="font-size: 11px; color: var(--text-muted)">
-                  árvores salvas
-                </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div style="background:var(--green-pale);border-radius:12px;padding:14px;text-align:center">
+                <div style="font-size:28px">🌳</div>
+                <div style="font-size:20px;font-weight:700;color:var(--green-mid)">12</div>
+                <div style="font-size:11px;color:var(--text-muted)">árvores salvas</div>
               </div>
-              <div
-                style="
-                  background: var(--green-pale);
-                  border-radius: 12px;
-                  padding: 14px;
-                  text-align: center;
-                "
-              >
-                <div style="font-size: 28px">💧</div>
-                <div
-                  style="
-                    font-size: 20px;
-                    font-weight: 700;
-                    color: var(--green-mid);
-                  "
-                >
-                  470L
-                </div>
-                <div style="font-size: 11px; color: var(--text-muted)">
-                  água preservada
-                </div>
+              <div style="background:var(--green-pale);border-radius:12px;padding:14px;text-align:center">
+                <div style="font-size:28px">💧</div>
+                <div style="font-size:20px;font-weight:700;color:var(--green-mid)">470L</div>
+                <div style="font-size:11px;color:var(--text-muted)">água preservada</div>
               </div>
-              <div
-                style="
-                  background: var(--green-pale);
-                  border-radius: 12px;
-                  padding: 14px;
-                  text-align: center;
-                "
-              >
-                <div style="font-size: 28px">⚡</div>
-                <div
-                  style="
-                    font-size: 20px;
-                    font-weight: 700;
-                    color: var(--green-mid);
-                  "
-                >
-                  83kWh
-                </div>
-                <div style="font-size: 11px; color: var(--text-muted)">
-                  energia economizada
-                </div>
+              <div style="background:var(--green-pale);border-radius:12px;padding:14px;text-align:center">
+                <div style="font-size:28px">⚡</div>
+                <div style="font-size:20px;font-weight:700;color:var(--green-mid)">83kWh</div>
+                <div style="font-size:11px;color:var(--text-muted)">energia economizada</div>
               </div>
-              <div
-                style="
-                  background: var(--green-pale);
-                  border-radius: 12px;
-                  padding: 14px;
-                  text-align: center;
-                "
-              >
-                <div style="font-size: 28px">🌿</div>
-                <div
-                  style="
-                    font-size: 20px;
-                    font-weight: 700;
-                    color: var(--green-mid);
-                  "
-                >
-                  94kg
-                </div>
-                <div style="font-size: 11px; color: var(--text-muted)">
-                  CO₂ evitado
-                </div>
+              <div style="background:var(--green-pale);border-radius:12px;padding:14px;text-align:center">
+                <div style="font-size:28px">🌿</div>
+                <div style="font-size:20px;font-weight:700;color:var(--green-mid)">94kg</div>
+                <div style="font-size:11px;color:var(--text-muted)">CO₂ evitado</div>
               </div>
             </div>
             <div class="menu-row">
@@ -149,8 +411,235 @@
               <span class="menu-arrow">›</span>
             </div>
           </div>
+
         </div>
       </div>
     </main>
+
+    <!-- ════════════════════════════════
+         MODAL NOTIFICAÇÕES
+    ════════════════════════════════ -->
+    <div class="modal-overlay" id="modal-notif">
+      <div class="modal-box">
+        <button class="modal-close-x" id="close-notif">✕</button>
+        <div class="modal-title">🔔 Notificações</div>
+        <div class="modal-subtitle">Escolha como deseja receber alertas da EcoTech.</div>
+
+        <div class="notif-options">
+          <div class="notif-option selected" data-value="todas">
+            <div class="notif-option-icon">🔔</div>
+            <div class="notif-option-text">
+              <strong>Todas as notificações</strong>
+              <span>Coletas, recompensas, novidades e alertas</span>
+            </div>
+            <div class="notif-option-check"></div>
+          </div>
+          <div class="notif-option" data-value="algumas">
+            <div class="notif-option-icon">🔕</div>
+            <div class="notif-option-text">
+              <strong>Apenas importantes</strong>
+              <span>Somente coletas agendadas e EcoCredits</span>
+            </div>
+            <div class="notif-option-check"></div>
+          </div>
+          <div class="notif-option" data-value="nenhuma">
+            <div class="notif-option-icon">🚫</div>
+            <div class="notif-option-text">
+              <strong>Nenhuma notificação</strong>
+              <span>Silenciar todos os alertas</span>
+            </div>
+            <div class="notif-option-check"></div>
+          </div>
+        </div>
+
+        <button class="btn-salvar" id="salvar-notif">Salvar preferências</button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         MODAL EDITAR PERFIL
+    ════════════════════════════════ -->
+    <div class="modal-overlay" id="modal-editar">
+      <div class="modal-box">
+        <button class="modal-close-x" id="close-editar">✕</button>
+        <div class="modal-title">👤 Editar Perfil</div>
+        <div class="modal-subtitle">Atualize seus dados pessoais.</div>
+
+        <div class="input-group">
+          <label>Nome completo</label>
+          <input type="text" id="input-nome" placeholder="Seu nome completo" />
+        </div>
+        <div class="input-group">
+          <label>E-mail</label>
+          <input type="email" id="input-email" placeholder="seu@email.com" disabled
+            style="opacity:0.6;cursor:not-allowed;" />
+        </div>
+
+        <button class="btn-salvar" id="salvar-perfil">Salvar alterações</button>
+
+        <div class="divider-modal"></div>
+
+        <div class="zona-perigo">
+          <h4>⚠️ Zona de perigo</h4>
+          <p>Ao excluir sua conta, todos os seus dados, EcoCredits e histórico de coletas serão permanentemente removidos.</p>
+          <button class="btn-excluir" id="btn-excluir-conta">Excluir minha conta</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         MODAL CONFIRMAR EXCLUSÃO
+    ════════════════════════════════ -->
+    <div class="modal-overlay" id="modal-confirm">
+      <div class="modal-box">
+        <div class="modal-icon">🗑️</div>
+        <div class="modal-title">Excluir conta?</div>
+        <div class="modal-subtitle">
+          Esta ação é <strong>irreversível</strong>. Todos os seus dados, EcoCredits e histórico serão apagados para sempre.
+        </div>
+        <div class="confirm-btns">
+          <button class="btn-cancelar" id="cancelar-exclusao">Cancelar</button>
+          <button class="btn-confirmar-excluir" id="confirmar-exclusao">Sim, excluir</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="eco-toast" id="eco-toast"></div>
+
+    <script>
+      const SESSION_KEY = "ecotech_session";
+
+      /* ── Sessão ── */
+      function getSession() {
+        try {
+          return JSON.parse(sessionStorage.getItem(SESSION_KEY)) ||
+                 JSON.parse(localStorage.getItem(SESSION_KEY)) || null;
+        } catch (_) { return null; }
+      }
+
+      function saveSession(sessao) {
+        const inLocal = !!localStorage.getItem(SESSION_KEY);
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+        if (inLocal) localStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+      }
+
+      /* ── Preenche dados da sessão no header ── */
+      const sessao = getSession();
+      if (sessao) {
+        document.getElementById("profile-name-display").textContent = sessao.nome || "Usuário";
+        document.getElementById("profile-email-display").textContent = sessao.email || "";
+        document.getElementById("input-nome").value = sessao.nome || "";
+        document.getElementById("input-email").value = sessao.email || "";
+        const initials = (sessao.nome || "?").split(" ").map(n => n[0]).slice(0,2).join("").toUpperCase();
+        document.getElementById("avatar-initials").textContent = initials;
+      } else {
+        document.getElementById("input-nome").value = "João Carlos";
+        document.getElementById("input-email").value = "joaocarlos@email.com";
+      }
+
+      /* ── Toast ── */
+      let toastTimer;
+      function showToast(msg) {
+        const t = document.getElementById("eco-toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => t.classList.remove("show"), 3000);
+      }
+
+      /* ── Modal helpers ── */
+      function openModal(id) { document.getElementById(id).classList.add("show"); }
+      function closeModal(id) { document.getElementById(id).classList.remove("show"); }
+
+      /* Fechar ao clicar no overlay */
+      document.querySelectorAll(".modal-overlay").forEach(ov => {
+        ov.addEventListener("click", e => {
+          if (e.target === ov) ov.classList.remove("show");
+        });
+      });
+
+      /* ── Abrir modais ── */
+      document.getElementById("btn-notificacoes").addEventListener("click", () => openModal("modal-notif"));
+      document.getElementById("btn-editar-perfil").addEventListener("click", () => openModal("modal-editar"));
+
+      /* ── Fechar modais ── */
+      document.getElementById("close-notif").addEventListener("click", () => closeModal("modal-notif"));
+      document.getElementById("close-editar").addEventListener("click", () => closeModal("modal-editar"));
+      document.getElementById("cancelar-exclusao").addEventListener("click", () => closeModal("modal-confirm"));
+
+      /* ── Notificações: seleção ── */
+      const notifOpts = document.querySelectorAll(".notif-option");
+      notifOpts.forEach(opt => {
+        opt.addEventListener("click", () => {
+          notifOpts.forEach(o => o.classList.remove("selected"));
+          opt.classList.add("selected");
+        });
+      });
+
+      /* Carrega preferência salva */
+      const savedNotif = localStorage.getItem("eco_notif") || "todas";
+      document.querySelector(`.notif-option[data-value="${savedNotif}"]`)?.classList.add("selected");
+      document.querySelector(`.notif-option:not([data-value="${savedNotif}"])`)?.classList.remove("selected");
+
+      document.getElementById("salvar-notif").addEventListener("click", () => {
+        const selected = document.querySelector(".notif-option.selected")?.dataset.value;
+        if (selected) localStorage.setItem("eco_notif", selected);
+        closeModal("modal-notif");
+        const labels = { todas: "Todas as notificações ativadas ✓", algumas: "Apenas notificações importantes ✓", nenhuma: "Notificações desativadas ✓" };
+        showToast(labels[selected] || "Salvo!");
+      });
+
+      /* ── Editar perfil: salvar nome ── */
+      document.getElementById("salvar-perfil").addEventListener("click", () => {
+        const novoNome = document.getElementById("input-nome").value.trim();
+        if (!novoNome) { showToast("Digite um nome válido."); return; }
+
+        document.getElementById("profile-name-display").textContent = novoNome;
+        const initials = novoNome.split(" ").map(n => n[0]).slice(0,2).join("").toUpperCase();
+        document.getElementById("avatar-initials").textContent = initials;
+
+        if (sessao) {
+          sessao.nome = novoNome;
+          saveSession(sessao);
+        }
+
+        closeModal("modal-editar");
+        showToast("Perfil atualizado com sucesso ✓");
+      });
+
+      /* ── Excluir conta ── */
+      document.getElementById("btn-excluir-conta").addEventListener("click", () => {
+        closeModal("modal-editar");
+        openModal("modal-confirm");
+      });
+
+      document.getElementById("confirmar-exclusao").addEventListener("click", () => {
+        sessionStorage.removeItem(SESSION_KEY);
+        localStorage.removeItem(SESSION_KEY);
+        localStorage.removeItem("ecotech_user_id");
+        localStorage.removeItem("usuariosEcoTech");
+        closeModal("modal-confirm");
+        showToast("Conta excluída. Redirecionando...");
+        setTimeout(() => { window.location.href = "login.html"; }, 1800);
+      });
+      document.getElementById("btn-indicar").addEventListener("click", () => {
+        const link = "https://eco-tech-blush.vercel.app/index.html";
+        navigator.clipboard.writeText(link)
+          .then(() => showToast("🔗 Link copiado! Compartilhe com seus amigos ✓"))
+          .catch(() => {
+            /* fallback para navegadores sem permissão de clipboard */
+            const el = document.createElement("textarea");
+            el.value = link;
+            el.style.position = "fixed";
+            el.style.opacity = "0";
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand("copy");
+            document.body.removeChild(el);
+            showToast("🔗 Link copiado! Compartilhe com seus amigos ✓");
+          });
+      });
+    </script>
   </body>
 </html>
