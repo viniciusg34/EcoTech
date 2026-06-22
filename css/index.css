@@ -55,16 +55,14 @@
    DARK MODE
 ══════════════════════════════ */
 [data-theme="dark"] {
-  --cream: #121612;
+  --cream: #1d261e;
   --cream2: #1a201b;
   --white: #1e251f;
-  --sage-50: #243025;
+  --sage-50: #282f28;
   --sage-100: #2d422e;
   --sage-200: #406142;
   --sage-400: #5aab5a;
-  --sage-500: #6bbf6b;
   --sage-600: #82d182;
-  --sage-700: #a3e3a3;
 
   --ink: #f0f5f0;
   --ink-2: #d0e0d1;
@@ -357,9 +355,6 @@ body {
   }
 }
 
-/* ══════════════════════════════
-   HERO
-══════════════════════════════ */
 .hero {
   min-height: 100svh;
   padding: 120px 20px 80px;
@@ -380,6 +375,7 @@ body {
   position: relative;
   overflow: hidden;
 }
+
 .blob {
   position: absolute;
   border-radius: 50%;
@@ -644,7 +640,6 @@ body {
 ══════════════════════════════ */
 .hiw-section {
   padding: 80px 20px;
-  background: var(--sage-50);
   position: relative;
   overflow: hidden;
 }
@@ -655,7 +650,6 @@ body {
   left: 0;
   right: 0;
   height: 1.5px;
-  background: linear-gradient(90deg, transparent, var(--sage-200), transparent);
 }
 .hiw-section::after {
   content: "";
@@ -760,8 +754,9 @@ body {
 ══════════════════════════════ */
 .stats-section {
   padding: 72px 20px;
-  background: var(--white);
+  background: var(--cream);
 }
+
 .stats-grid {
   max-width: 1100px;
   margin: 0 auto;
@@ -770,7 +765,7 @@ body {
   gap: 20px;
 }
 .stat-card {
-  background: var(--cream);
+  background: var(--cream2);
   border-radius: var(--br-lg);
   border: 1.5px solid var(--sage-100);
   padding: 32px 24px;
@@ -825,8 +820,9 @@ body {
 ══════════════════════════════ */
 .services-section {
   padding: 80px 20px;
-  background: var(--sage-50);
+  background: var(--cream);
 }
+
 .services-section::before {
   content: "";
   position: absolute;
@@ -836,6 +832,7 @@ body {
   height: 1.5px;
   background: linear-gradient(90deg, transparent, var(--sage-200), transparent);
 }
+
 .services-grid {
   max-width: 1100px;
   margin: 0 auto;
@@ -843,6 +840,7 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
   gap: 16px;
 }
+
 .svc-card {
   background: var(--white);
   border-radius: var(--br-lg);
@@ -858,11 +856,13 @@ body {
     transform 0.3s var(--ease),
     border-color 0.3s;
 }
+
 .svc-card:hover {
   box-shadow: var(--sh-md);
   transform: translateY(-5px);
   border-color: var(--sage-200);
 }
+
 .svc-icon-wrap {
   width: 52px;
   height: 52px;
@@ -876,22 +876,26 @@ body {
     background 0.3s,
     transform 0.3s;
 }
+
 .svc-card:hover .svc-icon-wrap {
   background: var(--sage-100);
   transform: rotate(-6deg) scale(1.08);
 }
+
 .svc-card h3 {
   font-weight: 700;
   font-size: 1.02rem;
   color: var(--ink);
   letter-spacing: -0.015em;
 }
+
 .svc-card p {
   font-size: 0.875rem;
   color: var(--ink-3);
   line-height: 1.7;
   flex: 1;
 }
+
 .svc-link {
   font-size: 0.82rem;
   font-weight: 700;
@@ -902,6 +906,7 @@ body {
   text-decoration: none;
   transition: gap 0.2s;
 }
+
 .svc-card:hover .svc-link {
   gap: 9px;
 }
@@ -910,9 +915,8 @@ body {
    MAPA
 ══════════════════════════════ */
 
-
 .map-section {
-  background: var(--white);
+  background: var(--cream);
   padding: 80px 24px;
   margin: 40px 0;
 }
@@ -959,6 +963,7 @@ body {
 .leaflet-popup-content {
   margin: 16px !important;
 }
+
 .leaflet-popup-close-button {
   top: 8px !important;
   right: 8px !important;
@@ -986,6 +991,7 @@ body {
   color: var(--ink-2);
   transition: opacity 0.25s ease;
 }
+
 .map-balloon::after {
   content: "";
   position: absolute;
@@ -999,19 +1005,23 @@ body {
   transform: rotate(45deg);
   border-radius: 0 0 3px 0;
 }
+
 [data-theme="dark"] .map-balloon {
   background: rgba(30, 37, 31, 0.97);
   border-color: var(--sage-100);
 }
+
 .map-balloon .balloon-text {
   display: flex;
   flex-direction: column;
   line-height: 1.3;
 }
+
 .map-balloon .balloon-text strong {
   font-size: 1.05rem;
   color: var(--sage-600);
 }
+
 .map-balloon .balloon-refresh {
   flex-shrink: 0;
   width: 30px;
@@ -1029,10 +1039,12 @@ body {
     transform 0.2s,
     background 0.2s;
 }
+
 .map-balloon .balloon-refresh:hover {
   background: var(--sage-600);
   transform: scale(1.06);
 }
+
 .map-balloon .balloon-refresh.is-text {
   width: auto;
   border-radius: var(--br-pill);
@@ -1043,7 +1055,7 @@ body {
 ══════════════════════════════ */
 .testi-section {
   padding: 80px 20px;
-  background: linear-gradient(135deg, var(--sage-50) 0%, var(--cream2) 100%);
+  background: var(--cream);
   position: relative;
   overflow: hidden;
 }
@@ -1122,12 +1134,14 @@ body {
 ══════════════════════════════ */
 .faq-section {
   padding: 80px 20px;
-  background: var(--white);
+  background: var(--cream);
 }
+
 .faq-wrap {
   max-width: 760px;
   margin: 0 auto;
 }
+
 .faq-item {
   border: 1.5px solid var(--sage-100);
   border-radius: var(--br-md);
@@ -1138,10 +1152,12 @@ body {
     box-shadow 0.25s;
   background: var(--white);
 }
+
 .faq-item.open {
   border-color: var(--sage-200);
   box-shadow: var(--sh-sm);
 }
+
 .faq-q {
   display: flex;
   align-items: center;
@@ -1155,9 +1171,11 @@ body {
   user-select: none;
   transition: background 0.2s;
 }
+
 .faq-q:hover {
   background: var(--mint);
 }
+
 .faq-icon {
   width: 28px;
   height: 28px;
@@ -1174,10 +1192,12 @@ body {
     transform 0.3s var(--ease),
     background 0.2s;
 }
+
 .faq-item.open .faq-icon {
   transform: rotate(45deg);
   background: var(--sage-100);
 }
+
 .faq-a {
   max-height: 0;
   overflow: hidden;
@@ -1186,10 +1206,12 @@ body {
     padding 0.3s;
   padding: 0 22px;
 }
+
 .faq-item.open .faq-a {
   max-height: 200px;
   padding: 0 22px 20px;
 }
+
 .faq-a p {
   font-size: 0.92rem;
   color: var(--ink-3);
@@ -1480,4 +1502,31 @@ footer p {
   .hero {
     padding: 100px 16px 70px;
   }
+}
+
+/* =========================================
+   FUNDO GLOBAL UNIFICADO
+========================================= */
+
+html,
+body,
+.hero,
+.hiw-section,
+.stats-section,
+.services-section,
+.map-section,
+.testi-section,
+.faq-section {
+  background: var(--cream);
+}
+
+.hero-card-visual,
+.step-card,
+.svc-card,
+.testi-card,
+.faq-item,
+.bottom-sheet,
+.map-legend,
+.map-balloon {
+  background: var(--cream2);
 }
