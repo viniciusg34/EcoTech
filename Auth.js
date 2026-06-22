@@ -12,7 +12,7 @@
  
 const DB_USUARIOS = "usuariosEcoTech";
 const DB_EMPRESAS = "empresasEcoTech";
-const SESSION_KEY = "sessaoEcoTech";
+const SESSION_KEY = "ecotech_session"; // sincronizado com eco-session.js
  
 /* ── Hash simples (não é criptografia forte, mas evita senha
    100% em texto puro no localStorage. Suficiente para o
@@ -143,10 +143,10 @@ function autenticarEmpresa(email, senha) {
  
 /* ── Sessão ── */
 function criarSessao(tipo, dadosPublicos) {
-  sessionStorage.setItem(
-    SESSION_KEY,
-    JSON.stringify({ tipo, ...dadosPublicos, logadoEm: new Date().toISOString() }),
-  );
+  // Garante que o campo "nome" existe (eco-session.js usa sessao.nome)
+  const payload = { tipo, ...dadosPublicos, logadoEm: new Date().toISOString() };
+  if (!payload.nome && payload.nomeEmpresa) payload.nome = payload.nomeEmpresa;
+  sessionStorage.setItem(SESSION_KEY, JSON.stringify(payload));
 }
  
 function getSessao() {
