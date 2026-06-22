@@ -5,21 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="assets/fivecom.png" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" />
     <link rel="stylesheet" href="css/cadastro_empresarial.css" />
     <title>Cadastro Empresarial — EcoTech</title>
+
     <script src="./js/auth.js"></script>
+
     <script>
       (function () {
         const saved = localStorage.getItem("eco-theme");
-        const pref =
-          saved ||
-          (window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light");
+        const pref = saved || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
         document.documentElement.setAttribute("data-theme", pref);
       })();
     </script>
@@ -28,19 +23,14 @@
 
     <main class="main-split-container">
       <div class="split-card">
+
         <div class="side-panel-visual">
           <div class="organic-shape"></div>
-
           <div class="visual-content">
             <span class="top-tag">Cadastro Empresarial</span>
             <h1>Cadastre sua empresa e faça parte da mudança.</h1>
           </div>
-
-          <img
-            src="assets/predio-sustentavel.jpg"
-            alt="Fachada corporativa sustentável EcoTech"
-            class="building-img"
-          />
+          <img src="assets/predio-sustentavel.jpg" alt="Fachada corporativa sustentável EcoTech" class="building-img" />
         </div>
 
         <div class="side-panel-form">
@@ -50,115 +40,65 @@
               <p>Preencha os dados da sua empresa para criar sua conta</p>
             </div>
 
-            <form id="cadastroEmpresarialForm" action="index.html">
+            <!-- SEM action nem method — JS intercepta tudo -->
+            <form id="cadastroEmpresarialForm">
+
               <div class="input-group">
                 <label for="cnpj">CNPJ</label>
-                <input
-                  type="text"
-                  id="cnpj"
-                  name="cnpj"
-                  placeholder="00.000.000/0000-00"
-                  required
-                  autocomplete="off"
-                  maxlength="18"
-                />
+                <input type="text" id="cnpj" name="cnpj" placeholder="00.000.000/0000-00"
+                  required autocomplete="off" maxlength="18" />
               </div>
 
               <div class="input-group">
                 <label for="nome_empresa">Nome Completo da Empresa</label>
-                <input
-                  type="text"
-                  id="nome_empresa"
-                  name="nome_empresa"
-                  placeholder="Digite o nome completo da empresa"
-                  required
-                  autocomplete="organization"
-                />
+                <input type="text" id="nome_empresa" name="nome_empresa"
+                  placeholder="Digite o nome completo da empresa" required autocomplete="organization" />
               </div>
 
               <div class="input-group">
                 <label for="endereco">Endereço</label>
-                <input
-                  type="text"
-                  id="endereco"
-                  name="endereco"
-                  placeholder="Rua, número, bairro, cidade, Estado, CEP"
-                  required
-                  autocomplete="street-address"
-                />
+                <input type="text" id="endereco" name="endereco"
+                  placeholder="Rua, número, bairro, cidade, Estado, CEP" required autocomplete="street-address" />
               </div>
 
               <div class="input-group">
                 <label for="razao_social">Razão Social</label>
-                <input
-                  type="text"
-                  id="razao_social"
-                  name="razao_social"
-                  placeholder="Digite a razão social da empresa"
-                  required
-                />
+                <input type="text" id="razao_social" name="razao_social"
+                  placeholder="Digite a razão social da empresa" required />
               </div>
 
               <div class="input-group">
                 <label for="email">E-mail</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="exemplo@empresa.com.br"
-                  required
-                  autocomplete="email"
-                />
+                <input type="email" id="email" name="email"
+                  placeholder="exemplo@empresa.com.br" required autocomplete="email" />
               </div>
 
               <div class="input-group group-password">
                 <label for="password">Senha</label>
                 <div class="password-field-wrapper">
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Crie uma senha segura"
-                    required
-                    autocomplete="new-password"
-                  />
-                  <button
-                    type="button"
-                    class="toggle-password-visibility"
-                    id="btnTogglePassword"
-                    aria-label="Mostrar ou ocultar senha"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="eye-icon"
-                    >
-                      <path
-                        d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
-                      ></path>
+                  <input type="password" id="password" name="password"
+                    placeholder="Crie uma senha segura" required autocomplete="new-password" />
+                  <button type="button" class="toggle-password-visibility" id="btnTogglePassword"
+                    aria-label="Mostrar ou ocultar senha">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                       <circle cx="12" cy="12" r="3"></circle>
                     </svg>
                   </button>
                 </div>
               </div>
 
-              <button type="submit" class="btn-submit-account">
-                Criar Conta
-              </button>
+              <button type="submit" class="btn-submit-account">Criar Conta</button>
 
               <div class="form-footer-toggle">
-                <span
-                  >Já possui uma conta? <a href="login.html">Entrar</a></span
-                >
+                <span>Já possui uma conta? <a href="login.html">Entrar</a></span>
               </div>
+
             </form>
           </div>
         </div>
+
       </div>
     </main>
 
@@ -167,160 +107,103 @@
     <script>
       "use strict";
 
-      /* 1. SINCRO DE TEMA ESCURO / CLARO */
+      /* ── Tema ── */
       const THEME_KEY = "eco-theme";
-      const htmlEl = document.documentElement;
-      const themeBtn = document.getElementById("theme-toggle");
-      const themeIcon = document.getElementById("theme-icon");
+      const htmlEl    = document.documentElement;
 
       function applyTheme(theme) {
         htmlEl.setAttribute("data-theme", theme);
         localStorage.setItem(THEME_KEY, theme);
-        if (themeIcon) themeIcon.textContent = theme === "dark" ? "🌙" : "☀️";
       }
-
       applyTheme(htmlEl.getAttribute("data-theme") || "light");
 
-      if (themeBtn) {
-        themeBtn.addEventListener("click", () => {
-          const next =
-            htmlEl.getAttribute("data-theme") === "dark" ? "light" : "dark";
-          applyTheme(next);
-        });
-      }
-
-      /* 2. MENU RESPONSIVO MOBILE */
-      const menuToggle = document.getElementById("menu-toggle");
-      const mainNav = document.getElementById("main-nav");
-
-      if (menuToggle && mainNav) {
-        menuToggle.addEventListener("click", () => {
-          const isOpen = mainNav.classList.toggle("open");
-          menuToggle.setAttribute("aria-expanded", String(isOpen));
-          menuToggle.textContent = isOpen ? "✕" : "☰";
-        });
-      }
-
-      /* 3. MÁSCARA AUTOMÁTICA PARA CNPJ (00.000.000/0000-00) */
+      /* ── Máscara CNPJ ── */
       const cnpjInput = document.getElementById("cnpj");
       if (cnpjInput) {
         cnpjInput.addEventListener("input", (e) => {
-          let value = e.target.value.replace(/\D/g, "");
-          if (value.length > 14) value = value.slice(0, 14);
-
-          // Aplicação dinâmica da máscara regex institucional
-          value = value.replace(/^(\d{2})(\d)/, "$1.$2");
-          value = value.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
-          value = value.replace(/\.(\d{3})(\d)/, ".$1/$2");
-          value = value.replace(/(\d{4})(\d)/, "$1-$2");
-
-          e.target.value = value;
+          let v = e.target.value.replace(/\D/g, "").slice(0, 14);
+          v = v.replace(/^(\d{2})(\d)/, "$1.$2");
+          v = v.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
+          v = v.replace(/\.(\d{3})(\d)/, ".$1/$2");
+          v = v.replace(/(\d{4})(\d)/, "$1-$2");
+          e.target.value = v;
         });
       }
 
-      /* 4. EXIBIÇÃO INTERATIVA DA SENHA (TOGGLE EYE) */
+      /* ── Toggle senha ── */
       const btnTogglePassword = document.getElementById("btnTogglePassword");
-      const passwordInput = document.getElementById("password");
-
+      const passwordInput     = document.getElementById("password");
       if (btnTogglePassword && passwordInput) {
         btnTogglePassword.addEventListener("click", () => {
-          const isPassword = passwordInput.type === "password";
-          passwordInput.type = isPassword ? "text" : "password";
-          btnTogglePassword.classList.toggle("visible", isPassword);
+          const show = passwordInput.type === "password";
+          passwordInput.type = show ? "text" : "password";
+          btnTogglePassword.classList.toggle("visible", show);
         });
       }
 
-      /* 5. INTERCEPTAÇÃO E VALIDAÇÃO DO FORMULÁRIO */
+      /* ── Toast ── */
       function showToast(msg) {
         const toast = document.getElementById("toast");
         toast.textContent = msg;
         toast.classList.add("show");
         setTimeout(() => toast.classList.remove("show"), 5000);
       }
+
+      /* ── Validações ── */
       function validarCNPJ(cnpj) {
-        cnpj = cnpj.replace(/\D/g, "");
-        return cnpj.length === 14;
+        return cnpj.replace(/\D/g, "").length === 14;
       }
 
       function senhaSegura(senha) {
-        return (
-          senha.length >= 8 &&
-          /[A-Z]/.test(senha) &&
-          /[a-z]/.test(senha) &&
-          /\d/.test(senha)
-        );
+        return senha.length >= 8 && /[A-Z]/.test(senha) && /[a-z]/.test(senha) && /\d/.test(senha);
       }
 
-      document
-        .getElementById("cadastroEmpresarialForm")
-        .addEventListener("submit", (e) => {
-          e.preventDefault();
+      /* ── Submit ── */
+      document.getElementById("cadastroEmpresarialForm").addEventListener("submit", (e) => {
+        e.preventDefault();
 
-          const cnpj = cnpjInput.value.trim();
-          const nomeEmpresa = document
-            .getElementById("nome_empresa")
-            .value.trim();
-          const endereco = document.getElementById("endereco").value.trim();
-          const razaoSocial = document
-            .getElementById("razao_social")
-            .value.trim();
-          const email = document
-            .getElementById("email")
-            .value.trim()
-            .toLowerCase();
-          const senha = passwordInput.value;
+        const cnpj        = cnpjInput.value.trim();
+        const nomeEmpresa = document.getElementById("nome_empresa").value.trim();
+        const endereco    = document.getElementById("endereco").value.trim();
+        const razaoSocial = document.getElementById("razao_social").value.trim();
+        const email       = document.getElementById("email").value.trim().toLowerCase();
+        const senha       = passwordInput.value;
 
-          if (
-            !cnpj ||
-            !nomeEmpresa ||
-            !endereco ||
-            !razaoSocial ||
-            !email ||
-            !senha
-          ) {
-            showToast("Preencha todos os campos.");
-            return;
-          }
+        if (!cnpj || !nomeEmpresa || !endereco || !razaoSocial || !email || !senha) {
+          showToast("Preencha todos os campos.");
+          return;
+        }
 
-          if (!validarCNPJ(cnpj)) {
-            showToast("CNPJ inválido. Use o formato 00.000.000/0000-00.");
-            return;
-          }
+        if (!validarCNPJ(cnpj)) {
+          showToast("CNPJ inválido. Use o formato 00.000.000/0000-00.");
+          return;
+        }
 
-          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            showToast("E-mail inválido.");
-            return;
-          }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showToast("E-mail inválido.");
+          return;
+        }
 
-          if (!senhaSegura(senha)) {
-            showToast(
-              "A senha precisa ter 8+ caracteres, maiúscula, minúscula e número.",
-            );
-            return;
-          }
+        if (!senhaSegura(senha)) {
+          showToast("A senha precisa ter 8+ caracteres, maiúscula, minúscula e número.");
+          return;
+        }
 
-          if (emailEmpresaExiste(email)) {
-            showToast("Este e-mail já está cadastrado.");
-            return;
-          }
+        if (emailEmpresaExiste(email)) {
+          showToast("Este e-mail já está cadastrado.");
+          return;
+        }
 
-          cadastrarEmpresa({
-            cnpj,
-            nomeEmpresa,
-            endereco,
-            razaoSocial,
-            email,
-            senha,
-          });
+        cadastrarEmpresa({ cnpj, nomeEmpresa, endereco, razaoSocial, email, senha });
 
-          showToast(
-            "✅ Cadastro recebido! Um e-mail formal foi enviado para " + email + " com os termos e condições. Entraremos em contato em breve."
-          );
+        showToast(
+          "✅ Cadastro recebido! Um e-mail formal foi enviado para " +
+          email +
+          " com os termos e condições. Entraremos em contato em breve."
+        );
 
-          setTimeout(() => {
-            window.location.href = "login.html";
-          }, 3000);
-        }); // fecha addEventListener submit
+        setTimeout(() => { window.location.href = "login.html"; }, 3000);
+      });
     </script>
   </body>
 </html>
