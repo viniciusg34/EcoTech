@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <link rel="shortcut icon" href="assets/fivecom.png" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -17,7 +16,6 @@
     <link rel="stylesheet" href="css/index.css" />
     <title>ECOTECH</title>
   </head>
-
   <body>
     <header class="header">
       <div class="nav-container">
@@ -31,7 +29,6 @@
           <a href="sobre_nos.html">Sobre nós</a>
           <a href="afilie_se.html" class="btn-nav">Afilie-se →</a>
         </nav>
-
         <div class="nav-actions" style="margin-left: auto">
           <button
             class="theme-toggle"
@@ -42,7 +39,6 @@
           </button>
           <a href="login.html" class="icon-btn" aria-label="Perfil">👤</a>
         </div>
-
         <div
           class="menu-toggle"
           id="menu-toggle"
@@ -86,26 +82,23 @@
                 <button type="submit">Seja Eco</button>
               </form>
               <div class="hero-badges">
-                <span class="badge"
-                  ><span class="badge-icon">🔒</span> Sem spam</span
-                >
-                <span class="badge"
-                  ><span class="badge-icon">♻️</span> 45 toneladas
-                  recicladas</span
-                >
-                <span class="badge"
-                  ><span class="badge-icon">🌱</span> 1.2k usuários ativos</span
-                >
+                <span class="badge" id="badge-tons">
+                  <span class="badge-icon">♻️</span>
+                  <span id="badge-tons-val">…</span>
+                </span>
+                <span class="badge">
+                  <span class="badge-icon">♻️</span> Sem spam
+                </span>
+                <span class="badge" id="badge-users">
+                  <span class="badge-icon">🌱</span>
+                  <span id="badge-users-val">…</span>
+                </span>
               </div>
             </div>
-
             <div class="hero-visual">
               <div class="hero-card-visual">
-                <!-- SVG ilustração plantinha -->
                 <svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg">
-                  <!-- Solo -->
                   <ellipse cx="180" cy="182" rx="100" ry="12" fill="#d6ebd6" />
-                  <!-- Caule -->
                   <path
                     d="M180 180 Q178 140 175 110"
                     stroke="#5aab5a"
@@ -113,23 +106,19 @@
                     fill="none"
                     stroke-linecap="round"
                   />
-                  <!-- Folha esquerda grande -->
                   <path
                     d="M175 130 Q130 90 120 55 Q155 75 165 120"
                     fill="#3d9140"
                     opacity=".9"
                   />
-                  <!-- Folha direita grande -->
                   <path
                     d="M175 115 Q225 78 238 44 Q205 68 180 108"
                     fill="#5aab5a"
                   />
-                  <!-- Folha topo esquerda -->
                   <path
                     d="M175 110 Q145 75 148 48 Q168 70 175 105"
                     fill="#acd4ac"
                   />
-                  <!-- Vaso -->
                   <rect
                     x="152"
                     y="168"
@@ -148,12 +137,10 @@
                     rx="5"
                     fill="#acd4ac"
                   />
-                  <!-- Brilhos -->
                   <circle cx="240" cy="44" r="4" fill="#f5a623" opacity=".7" />
                   <circle cx="118" cy="55" r="3" fill="#5aab5a" opacity=".5" />
                   <circle cx="260" cy="110" r="6" fill="#d6ebd6" opacity=".8" />
                   <circle cx="90" cy="130" r="5" fill="#eef5ee" opacity=".9" />
-                  <!-- linhas de dados decorativas -->
                   <rect
                     x="20"
                     y="20"
@@ -197,17 +184,15 @@
                 </svg>
                 <div class="mini-stats">
                   <div class="mini-stat">
-                    <div class="mini-stat-num">
-                      45<span style="font-size: 0.7rem">t</span>
-                    </div>
+                    <div class="mini-stat-num" id="mini-tons">…</div>
                     <div class="mini-stat-lbl">Recicladas</div>
                   </div>
                   <div class="mini-stat">
-                    <div class="mini-stat-num">22</div>
+                    <div class="mini-stat-num" id="mini-ecopontos">…</div>
                     <div class="mini-stat-lbl">Ecopontos</div>
                   </div>
                   <div class="mini-stat">
-                    <div class="mini-stat-num">
+                    <div class="mini-stat-num" id="mini-eficiencia">
                       98<span style="font-size: 0.7rem">%</span>
                     </div>
                     <div class="mini-stat-lbl">Eficiência</div>
@@ -266,7 +251,6 @@
         </div>
       </section>
 
-      <!-- STATS -->
       <section class="stats-section" aria-label="Números EcoTech">
         <div class="section-label">Nosso impacto</div>
         <h2 class="section-title">Números que inspiram</h2>
@@ -276,19 +260,21 @@
         <div class="stats-grid">
           <div class="stat-card reveal">
             <span class="stat-emoji">♻️</span>
-            <span class="stat-num" data-target="45">0</span>
+            <span class="stat-num" data-stat="tons" data-target="0">0</span>
             <div class="stat-label">toneladas recicladas</div>
             <div class="stat-sub">no estado do Rio</div>
           </div>
           <div class="stat-card reveal">
             <span class="stat-emoji">👥</span>
-            <span class="stat-num" data-target="1200">0</span>
+            <span class="stat-num" data-stat="members" data-target="0">0</span>
             <div class="stat-label">membros ativos</div>
             <div class="stat-sub">e crescendo todo dia</div>
           </div>
           <div class="stat-card reveal">
             <span class="stat-emoji">📍</span>
-            <span class="stat-num" data-target="22">0</span>
+            <span class="stat-num" data-stat="ecopontos" data-target="0"
+              >0</span
+            >
             <div class="stat-label">ecopontos no mapa</div>
             <div class="stat-sub">espalhados pela cidade</div>
           </div>
@@ -346,7 +332,6 @@
         </div>
       </section>
 
-      <!-- MAPA -->
       <div class="map-section">
         <div class="map-container">
           <div class="section-header">
@@ -393,7 +378,6 @@
         </div>
       </section>
 
-      <!-- FAQ -->
       <section class="faq-section" aria-labelledby="titulo-faq">
         <div class="section-label">Dúvidas frequentes</div>
         <h2 class="section-title" id="titulo-faq">Perguntas e respostas</h2>
@@ -403,8 +387,7 @@
         <div class="faq-wrap">
           <div class="faq-item">
             <div class="faq-q" tabindex="0" role="button" aria-expanded="false">
-              Como me cadastro na EcoTech?
-              <span class="faq-icon">+</span>
+              Como me cadastro na EcoTech?<span class="faq-icon">+</span>
             </div>
             <div class="faq-a">
               <p>
@@ -416,8 +399,9 @@
           </div>
           <div class="faq-item">
             <div class="faq-q" tabindex="0" role="button" aria-expanded="false">
-              Quais tipos de resíduos são aceitos?
-              <span class="faq-icon">+</span>
+              Quais tipos de resíduos são aceitos?<span class="faq-icon"
+                >+</span
+              >
             </div>
             <div class="faq-a">
               <p>
@@ -429,8 +413,7 @@
           </div>
           <div class="faq-item">
             <div class="faq-q" tabindex="0" role="button" aria-expanded="false">
-              O serviço é pago?
-              <span class="faq-icon">+</span>
+              O serviço é pago?<span class="faq-icon">+</span>
             </div>
             <div class="faq-a">
               <p>
@@ -442,8 +425,9 @@
           </div>
           <div class="faq-item">
             <div class="faq-q" tabindex="0" role="button" aria-expanded="false">
-              Como funciona o sistema de recompensas?
-              <span class="faq-icon">+</span>
+              Como funciona o sistema de recompensas?<span class="faq-icon"
+                >+</span
+              >
             </div>
             <div class="faq-a">
               <p>
@@ -455,8 +439,7 @@
           </div>
           <div class="faq-item">
             <div class="faq-q" tabindex="0" role="button" aria-expanded="false">
-              Empresas podem se tornar parceiras?
-              <span class="faq-icon">+</span>
+              Empresas podem se tornar parceiras?<span class="faq-icon">+</span>
             </div>
             <div class="faq-a">
               <p>
@@ -473,7 +456,7 @@
     <footer>
       <div class="footer-socials">
         <a
-          href="https://www.instagram.com/"
+          href="https://www.instagram.com/ecotech.gp6?igsh=MXAyaHNjdXh6anZ2eg%3D%3D&utm_source=qr"
           target="_blank"
           rel="noopener"
           aria-label="Instagram"
@@ -503,7 +486,6 @@
       <p>© 2026 EcoTech. Todos os direitos reservados.</p>
     </footer>
 
-    <!-- BOTTOM SHEET -->
     <div class="sheet-overlay" id="sheetOverlay" aria-hidden="true"></div>
     <div
       class="bottom-sheet"
@@ -524,11 +506,125 @@
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
+    <script src="js/eco-session.js"></script>
+    
     <script>
       "use strict";
-      document.addEventListener("DOMContentLoaded", () => {
-        /* ── INICIALIZAÇÃO TEMA ── */
+
+      /* ════════════════════════════════════════════════════
+         CONFIGURAÇÃO DA API
+      ════════════════════════════════════════════════════ */
+      const API_BASE = "https://6a386bef64a2d82692228142.mockapi.io/api/v1";
+      const API_PESSOA = "https://6a38cde364a2d8269222d659.mockapi.io";
+
+      /* ════════════════════════════════════════════════════
+         CARREGA ESTATÍSTICAS DA API E ATUALIZA O DOM
+      ════════════════════════════════════════════════════ */
+      async function loadStats(ecopontosMapCount) {
+        // --- Toneladas: soma kgColetado de /empresa ---
+        let tons = null;
+        try {
+          const res = await fetch(`${API_BASE}/empresa`);
+          if (res.ok) {
+            const empresas = await res.json();
+            if (Array.isArray(empresas) && empresas.length > 0) {
+              const totalKg = empresas.reduce(
+                (sum, e) => sum + parseFloat(e.kgColetado || 0),
+                0,
+              );
+              tons = parseFloat((totalKg / 1000).toFixed(1));
+              console.info(`[EcoTech API] ✅ /empresa → ${tons}t coletadas`);
+            }
+          }
+        } catch (err) {
+          console.warn("[EcoTech API] /empresa indisponível:", err);
+        }
+
+        // --- Membros ativos: total de registros em /pessoa ---
+        let members = null;
+        try {
+          const res = await fetch(`${API_PESSOA}/pessoa`);
+          if (res.ok) {
+            const pessoas = await res.json();
+            if (Array.isArray(pessoas)) {
+              members = pessoas.length;
+              console.info(`[EcoTech API] ✅ /pessoa → ${members} membros`);
+            }
+          }
+        } catch (err) {
+          console.warn("[EcoTech API] /pessoa indisponível:", err);
+        }
+
+        // --- Ecopontos: fallback para contagem do mapa ---
+        let ecopontos = ecopontosMapCount;
+        try {
+          const res = await fetch(`${API_BASE}/ecopontos`);
+          if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data)) ecopontos = data.length;
+          }
+        } catch (_) {
+          /* usa fallback */
+        }
+
+        return { tons, members, ecopontos };
+      }
+
+      /* ════════════════════════════════════════════════════
+         FORMATA NÚMERO PARA EXIBIÇÃO CURTA
+      ════════════════════════════════════════════════════ */
+      function formatShort(n) {
+        if (n === null || n === undefined) return "—";
+        if (n >= 1000) return (n / 1000).toFixed(1).replace(".0", "") + "k";
+        return String(n);
+      }
+
+      /* ════════════════════════════════════════════════════
+         ANIMAÇÃO DE CONTADOR
+      ════════════════════════════════════════════════════ */
+      function initStatCounters() {
+        const statNums = document.querySelectorAll(".stat-num[data-target]");
+        const statObs = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              const el = entry.target;
+              const target = parseFloat(el.dataset.target);
+              if (!target) return;
+
+              let start = null;
+              const isDecimal = target % 1 !== 0;
+
+              const format = (v) => {
+                if (target >= 1000) {
+                  return (v / 1000).toFixed(1) + "k";
+                }
+                return isDecimal ? v.toFixed(1) : Math.floor(v).toString();
+              };
+
+              const step = (ts) => {
+                if (!start) start = ts;
+                const p = Math.min((ts - start) / 1800, 1);
+                const eased = p < 0.5 ? 2 * p * p : -1 + (4 - 2 * p) * p;
+                el.textContent = format(eased * target);
+                if (p < 1) requestAnimationFrame(step);
+                else el.textContent = format(target);
+              };
+
+              requestAnimationFrame(step);
+              statObs.unobserve(el);
+            });
+          },
+          { threshold: 0.5 },
+        );
+        statNums.forEach((el) => statObs.observe(el));
+      }
+
+      /* ════════════════════════════════════════════════════
+         INICIALIZAÇÃO PRINCIPAL
+      ════════════════════════════════════════════════════ */
+      document.addEventListener("DOMContentLoaded", async () => {
+        /* ── TEMA ── */
         (function () {
           const saved = localStorage.getItem("eco-theme");
           const pref =
@@ -539,22 +635,18 @@
           document.documentElement.setAttribute("data-theme", pref);
         })();
 
-        /* ── DARK MODE TOGGLE ── */
         const themeToggle = document.getElementById("theme-toggle");
         const themeIcon = document.getElementById("theme-icon");
-
-        const currentTheme =
-          document.documentElement.getAttribute("data-theme");
-        themeIcon.textContent = currentTheme === "dark" ? "🌙" : "☀️";
-
+        themeIcon.textContent =
+          document.documentElement.getAttribute("data-theme") === "dark"
+            ? "🌙"
+            : "☀️";
         themeToggle.addEventListener("click", () => {
           const root = document.documentElement;
-          const isDark = root.getAttribute("data-theme") === "dark";
-          const newTheme = isDark ? "light" : "dark";
-
+          const newTheme =
+            root.getAttribute("data-theme") === "dark" ? "light" : "dark";
           root.setAttribute("data-theme", newTheme);
           localStorage.setItem("eco-theme", newTheme);
-
           themeIcon.style.transform = "rotate(360deg)";
           themeIcon.style.transition = "transform 0.3s ease";
           setTimeout(() => {
@@ -580,7 +672,6 @@
         );
 
         /* ── REVEAL ON SCROLL ── */
-        const revealEls = document.querySelectorAll(".reveal");
         const revealObs = new IntersectionObserver(
           (entries) => {
             entries.forEach((e, i) => {
@@ -591,34 +682,9 @@
           },
           { threshold: 0.12 },
         );
-        revealEls.forEach((el) => revealObs.observe(el));
-
-        /* ── STATS COUNTER ── */
-        const statNums = document.querySelectorAll(".stat-num[data-target]");
-        const statObs = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (!entry.isIntersecting) return;
-              const el = entry.target;
-              const target = parseInt(el.dataset.target);
-              let start = null;
-              const format = (v) =>
-                target >= 1000 ? (v / 1000).toFixed(v < 1000 ? 0 : 1) + "k" : v;
-              const step = (ts) => {
-                if (!start) start = ts;
-                const p = Math.min((ts - start) / 1500, 1);
-                const eased = p < 0.5 ? 2 * p * p : -1 + (4 - 2 * p) * p;
-                el.textContent = format(Math.floor(eased * target));
-                if (p < 1) requestAnimationFrame(step);
-                else el.textContent = format(target);
-              };
-              requestAnimationFrame(step);
-              statObs.unobserve(el);
-            });
-          },
-          { threshold: 0.5 },
-        );
-        statNums.forEach((el) => statObs.observe(el));
+        document
+          .querySelectorAll(".reveal")
+          .forEach((el) => revealObs.observe(el));
 
         /* ── FAQ ── */
         document.querySelectorAll(".faq-q").forEach((q) => {
@@ -660,14 +726,6 @@
         const sheetTitle = document.getElementById("sheetTitle");
         const sheetContent = document.getElementById("sheetContent");
         const closeSheet = document.getElementById("closeSheet");
-        function openSheet(t, c) {
-          sheetTitle.textContent = t;
-          sheetContent.innerHTML = `<p>${c}</p>`;
-          bottomSheet.classList.add("open");
-          sheetOverlay.classList.add("open");
-          bottomSheet.setAttribute("aria-hidden", "false");
-          closeSheet.focus();
-        }
         function closeBS() {
           bottomSheet.classList.remove("open");
           sheetOverlay.classList.remove("open");
@@ -679,10 +737,9 @@
           if (e.key === "Escape") closeBS();
         });
 
-        /* ── MAPA SINCRONIZADO COM COLETA.HTML ── */
+        /* ── MAPA ── */
         const htmlEl = document.documentElement;
 
-        // Categorias ajustadas (iguais ao da página Coleta)
         const CATEGORIES = [
           { key: "metal", label: "Metal", color: "#f9a825" },
           { key: "papel", label: "Papel", color: "#66bb6a" },
@@ -691,9 +748,7 @@
           { key: "eletronicos", label: "Eletrônicos", color: "#ab47bc" },
         ];
 
-        // Mapeamento abrangente de pontos no Rio de Janeiro + Mangaratiba
         const POINTS = [
-          // Mangaratiba & Costa Verde
           {
             lat: -22.9597,
             lng: -44.0406,
@@ -722,8 +777,6 @@
             cat: "vidro",
             desc: "Potes e garrafas de vidro",
           },
-
-          // Zona Central
           {
             lat: -22.9068,
             lng: -43.1729,
@@ -738,8 +791,6 @@
             cat: "vidro",
             desc: "Garrafas e frascos de vidro",
           },
-
-          // Zona Sul
           {
             lat: -22.9519,
             lng: -43.2105,
@@ -761,8 +812,6 @@
             cat: "plastico",
             desc: "Ponto de coleta PET",
           },
-
-          // Zona Norte
           {
             lat: -22.9329,
             lng: -43.2372,
@@ -791,8 +840,6 @@
             cat: "eletronicos",
             desc: "Descarte de eletroeletrônicos",
           },
-
-          // Zona Oeste
           {
             lat: -23.0003,
             lng: -43.3658,
@@ -828,8 +875,6 @@
             cat: "papel",
             desc: "Papelão comercial",
           },
-
-          // Niterói e Baixada
           {
             lat: -22.9056,
             lng: -43.1065,
@@ -860,7 +905,49 @@
           },
         ];
 
-        // Centralizado para englobar Mangaratiba e Rio de Janeiro
+        /* ── BUSCA DADOS E ATUALIZA DOM ── */
+        try {
+          const { tons, members, ecopontos } = await loadStats(POINTS.length);
+
+          // Badges do hero
+          const badgeTonsVal = document.getElementById("badge-tons-val");
+          const badgeUsersVal = document.getElementById("badge-users-val");
+          if (badgeTonsVal)
+            badgeTonsVal.textContent =
+              tons !== null ? `${tons}t recicladas` : "toneladas recicladas";
+          if (badgeUsersVal)
+            badgeUsersVal.textContent =
+              members !== null
+                ? `${formatShort(members)} usuários ativos`
+                : "usuários ativos";
+
+          // Mini-stats do card hero
+          const miniTons = document.getElementById("mini-tons");
+          const miniEcopontos = document.getElementById("mini-ecopontos");
+          if (miniTons) miniTons.textContent = tons !== null ? `${tons}t` : "—";
+          if (miniEcopontos)
+            miniEcopontos.textContent = ecopontos !== null ? ecopontos : "—";
+
+          // Contadores animados
+          document.querySelectorAll(".stat-num[data-stat]").forEach((el) => {
+            const stat = el.dataset.stat;
+            const value =
+              stat === "tons"
+                ? tons
+                : stat === "members"
+                  ? members
+                  : stat === "ecopontos"
+                    ? ecopontos
+                    : null;
+            if (value !== null) el.setAttribute("data-target", value);
+          });
+        } catch (err) {
+          console.error("[EcoTech API] Falha ao carregar stats:", err);
+        }
+
+        initStatCounters();
+
+        /* ── MAPA LEAFLET ── */
         const map = L.map("eco-map").setView([-22.9, -43.6], 9);
 
         const TILE_LIGHT = L.tileLayer(
@@ -882,83 +969,45 @@
           }
         }
         updateMapTile();
-
         new MutationObserver(updateMapTile).observe(htmlEl, {
           attributes: true,
           attributeFilter: ["data-theme"],
         });
 
-        /* ── MARCADORES COM POPUP ── */
         const layerGroups = {};
         CATEGORIES.forEach((c) => {
           layerGroups[c.key] = L.layerGroup().addTo(map);
         });
 
         CATEGORIES.forEach((cat) => {
-          const color = cat.color;
           const icon = L.divIcon({
-            html: `<div style="
-          background:${color};
-          width:28px; height:28px;
-          border-radius:50%;
-          display:flex; align-items:center; justify-content:center;
-          color:white; font-weight:bold;
-          border:2px solid white;
-          box-shadow:0 2px 6px rgba(0,0,0,0.3);
-        ">${cat.label[0]}</div>`,
+            html: `<div style="background:${cat.color};width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;border:2px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);">${cat.label[0]}</div>`,
             iconSize: [28, 28],
             className: "",
           });
-
           POINTS.filter((p) => p.cat === cat.key).forEach((p) => {
             const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}`;
-            const popupContent = `
-          <div style="min-width:180px; font-family:'Plus Jakarta Sans', 'Poppins', sans-serif;">
-            <p style="margin:0 0 4px; font-size:14px; font-weight:700; color:var(--ink);">${p.name}</p>
-            <p style="margin:0 0 12px; font-size:12px; color:var(--ink-3);">${p.desc}</p>
-            <a
-              href="${gmapsUrl}"
-              target="_blank"
-              rel="noopener"
-              style="
-                display:inline-flex;
-                align-items:center;
-                gap:6px;
-                background:${color};
-                color:white;
-                padding:7px 14px;
-                border-radius:20px;
-                text-decoration:none;
-                font-size:12px;
-                font-weight:600;
-                transition: transform 0.2s;
-              "
-              onmouseover="this.style.transform='translateY(-2px)'"
-              onmouseout="this.style.transform='translateY(0)'"
-            >🗺️ Abrir Rota</a>
-          </div>
-        `;
-
+            const popup = `<div style="min-width:180px;font-family:'Plus Jakarta Sans','Poppins',sans-serif;">
+              <p style="margin:0 0 4px;font-size:14px;font-weight:700;color:var(--ink);">${p.name}</p>
+              <p style="margin:0 0 12px;font-size:12px;color:var(--ink-3);">${p.desc}</p>
+              <a href="${gmapsUrl}" target="_blank" rel="noopener"
+                style="display:inline-flex;align-items:center;gap:6px;background:${cat.color};color:white;padding:7px 14px;border-radius:20px;text-decoration:none;font-size:12px;font-weight:600;">🗺️ Abrir Rota</a>
+            </div>`;
             L.marker([p.lat, p.lng], { icon })
-              .bindPopup(popupContent, { maxWidth: 240 })
+              .bindPopup(popup, { maxWidth: 240 })
               .addTo(layerGroups[cat.key]);
           });
         });
 
-        /* ── LEGENDA / FILTRO ── */
         const legendEl = document.getElementById("map-legend");
         let visibleCats = new Set(CATEGORIES.map((c) => c.key));
         legendEl.innerHTML =
-          "<strong style='font-size: 1rem; color: var(--ink);'>🗑️ Filtro</strong><br>";
-
+          "<strong style='font-size:1rem;color:var(--ink);'>🗑️ Filtro</strong><br>";
         CATEGORIES.forEach((cat) => {
           const item = document.createElement("div");
           item.style.cssText =
-            "display:flex; align-items:center; gap:8px; margin-top:8px; cursor:pointer; font-size: 0.9rem; font-weight: 500; color: var(--ink-2); transition: opacity 0.2s;";
-          item.innerHTML = `
-        <span style="background:${cat.color}; width:14px; height:14px; border-radius:50%; display:inline-block;"></span>
-        ${cat.label}
-      `;
+            "display:flex;align-items:center;gap:8px;margin-top:8px;cursor:pointer;font-size:0.9rem;font-weight:500;color:var(--ink-2);transition:opacity 0.2s;";
+          item.innerHTML = `<span style="background:${cat.color};width:14px;height:14px;border-radius:50%;display:inline-block;"></span>${cat.label}`;
           item.onclick = () => {
             if (visibleCats.has(cat.key)) {
               visibleCats.delete(cat.key);
@@ -972,7 +1021,7 @@
           };
           legendEl.appendChild(item);
         });
-      });
+      }); // fim DOMContentLoaded
     </script>
   </body>
 </html>

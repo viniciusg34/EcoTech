@@ -4,39 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login — EcoTech</title>
-
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./css/login.css" />
   </head>
-
   <body>
     <main class="page">
       <section class="app">
         <section class="content">
           <section class="hero">
             <span class="tag">Nossa Essência</span>
-
             <h1>A união de<br />dados, ciência<br />e amor pela<br />terra.</h1>
-
-            <p>
-              Somos uma equipe dedicada a criar soluções tecnológicas para a
-              preservação ambiental e o monitoramento do nosso planeta.
-            </p>
-
+            <p>Somos uma equipe dedicada a criar soluções tecnológicas para a preservação ambiental e o monitoramento do nosso planeta.</p>
             <div class="stat-card">
               <strong>85%</strong>
               <p>de eficiência<br />em nossos<br />projetos</p>
             </div>
-
             <div class="hero-card">
               <div>♧</div>
-              <p>
-                Tecnologia e ciência trabalhando juntas por um futuro
-                sustentável.
-              </p>
+              <p>Tecnologia e ciência trabalhando juntas por um futuro sustentável.</p>
             </div>
           </section>
 
@@ -44,12 +29,8 @@
             <div class="eco-logo">
               <img src="./assets/logo.svg" alt="EcoTech" />
             </div>
-
             <h2>Bem-vindo de volta!</h2>
-            <p>
-              Faça login para acessar sua conta<br />e acompanhar nossos
-              projetos.
-            </p>
+            <p>Faça login para acessar sua conta<br />e acompanhar nossos projetos.</p>
 
             <label for="email">E-mail</label>
             <div class="input-box">
@@ -65,15 +46,11 @@
             </div>
 
             <div class="options">
-              <label>
-                <input type="checkbox" />
-                Lembrar-me
-              </label>
-
+              <label><input type="checkbox" id="remember-me" /> Lembrar-me</label>
               <a href="esqueci_senha.html">Esqueceu sua senha?</a>
             </div>
 
-            <button class="primary" onclick="handleLogin()">Entrar</button>
+            <button class="primary" id="btn-login" onclick="handleLogin()">Entrar</button>
 
             <small style="display: block; margin-top: 20px; text-align: center">
               Ainda não tem uma conta? <a href="cadastro.html">cadastre-se</a>
@@ -85,65 +62,107 @@
 
     <div class="toast" id="toast"></div>
 
-    <script src="./js/perfis.js"></script>
     <script>
+      "use strict";
+
+      /* ══════════════════════════════════════════════════
+         CONFIG
+      ══════════════════════════════════════════════════ */
+      const API_PESSOA  = "https://6a38cde364a2d8269222d659.mockapi.io";
+      const SESSION_KEY = "ecotech_session";
+
+      /* ── Toast ── */
       let toastTimer;
-
       function showToast(msg) {
-        const toast = document.getElementById("toast");
-        toast.textContent = msg;
-        toast.classList.add("show");
-
+        const t = document.getElementById("toast");
+        t.textContent = msg;
+        t.classList.add("show");
         clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => {
-          toast.classList.remove("show");
-        }, 3000);
+        toastTimer = setTimeout(() => t.classList.remove("show"), 3000);
       }
 
+      /* ── Toggle senha ── */
       function togglePassword() {
-        const password = document.getElementById("password");
-        password.type = password.type === "password" ? "text" : "password";
+        const pw = document.getElementById("password");
+        pw.type = pw.type === "password" ? "text" : "password";
       }
 
-      function handleLogin() {
-        const email = document.getElementById("email").value.trim();
+      /* ══════════════════════════════════════════════════
+         LOGIN PRINCIPAL
+      ══════════════════════════════════════════════════ */
+      async function handleLogin() {
+        const email    = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value;
+        const btn      = document.getElementById("btn-login");
 
-        // Validação se os campos estão preenchidos
-        if (!email || !password) {
-          showToast("Preencha todos os campos.");
-          return;
-        }
+        if (!email || !password) { showToast("Preencha todos os campos."); return; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast("E-mail inválido."); return; }
 
-        // Validação do formato do e-mail
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          showToast("E-mail inválido.");
-          return;
-        }
+        btn.disabled    = true;
+        btn.textContent = "Entrando…";
 
-        // O array 'perfisEcoTech' vem diretamente do ficheiro perfis.js externo
-        const utilizador = perfisEcoTech.find(
-          (perfil) => perfil.email === email,
-        );
+        try {
+          /* Busca todos os usuários e filtra por email + senha */
+          const res = await fetch(`${API_PESSOA}/pessoa`);
+          if (!res.ok) throw new Error("API indisponível");
+          const pessoas = await res.json();
 
-        // Se o e-mail não existir no ficheiro externo
-        if (!utilizador) {
-          showToast("E-mail não registado no sistema.");
-          return;
-        }
+          const usuario = pessoas.find(
+            (p) => p.email?.toLowerCase() === email.toLowerCase() && p.senha === password
+          );
 
-        // Exibe a mensagem de carregamento no toast
-        showToast(`A entrar como ${utilizador.nome}...`);
-
-        // Redirecionamento condicional após 1 segundo
-        setTimeout(() => {
-          if (utilizador.isCnpj) {
-            window.location.href = "empresa.html";
-          } else {
-            window.location.href = "coleta.html";
+          if (!usuario) {
+            showToast("E-mail ou senha incorretos.");
+            btn.disabled    = false;
+            btn.textContent = "Entrar";
+            return;
           }
-        }, 1000);
+
+          /* Salva sessão */
+          const sessao = {
+            id:     usuario.id,
+            nome:   usuario.name,
+            email:  usuario.email,
+            avatar: usuario.avatar || null,
+            coins:  usuario.coins  || "0",
+            tipo:   "pessoa",
+          };
+
+          if (document.getElementById("remember-me").checked) {
+            localStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+          } else {
+            sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+          }
+
+          /* Salva o ID para a coleta.html usar */
+          localStorage.setItem("ecotech_user_id", usuario.id);
+
+          showToast(`Bem-vindo, ${usuario.name.split(" ")[0]}! 🌱`);
+          setTimeout(() => { window.location.href = "coleta.html"; }, 900);
+
+        } catch (err) {
+          console.error(err);
+          showToast("Erro de conexão. Tente novamente.");
+          btn.disabled    = false;
+          btn.textContent = "Entrar";
+        }
       }
+
+      /* ── Enter no campo de senha dispara login ── */
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("password").addEventListener("keydown", (e) => {
+          if (e.key === "Enter") handleLogin();
+        });
+        document.getElementById("email").addEventListener("keydown", (e) => {
+          if (e.key === "Enter") document.getElementById("password").focus();
+        });
+
+        /* Se já há sessão ativa, redireciona direto */
+        const sessao = JSON.parse(sessionStorage.getItem(SESSION_KEY) || localStorage.getItem(SESSION_KEY) || "null");
+        if (sessao) {
+          window.location.href = "coleta.html";
+        }
+      });
     </script>
   </body>
 </html>
