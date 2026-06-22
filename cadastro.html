@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="./assets/fivecom.png" type="image/x-icon" />
     <title>Cadastro — EcoTech</title>
- 
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
@@ -13,7 +12,7 @@
     <link rel="stylesheet" href="./css/cadastro.css" />
     <script src="./auth.js"></script>
   </head>
- 
+
   <body>
     <a href="index.html" class="btn-back" aria-label="Voltar para o início">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -24,18 +23,17 @@
 
     <main class="page">
       <section class="app">
- 
         <section class="register">
           <div class="eco-logo">
             <img src="./assets/logo.svg" alt="EcoTech" />
           </div>
- 
+
           <h1>Crie sua conta!</h1>
           <p>
             Cadastre-se para acompanhar nossos projetos<br />e fazer parte da
             EcoTech.
           </p>
- 
+
           <form id="formCadastro" autocomplete="off">
             <!-- EMAIL -->
             <label for="email">E-mail</label>
@@ -49,7 +47,7 @@
                 required
               />
             </div>
- 
+
             <!-- CPF -->
             <label for="cpf">CPF</label>
             <div class="input-box">
@@ -62,7 +60,7 @@
                 required
               />
             </div>
- 
+
             <!-- NOME COMPLETO -->
             <label for="nome">Nome completo</label>
             <div class="input-box">
@@ -75,7 +73,7 @@
                 required
               />
             </div>
- 
+
             <!-- NOME DA MÃE -->
             <label for="nomeMae">Nome da mãe</label>
             <div class="input-box">
@@ -88,14 +86,14 @@
                 required
               />
             </div>
- 
+
             <!-- DATA DE NASCIMENTO -->
             <label for="nascimento">Sua data de nascimento</label>
             <div class="input-box">
               <span>📅</span>
               <input id="nascimento" type="date" required />
             </div>
- 
+
             <!-- SENHA -->
             <label for="senha">Senha</label>
             <div class="input-box">
@@ -109,7 +107,7 @@
               />
               <span class="eye" onclick="togglePassword('senha')">◎</span>
             </div>
- 
+
             <!-- CONFIRMAR SENHA -->
             <label for="confirmarSenha">Confirmar senha</label>
             <div class="input-box">
@@ -121,15 +119,12 @@
                 maxlength="32"
                 required
               />
-              <span class="eye" onclick="togglePassword('confirmarSenha')"
-                >◎</span
-              >
+              <span class="eye" onclick="togglePassword('confirmarSenha')">◎</span>
             </div>
- 
+
             <div class="terms-card">
               <label class="terms-label">
                 <input type="checkbox" id="aceitarTermos" />
- 
                 <span>
                   Ao criar uma conta, você concorda com nossos
                   <a
@@ -142,37 +137,37 @@
                 </span>
               </label>
             </div>
- 
-            <button type="submit">Cadastrar</button>
+
+            <button type="submit" id="btnCadastrar">Cadastrar</button>
           </form>
- 
+
           <small>Já tem uma conta? <a href="login.html">Entrar</a></small>
         </section>
       </section>
     </main>
- 
+
     <div class="toast" id="toast"></div>
- 
+
     <script>
+      const API_URL = "https://6a38cde364a2d8269222d659.mockapi.io/pessoa";
+
       let toastTimer;
- 
+
       function showToast(msg) {
         const toast = document.getElementById("toast");
         toast.textContent = msg;
         toast.classList.add("show");
- 
         clearTimeout(toastTimer);
         toastTimer = setTimeout(() => {
           toast.classList.remove("show");
         }, 3000);
       }
- 
+
       function togglePassword(id) {
         const campo = document.getElementById(id);
- 
         campo.type = campo.type === "password" ? "text" : "password";
       }
- 
+
       function setCookie(name, value, days) {
         const date = new Date();
         date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
@@ -184,11 +179,11 @@
           date.toUTCString() +
           "; path=/; SameSite=Lax";
       }
- 
+
       function cleanText(value) {
         return value.trim().replace(/\s+/g, " ");
       }
- 
+
       function formatCPF(value) {
         return value
           .replace(/\D/g, "")
@@ -196,50 +191,42 @@
           .replace(/(\d{3})(\d)/, "$1.$2")
           .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
       }
- 
+
       function validarCPF(cpf) {
         cpf = cpf.replace(/\D/g, "");
- 
-        if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) {
-          return false;
-        }
- 
+        if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+
         let soma = 0;
         let resto;
- 
+
         for (let i = 1; i <= 9; i++) {
           soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
         }
- 
         resto = (soma * 10) % 11;
         if (resto === 10 || resto === 11) resto = 0;
         if (resto !== parseInt(cpf.substring(9, 10))) return false;
- 
+
         soma = 0;
- 
         for (let i = 1; i <= 10; i++) {
           soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
         }
- 
         resto = (soma * 10) % 11;
         if (resto === 10 || resto === 11) resto = 0;
- 
+
         return resto === parseInt(cpf.substring(10, 11));
       }
- 
+
       function calcularIdade(dataNascimento) {
         const hoje = new Date();
         const nascimento = new Date(dataNascimento);
         let idade = hoje.getFullYear() - nascimento.getFullYear();
         const mes = hoje.getMonth() - nascimento.getMonth();
- 
         if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
           idade--;
         }
- 
         return idade;
       }
- 
+
       function senhaSegura(senha) {
         return (
           senha.length >= 8 &&
@@ -248,93 +235,130 @@
           /\d/.test(senha)
         );
       }
- 
+
+      function setLoading(isLoading) {
+        const btn = document.getElementById("btnCadastrar");
+        btn.disabled = isLoading;
+        btn.textContent = isLoading ? "Aguarde..." : "Cadastrar";
+      }
+
       document.getElementById("cpf").addEventListener("input", function () {
         this.value = formatCPF(this.value);
       });
- 
+
       document
         .getElementById("formCadastro")
-        .addEventListener("submit", function (event) {
+        .addEventListener("submit", async function (event) {
           event.preventDefault();
- 
-          const confirmarSenha =
-            document.getElementById("confirmarSenha").value;
+
+          const confirmarSenha = document.getElementById("confirmarSenha").value;
           const nome = cleanText(document.getElementById("nome").value);
-          const email = cleanText(
-            document.getElementById("email").value,
-          ).toLowerCase();
+          const email = cleanText(document.getElementById("email").value).toLowerCase();
           const cpf = document.getElementById("cpf").value.trim();
           const nomeMae = cleanText(document.getElementById("nomeMae").value);
           const nascimento = document.getElementById("nascimento").value;
           const senha = document.getElementById("senha").value;
- 
+
+          // ── Validações locais ──────────────────────────────────────
           if (!nome || !email || !cpf || !nomeMae || !nascimento || !senha) {
             showToast("Preencha todos os campos.");
             return;
           }
- 
+
           if (nome.length < 3 || nomeMae.length < 3) {
             showToast("Nome inválido.");
             return;
           }
- 
+
           if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             showToast("E-mail inválido.");
             return;
           }
- 
+
           if (!validarCPF(cpf)) {
             showToast("CPF inválido.");
             return;
           }
- 
+
           if (calcularIdade(nascimento) < 13) {
             showToast("Cadastro permitido apenas para maiores de 13 anos.");
             return;
           }
- 
+
           if (!senhaSegura(senha)) {
             showToast("Use 8 caracteres, letra maiúscula, minúscula e número.");
             return;
           }
- 
+
           if (senha !== confirmarSenha) {
             showToast("As senhas não coincidem.");
             return;
           }
- 
-          const aceitarTermos = document.getElementById("aceitarTermos");
- 
-          if (!aceitarTermos.checked) {
+
+          if (!document.getElementById("aceitarTermos").checked) {
             showToast("Você precisa aceitar os Termos e Condições.");
             return;
           }
- 
-          if (emailUsuarioExiste(email)) {
-            showToast("Este e-mail já está cadastrado.");
-            return;
+
+          // ── Chamadas à API ─────────────────────────────────────────
+          setLoading(true);
+
+          try {
+            // 1. Verificar se o e-mail já existe
+            const checkRes = await fetch(
+              `${API_URL}?email=${encodeURIComponent(email)}`
+            );
+
+            if (!checkRes.ok) throw new Error("Erro ao verificar e-mail.");
+
+            const existing = await checkRes.json();
+
+            if (existing.length > 0) {
+              showToast("Este e-mail já está cadastrado.");
+              setLoading(false);
+              return;
+            }
+
+            // 2. Registrar o novo usuário
+            const novoUsuario = {
+              name: nome,
+              email,
+              senha,
+              cpf,
+              nomeMae,
+              nascimento,
+              coins: "0.00",
+              avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(nome)}&background=4CAF50&color=fff&size=128`,
+              reciclado: [],
+            };
+
+            const postRes = await fetch(API_URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(novoUsuario),
+            });
+
+            if (!postRes.ok) throw new Error("Erro ao cadastrar usuário.");
+
+            const usuarioCriado = await postRes.json();
+
+            // 3. Persistir sessão nos cookies
+            sessionStorage.setItem("cadastroValidado", "true");
+            setCookie("ecoTechEmail", email, 7);
+            setCookie("ecoTechCadastro", "ativo", 7);
+            setCookie("ecoTechUserId", usuarioCriado.id, 7);
+
+            showToast("Cadastro realizado com sucesso!");
+
+            setTimeout(() => {
+              window.location.href = "login.html";
+            }, 1400);
+
+          } catch (err) {
+            console.error(err);
+            showToast("Erro de conexão. Verifique sua internet e tente novamente.");
+            setLoading(false);
           }
- 
-          cadastrarUsuario({
-            nome,
-            email,
-            cpf,
-            nomeMae,
-            nascimento,
-            senha,
-          });
- 
-          sessionStorage.setItem("cadastroValidado", "true");
- 
-          setCookie("ecoTechEmail", email, 7);
-          setCookie("ecoTechCadastro", "ativo", 7);
- 
-          showToast("Cadastro realizado com sucesso!");
- 
-          setTimeout(() => {
-            window.location.href = "login.html";
-          }, 1400);
         });
     </script>
   </body>

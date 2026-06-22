@@ -4,13 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login — EcoTech</title>
-
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./css/login.css" />
-  <script src="./auth.js"></script>
 </head>
-
 <body>
+
 <a href="index.html" class="btn-back" aria-label="Voltar para o início">
   <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M19 12H5"></path>
@@ -19,134 +17,150 @@
 </a>
 
 <main class="page">
-    <section class="app">
-      <section class="content">
-        <section class="hero">
-          <span class="tag">Nossa Essência</span>
+  <section class="app">
+    <section class="content">
+      <section class="hero">
+        <span class="tag">Nossa Essência</span>
+        <h1>A união de<br>dados, ciência<br>e amor pela<br>terra.</h1>
+        <p>Somos uma equipe dedicada a criar soluções tecnológicas para a preservação ambiental e o monitoramento do nosso planeta.</p>
+        <div class="stat-card">
+          <strong>85%</strong>
+          <p>de eficiência<br>em nossos<br>projetos</p>
+        </div>
+        <div class="hero-card">
+          <div>♧</div>
+          <p>Tecnologia e ciência trabalhando juntas por um futuro sustentável.</p>
+        </div>
+      </section>
 
-          <h1>A união de<br>dados, ciência<br>e amor pela<br>terra.</h1>
+      <section class="login">
+        <div class="eco-logo">
+          <img src="./assets/logo.svg" alt="EcoTech" />
+        </div>
+        <h2>Bem-vindo de volta!</h2>
+        <p>Faça login para acessar sua conta<br>e acompanhar nossos projetos.</p>
 
-          <p>
-            Somos uma equipe dedicada a criar soluções tecnológicas para a
-            preservação ambiental e o monitoramento do nosso planeta.
-          </p>
+        <label for="email">E-mail</label>
+        <div class="input-box">
+          <span>✉</span>
+          <input type="email" id="email" placeholder="seu@email.com" />
+        </div>
 
-          <div class="stat-card">
-            <strong>85%</strong>
-            <p>de eficiência<br>em nossos<br>projetos</p>
-          </div>
+        <label for="password">Senha</label>
+        <div class="input-box">
+          <span>🔒</span>
+          <input type="password" id="password" placeholder="••••••••" />
+          <span class="eye" onclick="togglePassword()">◎</span>
+        </div>
 
-          <div class="hero-card">
-            <div>♧</div>
-            <p>Tecnologia e ciência trabalhando juntas por um futuro sustentável.</p>
-          </div>
-        </section>
+        <div class="options">
+          <label><input type="checkbox" id="remember-me" /> Lembrar-me</label>
+          <a href="esqueci_senha.html">Esqueceu sua senha?</a>
+        </div>
 
-        <section class="login">
-          <div class="eco-logo">
-            <img src="./assets/logo.svg" alt="EcoTech">
-          </div>
+        <button class="primary" id="btn-login">Entrar</button>
 
-          <h2>Bem-vindo de volta!</h2>
-          <p>Faça login para acessar sua conta<br>e acompanhar nossos projetos.</p>
-
-          <label for="email">E-mail</label>
-          <div class="input-box">
-            <span>✉</span>
-            <input type="email" id="email" placeholder="seu@email.com" />
-          </div>
-
-          <label for="password">Senha</label>
-          <div class="input-box">
-            <span>🔒</span>
-            <input type="password" id="password" placeholder="••••••••" />
-            <span class="eye" onclick="togglePassword()">◎</span>
-          </div>
-
-          <div class="options">
-            <label>
-              <input type="checkbox" />
-              Lembrar-me
-            </label>
-
-            <a href="esqueci_senha.html">Esqueceu sua senha?</a>
-          </div>
-
-          <button class="primary" onclick="handleLogin()">Entrar</button>
-
-          <small style="display: block; margin-top: 20px; text-align: center;">
-            Ainda não tem uma conta? <a href="cadastro.html">cadastre-se</a>
-          </small>
-        </section>
+        <small style="display:block; margin-top:20px; text-align:center;">
+          Ainda não tem uma conta? <a href="cadastro.html">cadastre-se</a>
+        </small>
       </section>
     </section>
-  </main>
+  </section>
+</main>
 
-  <div class="toast" id="toast"></div>
+<div class="toast" id="toast"></div>
 
-  <script>
-    let toastTimer;
+<script>
+  "use strict";
 
-    function showToast(msg) {
-      const toast = document.getElementById("toast");
-      toast.textContent = msg;
-      toast.classList.add("show");
+  const API_PESSOA  = "https://6a38cde364a2d8269222d659.mockapi.io";
+  const SESSION_KEY = "ecotech_session";
 
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => {
-        toast.classList.remove("show");
-      }, 3000);
+  /* ── Se já logado, vai direto para coleta ── */
+  (function () {
+    try {
+      const s = JSON.parse(sessionStorage.getItem(SESSION_KEY))
+             || JSON.parse(localStorage.getItem(SESSION_KEY));
+      if (s && s.id) { window.location.replace("coleta.html"); }
+    } catch (_) {}
+  })();
+
+  /* ── Toast ── */
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove("show"), 3000);
+  }
+
+  function togglePassword() {
+    const pw = document.getElementById("password");
+    pw.type   = pw.type === "password" ? "text" : "password";
+  }
+
+  /* ── Login ── */
+  async function handleLogin() {
+    const email    = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const btn      = document.getElementById("btn-login");
+
+    if (!email || !password)                              { showToast("Preencha todos os campos."); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))       { showToast("E-mail inválido.");          return; }
+
+    btn.disabled    = true;
+    btn.textContent = "Entrando…";
+
+    try {
+      const res = await fetch(`${API_PESSOA}/pessoa`);
+      if (!res.ok) throw new Error("API indisponível");
+      const pessoas = await res.json();
+
+      const usuario = pessoas.find(
+        (p) =>
+          p.email?.toLowerCase() === email.toLowerCase() &&
+          p.senha === password
+      );
+
+      if (!usuario) {
+        showToast("E-mail ou senha incorretos.");
+        btn.disabled    = false;
+        btn.textContent = "Entrar";
+        return;
+      }
+
+      /* Monta sessão */
+      const sessao = {
+        id:     usuario.id,
+        nome:   usuario.name,
+        email:  usuario.email,
+        avatar: usuario.avatar || null,
+        coins:  usuario.coins  || "0",
+        tipo:   "pessoa",
+      };
+
+      const storage = document.getElementById("remember-me").checked
+        ? localStorage
+        : sessionStorage;
+      storage.setItem(SESSION_KEY, JSON.stringify(sessao));
+      localStorage.setItem("ecotech_user_id", usuario.id);
+
+      showToast(`Bem-vindo, ${usuario.name.split(" ")[0]}! 🌱`);
+      setTimeout(() => window.location.replace("coleta.html"), 900);
+
+    } catch (err) {
+      console.error(err);
+      showToast("Erro de conexão. Tente novamente.");
+      btn.disabled    = false;
+      btn.textContent = "Entrar";
     }
+  }
 
-    function togglePassword() {
-      const password = document.getElementById("password");
-      password.type = password.type === "password" ? "text" : "password";
-    }
-
-    function handleLogin() {
-      const email = document.getElementById("email").value.trim().toLowerCase();
-      const password = document.getElementById("password").value;
-
-      // Validação se os campos estão preenchidos
-      if (!email || !password) {
-        showToast("Preencha todos os campos.");
-        return;
-      }
-
-      // Validação do formato do e-mail usando expressão regular
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        showToast("E-mail inválido.");
-        return;
-      }
-
-      // Verifica as credenciais no localStorage
-      // 1) Primeiro tenta como conta de pessoa física
-      const usuario = autenticarUsuario(email, password);
-      if (usuario) {
-        criarSessao("usuario", { nome: usuario.nome, email: usuario.email });
-        showToast("Entrando...");
-        setTimeout(() => {
-          window.location.href = "index.html";
-        }, 1000);
-        return;
-      }
-
-      // 2) Se não encontrou, tenta como conta de empresa
-      const empresa = autenticarEmpresa(email, password);
-      if (empresa) {
-        criarSessao("empresa", {
-          nomeEmpresa: empresa.nomeEmpresa,
-          email: empresa.email,
-        });
-        showToast("Entrando...");
-        setTimeout(() => {
-          window.location.href = "empresa.html";
-        }, 1000);
-        return;
-      }
-
-      showToast("E-mail ou senha incorretos.");
-    }
-  </script>
+  /* ── Eventos ── */
+  document.getElementById("btn-login").addEventListener("click", handleLogin);
+  document.getElementById("password").addEventListener("keydown", (e) => { if (e.key === "Enter") handleLogin(); });
+  document.getElementById("email").addEventListener("keydown",    (e) => { if (e.key === "Enter") document.getElementById("password").focus(); });
+</script>
 </body>
 </html>
