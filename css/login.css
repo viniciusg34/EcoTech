@@ -382,6 +382,36 @@ small {
   transform: translateY(0);
 }
 
+.btn-back {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: #173d27; /* no cadastro_empresarial.css usei var(--brand-green-primary) p/ respeitar o dark mode */
+  color: #fff;
+  border-radius: 50%;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(23, 61, 39, 0.28);
+  transition: 0.25s ease;
+  z-index: 1000;
+}
+
+.btn-back:hover {
+  background: #0f2c1c; /* var(--brand-green-hover) no empresarial */
+  transform: translateX(-3px);
+}
+
+.btn-back svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+}
+
+
 @media (max-width: 1050px) {
   .page {
     padding: 15px;
