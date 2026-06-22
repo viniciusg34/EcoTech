@@ -312,14 +312,15 @@
             email,
             senha,
           });
+
           showToast(
             "✅ Cadastro recebido! Um e-mail formal foi enviado para " + email + " com os termos e condições. Entraremos em contato em breve."
           );
 
-            setTimeout(() => {
-          window.location.href = "login.html";
-        }, 3000);
-
+          setTimeout(() => {
+            window.location.href = "login.html";
+          }, 3000);
+        }); // fecha addEventListener submit
     </script>
   </body>
 </html>
