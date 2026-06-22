@@ -4,13 +4,13 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-
+ 
 body {
   min-height: 100vh;
   color: #153f2a;
   background: #f7f6f0;
 }
-
+ 
 .page {
   width: 100%;
   min-height: 100vh;
@@ -19,7 +19,7 @@ body {
   justify-content: center;
   align-items: center;
 }
-
+ 
 .app {
   width: 100%;
   max-width: 1160px;
@@ -32,7 +32,7 @@ body {
   position: relative;
   box-shadow: 0 28px 70px rgba(22, 63, 42, 0.18);
 }
-
+ 
 .topbar {
   position: absolute;
   top: 22px;
@@ -47,18 +47,18 @@ body {
   margin: 0;
   z-index: 5;
 }
-
+ 
 .logo {
   color: #153f2a;
   font-size: 18px;
   font-weight: 800;
   white-space: nowrap;
 }
-
+ 
 nav {
   display: none;
 }
-
+ 
 .app::before {
   content: "";
   grid-column: 1;
@@ -72,7 +72,7 @@ nav {
   align-self: end;
   margin-top: 250px;
 }
-
+ 
 .app::after {
   content: "Bem-vindo a\Auma vida mais\Asustentável.";
   white-space: pre;
@@ -85,7 +85,7 @@ nav {
   line-height: 1.15;
   font-weight: 700;
 }
-
+ 
 .register {
   grid-column: 2;
   width: 435px;
@@ -98,7 +98,7 @@ nav {
   backdrop-filter: none;
   align-self: center;
 }
-
+ 
 .eco-logo {
   width: 68px;
   height: 68px;
@@ -110,14 +110,14 @@ nav {
   justify-content: center;
   box-shadow: 0 10px 22px rgba(45, 126, 53, 0.28);
 }
-
+ 
 .eco-logo img {
   width: 42px;
   height: 42px;
   object-fit: contain;
   filter: brightness(0) invert(1);
 }
-
+ 
 .register h1 {
   text-align: center;
   color: #153f2a;
@@ -125,14 +125,14 @@ nav {
   font-weight: 800;
   margin-bottom: 8px;
 }
-
+ 
 .register > p {
   text-align: center;
   color: #7a7d82;
   font-size: 12px;
   margin-bottom: 26px;
 }
-
+ 
 .register label {
   display: block;
   font-size: 11px;
@@ -140,7 +140,7 @@ nav {
   color: #153f2a;
   margin: 0 0 6px;
 }
-
+ 
 .input-box {
   height: 60px;
   border: 1px solid #e2e6e1;
@@ -153,18 +153,18 @@ nav {
   margin-bottom: 16px;
   transition: 0.2s ease;
 }
-
+ 
 .input-box:focus-within {
   border-color: #2d7e35;
   box-shadow: 0 0 0 3px rgba(45, 126, 53, 0.1);
 }
-
+ 
 .input-box span {
   font-size: 20px;
   color: #2d7e35;
   margin-right: 0;
 }
-
+ 
 .input-box input {
   width: 100%;
   height: 100%;
@@ -175,17 +175,17 @@ nav {
   font-size: 13px;
   padding-left: 10px;
 }
-
+ 
 .input-box input::placeholder {
   color: #9a9da1;
 }
-
+ 
 .eye {
   cursor: pointer;
   color: #7d8580 !important;
   font-size: 19px !important;
 }
-
+ 
 .terms-card {
   margin-top: 4px;
   margin-bottom: 16px;
@@ -194,7 +194,7 @@ nav {
   border: 1px solid #dce8dc;
   border-radius: 10px;
 }
-
+ 
 .terms-label {
   display: flex !important;
   align-items: flex-start;
@@ -202,7 +202,7 @@ nav {
   margin: 0 !important;
   cursor: pointer;
 }
-
+ 
 .terms-label input {
   width: 17px;
   height: 17px;
@@ -210,24 +210,24 @@ nav {
   cursor: pointer;
   accent-color: #2d7e35;
 }
-
+ 
 .terms-label span {
   font-size: 11px;
   line-height: 1.45;
   color: #60656a;
   font-weight: 500;
 }
-
+ 
 .terms-label a {
   color: #2d7e35;
   font-weight: 800;
   text-decoration: none;
 }
-
+ 
 .terms-label a:hover {
   text-decoration: underline;
 }
-
+ 
 button {
   width: 100%;
   height: 54px;
@@ -241,12 +241,12 @@ button {
   box-shadow: 0 8px 18px rgba(45, 126, 53, 0.24);
   transition: 0.2s ease;
 }
-
+ 
 button:hover {
   transform: translateY(-1px);
   background: linear-gradient(90deg, #256e2d, #2d7e35);
 }
-
+ 
 small {
   display: block;
   text-align: center;
@@ -254,13 +254,13 @@ small {
   font-size: 12px;
   margin-top: 18px;
 }
-
+ 
 small a {
   color: #2d7e35;
   font-weight: 800;
   text-decoration: none;
 }
-
+ 
 .toast {
   position: fixed;
   right: 24px;
@@ -277,12 +277,12 @@ small a {
   transition: 0.25s ease;
   z-index: 20;
 }
-
+ 
 .toast.show {
   opacity: 1;
   transform: translateY(0);
 }
-
+ 
 @media (max-width: 980px) {
   .app {
     display: block;
@@ -290,18 +290,18 @@ small a {
     min-height: auto;
     border-radius: 24px;
   }
-
+ 
   .app::before,
   .app::after {
     display: none;
   }
-
+ 
   .topbar {
     position: static;
     text-align: center;
     padding-top: 24px;
   }
-
+ 
   .register {
     margin: 24px auto;
   }
