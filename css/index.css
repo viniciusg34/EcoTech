@@ -1504,6 +1504,120 @@ footer p {
   }
 }
 
+@media (max-width: 980px) {
+  .app {
+    display: block;
+    max-width: 520px;
+    min-height: auto;
+    border-radius: 24px;
+  }
+ 
+  .app::before,
+  .app::after {
+    display: none;
+  }
+ 
+  .topbar {
+    position: static;
+    text-align: center;
+    padding-top: 24px;
+  }
+ 
+  .register {
+    margin: 24px auto;
+  }
+}
+
+/* Ajustes para Tablets e Mobile Grande */
+@media (max-width: 860px) {
+  /* O grid do Hero já estava ajustado, mas vamos garantir que a imagem não fique enorme */
+  .hero-card-visual {
+    max-width: 320px;
+  }
+}
+
+/* Ajustes Gerais para Mobile (Substitui o seu media query de 720px) */
+@media (max-width: 768px) {
+  /* Reduz os paddings verticais das seções para ganhar espaço em telas pequenas */
+  .hiw-section,
+  .stats-section,
+  .services-section,
+  .testi-section,
+  .faq-section {
+    padding: 60px 16px;
+    height: auto; /* Garante que o conteúdo defina a altura */
+  }
+
+  .map-section {
+    padding: 40px 16px;
+  }
+
+  /* Mantém apenas o mapa com altura controlada */
+  .map-wrapper {
+    height: 450px; 
+  }
+
+  /* Ajusta a CTA para não encostar nas bordas */
+  .cta-section {
+    padding: 48px 24px;
+    margin: 20px auto 40px;
+    width: 95%;
+    border-radius: var(--br-lg);
+  }
+
+  .hero {
+    padding: 100px 16px 60px;
+  }
+
+  /* Ajuste do balão do mapa para não usar 'top' fixo que quebra ao dar zoom */
+  .map-balloon {
+    top: auto;
+    bottom: 90px; /* Posiciona logo acima da legenda, em vez de um 'top' fixo */
+    left: 10px;
+    max-width: calc(100% - 20px);
+  }
+}
+
+/* Ajustes Finos para Celulares (Smartphones em pé) */
+@media (max-width: 480px) {
+  /* Força o botão e o input do formulário a ocuparem 100% da largura */
+  .hero-form {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-form input[type="email"] {
+    width: 100%;
+    max-width: none;
+  }
+
+  .hero-form button {
+    width: 100%;
+  }
+
+  /* Reduz os títulos das seções para evitar quebra de palavras indesejada */
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  /* Empilha os botões da CTA */
+  .cta-btns {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-white,
+  .btn-outline-white {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Ajuste no Nav Container para dar mais respiro nas bordas do mobile */
+  .nav-container {
+    padding: 0 16px;
+  }
+}
+
 /* =========================================
    FUNDO GLOBAL UNIFICADO
 ========================================= */
