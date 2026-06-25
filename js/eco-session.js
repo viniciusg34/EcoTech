@@ -26,15 +26,15 @@ function getSession() {
 function clearSession() {
   sessionStorage.removeItem(SESSION_KEY);
   localStorage.removeItem(SESSION_KEY);
-  localStorage.removeItem("ecotech_user_id");
+  localStorage.removeItem("ecotech_user_id"); // ← garante que a API para de funcionar
 }
 
-/* ── Proteção de rota ── */
 function requireAuth() {
   const s = getSession();
+  // s.id pode ser número (API) ou email (conta local) — ambos são truthy se existirem
   if (!s || !s.id) {
     window.location.replace("login.html");
-    throw new Error("Sessão inválida — redirecionando para login.");
+    throw new Error("Não autenticado.");
   }
   return s;
 }
