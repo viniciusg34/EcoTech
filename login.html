@@ -1,245 +1,284 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login — EcoTech</title>
- 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./css/login.css" />
-</head>
- 
-<body>
-<main class="page">
-    <section class="app">
-      <section class="content">
-        <section class="hero">
-          <span class="tag">Nossa Essência</span>
- 
-          <h1>A união de<br>dados, ciência<br>e amor pela<br>terra.</h1>
- 
-          <p>
-            Somos uma equipe dedicada a criar soluções tecnológicas para a
-            preservação ambiental e o monitoramento do nosso planeta.
-          </p>
- 
-          <div class="stat-card">
-            <strong>85%</strong>
-            <p>de eficiência<br>em nossos<br>projetos</p>
-          </div>
- 
-          <div class="hero-card">
-            <div>♧</div>
-            <p>Tecnologia e ciência trabalhando juntas por um futuro sustentável.</p>
-          </div>
-        </section>
- 
-        <section class="login">
-          <div class="eco-logo">
-            <img src="./assets/logo.svg" alt="EcoTech">
-          </div>
- 
-          <h2>Bem-vindo de volta!</h2>
-          <p>Faça login para acessar sua conta<br>e acompanhar nossos projetos.</p>
- 
-          <label for="email">E-mail</label>
-          <div class="input-box">
-            <span>✉</span>
-            <input type="email" id="email" placeholder="seu@email.com" />
-          </div>
- 
-          <label for="password">Senha</label>
-          <div class="input-box">
-            <span>🔒</span>
-            <input type="password" id="password" placeholder="••••••••" />
-            <span class="eye" onclick="togglePassword()">◎</span>
-          </div>
- 
-          <div class="options">
-            <label>
-              <input type="checkbox" id="lembrarMe" />
-              Lembrar-me
-            </label>
- 
-            <a href="esqueci_senha.html">Esqueceu sua senha?</a>
-          </div>
- 
-          <button class="primary" id="btnEntrar" onclick="handleLogin()">Entrar</button>
- 
-          <small style="display: block; margin-top: 20px; text-align: center;">
-            Ainda não tem uma conta? <a href="cadastro.html">cadastre-se</a>
-          </small>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login — EcoTech</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/login.css" />
+  </head>
+
+  <body>
+    <main class="page">
+      <a href="index.html" class="btn-back" aria-label="Voltar para o início">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M19 12H5"></path>
+          <path d="M12 19l-7-7 7-7"></path>
+        </svg>
+      </a>
+      <section class="app">
+        <section class="content">
+          <section class="hero">
+            <span class="tag">Nossa Essência</span>
+
+            <h1>A união de<br />dados, ciência<br />e amor pela<br />terra.</h1>
+
+            <p>
+              Somos uma equipe dedicada a criar soluções tecnológicas para a
+              preservação ambiental e o monitoramento do nosso planeta.
+            </p>
+
+            <div class="stat-card">
+              <strong>85%</strong>
+              <p>de eficiência<br />em nossos<br />projetos</p>
+            </div>
+
+            <div class="hero-card">
+              <div>♧</div>
+              <p>
+                Tecnologia e ciência trabalhando juntas por um futuro
+                sustentável.
+              </p>
+            </div>
+          </section>
+
+          <section class="login">
+            <div class="eco-logo">
+              <img src="./assets/logo.svg" alt="EcoTech" />
+            </div>
+
+            <h2>Bem-vindo de volta!</h2>
+            <p>
+              Faça login para acessar sua conta<br />e acompanhar nossos
+              projetos.
+            </p>
+
+            <label for="email">E-mail</label>
+            <div class="input-box">
+              <span>✉</span>
+              <input type="email" id="email" placeholder="seu@email.com" />
+            </div>
+
+            <label for="password">Senha</label>
+            <div class="input-box">
+              <span>🔒</span>
+              <input type="password" id="password" placeholder="••••••••" />
+              <span class="eye" onclick="togglePassword()">◎</span>
+            </div>
+
+            <div class="options">
+              <label>
+                <input type="checkbox" id="lembrarMe" />
+                Lembrar-me
+              </label>
+
+              <a href="esqueci_senha.html">Esqueceu sua senha?</a>
+            </div>
+
+            <button class="primary" id="btnEntrar" onclick="handleLogin()">
+              Entrar
+            </button>
+
+            <small style="display: block; margin-top: 20px; text-align: center">
+              Ainda não tem uma conta? <a href="cadastro.html">cadastre-se</a>
+            </small>
+          </section>
         </section>
       </section>
-    </section>
-  </main>
- 
-  <div class="toast" id="toast"></div>
- 
-  <script>
-    /* ─── Configuração da API ─── */
-    const API_BASE = "https://6a38cde364a2d8269222d659.mockapi.io";
-    const SESSION_KEY = "ecotech_session"; // deve ser igual ao eco-session.js
- 
-    let toastTimer;
- 
-    function showToast(msg, tipo = "info") {
-      const toast = document.getElementById("toast");
-      toast.textContent = msg;
-      toast.classList.add("show");
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.classList.remove("show"), 3000);
-    }
- 
-    function togglePassword() {
-      const password = document.getElementById("password");
-      password.type = password.type === "password" ? "text" : "password";
-    }
- 
-    function setLoading(ativo) {
-      const btn = document.getElementById("btnEntrar");
-      btn.disabled = ativo;
-      btn.textContent = ativo ? "Verificando..." : "Entrar";
-    }
- 
-    function salvarSessao(usuario) {
-      const lembrar = document.getElementById("lembrarMe").checked;
-      const sessao = {
-        id:     usuario.id,
-        nome:   usuario.name,
-        email:  usuario.email,
-        avatar: usuario.avatar,
-        coins:  usuario.coins,
-        logadoEm: new Date().toISOString()
-      };
-      // eco-session.js lê de sessionStorage OU localStorage
-      sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
-      if (lembrar) {
-        localStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+    </main>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      /* ─── Configuração da API ─── */
+      const API_BASE = "https://6a38cde364a2d8269222d659.mockapi.io";
+      const SESSION_KEY = "ecotech_session"; // deve ser igual ao eco-session.js
+
+      let toastTimer;
+
+      function showToast(msg, tipo = "info") {
+        const toast = document.getElementById("toast");
+        toast.textContent = msg;
+        toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove("show"), 3000);
       }
-      // Guarda o id para outras páginas (coleta, perfil, etc.)
-      localStorage.setItem("ecotech_user_id", usuario.id);
-    }
- 
-    /* ─── Login pela API MockAPI ─── */
-    async function autenticarPelaAPI(email, senha) {
-      const url = `${API_BASE}/pessoa?email=${encodeURIComponent(email)}`;
-      const resp = await fetch(url);
-      if (!resp.ok) throw new Error("Falha ao contatar o servidor.");
- 
-      const lista = await resp.json();
-      // A API pode retornar array com 0 ou + resultados
-      const usuario = lista.find(
-        (u) => u.email.toLowerCase() === email.toLowerCase() && u.senha === senha
-      );
-      return usuario || null;
-    }
- 
-    /* ─── Login local (contas criadas no cadastro.html) ─── */
-    function hashSenha(senha) {
-      let hash = 0;
-      const texto = "ecoTechSalt_" + senha;
-      for (let i = 0; i < texto.length; i++) {
-        hash = (hash << 5) - hash + texto.charCodeAt(i);
-        hash |= 0;
+
+      function togglePassword() {
+        const password = document.getElementById("password");
+        password.type = password.type === "password" ? "text" : "password";
       }
-      return "h" + Math.abs(hash).toString(36) + texto.length;
-    }
- 
-    function autenticarLocal(email, senha) {
-      try {
-        const usuarios = JSON.parse(localStorage.getItem("usuariosEcoTech") || "[]");
-        const encontrado = usuarios.find(
-          (u) => u.email === email.toLowerCase() && u.senha === hashSenha(senha)
+
+      function setLoading(ativo) {
+        const btn = document.getElementById("btnEntrar");
+        btn.disabled = ativo;
+        btn.textContent = ativo ? "Verificando..." : "Entrar";
+      }
+
+      function salvarSessao(usuario) {
+        const lembrar = document.getElementById("lembrarMe").checked;
+        const sessao = {
+          id: usuario.id,
+          nome: usuario.name,
+          email: usuario.email,
+          avatar: usuario.avatar,
+          coins: usuario.coins,
+          logadoEm: new Date().toISOString(),
+        };
+        // eco-session.js lê de sessionStorage OU localStorage
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+        if (lembrar) {
+          localStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+        }
+        // Guarda o id para outras páginas (coleta, perfil, etc.)
+        localStorage.setItem("ecotech_user_id", usuario.id);
+      }
+
+      /* ─── Login pela API MockAPI ─── */
+      async function autenticarPelaAPI(email, senha) {
+        const url = `${API_BASE}/pessoa?email=${encodeURIComponent(email)}`;
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error("Falha ao contatar o servidor.");
+
+        const lista = await resp.json();
+        // A API pode retornar array com 0 ou + resultados
+        const usuario = lista.find(
+          (u) =>
+            u.email.toLowerCase() === email.toLowerCase() && u.senha === senha,
         );
-        return encontrado || null;
-      } catch (_) { return null; }
-    }
- 
-    async function handleLogin() {
-      const email    = document.getElementById("email").value.trim().toLowerCase();
-      const password = document.getElementById("password").value;
- 
-      if (!email || !password) {
-        showToast("Preencha todos os campos.");
-        return;
+        return usuario || null;
       }
- 
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        showToast("E-mail inválido.");
-        return;
+
+      /* ─── Login local (contas criadas no cadastro.html) ─── */
+      function hashSenha(senha) {
+        let hash = 0;
+        const texto = "ecoTechSalt_" + senha;
+        for (let i = 0; i < texto.length; i++) {
+          hash = (hash << 5) - hash + texto.charCodeAt(i);
+          hash |= 0;
+        }
+        return "h" + Math.abs(hash).toString(36) + texto.length;
       }
- 
-      setLoading(true);
- 
-      try {
-        /* 1) Tenta na API MockAPI (usuários da base de dados) */
-        let usuario = await autenticarPelaAPI(email, password);
- 
-        if (usuario) {
-          salvarSessao(usuario);
-          showToast("Entrando...");
-          setTimeout(() => { window.location.href = "index.html"; }, 1000);
+
+      function autenticarLocal(email, senha) {
+        try {
+          const usuarios = JSON.parse(
+            localStorage.getItem("usuariosEcoTech") || "[]",
+          );
+          const encontrado = usuarios.find(
+            (u) =>
+              u.email === email.toLowerCase() && u.senha === hashSenha(senha),
+          );
+          return encontrado || null;
+        } catch (_) {
+          return null;
+        }
+      }
+
+      async function handleLogin() {
+        const email = document
+          .getElementById("email")
+          .value.trim()
+          .toLowerCase();
+        const password = document.getElementById("password").value;
+
+        if (!email || !password) {
+          showToast("Preencha todos os campos.");
           return;
         }
- 
-        /* 2) Fallback: conta criada localmente via cadastro.html */
-        const local = autenticarLocal(email, password);
-        if (local) {
-          salvarSessao({
-            id:     local.email,
-            name:   local.nome,
-            email:  local.email,
-            avatar: null,
-            coins:  "0.00"
-          });
-          showToast("Entrando...");
-          setTimeout(() => { window.location.href = "index.html"; }, 1000);
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showToast("E-mail inválido.");
           return;
         }
- 
-        /* 3) Conta de empresa (localStorage) */
-        const empresas = JSON.parse(localStorage.getItem("empresasEcoTech") || "[]");
-        const empresa  = empresas.find(
-          (e) => e.email === email && e.senha === hashSenha(password)
-        );
-        if (empresa) {
-          const sessao = {
-            id:          empresa.email,
-            nome:        empresa.nomeEmpresa,
-            email:       empresa.email,
-            avatar:      null,
-            tipo:        "empresa",
-            logadoEm:    new Date().toISOString()
-          };
-          sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
-          if (document.getElementById("lembrarMe").checked) {
-            localStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+
+        setLoading(true);
+
+        try {
+          /* 1) Tenta na API MockAPI (usuários da base de dados) */
+          let usuario = await autenticarPelaAPI(email, password);
+
+          if (usuario) {
+            salvarSessao(usuario);
+            showToast("Entrando...");
+            setTimeout(() => {
+              window.location.href = "index.html";
+            }, 1000);
+            return;
           }
-          showToast("Entrando...");
-          setTimeout(() => { window.location.href = "empresa.html"; }, 1000);
-          return;
+
+          /* 2) Fallback: conta criada localmente via cadastro.html */
+          const local = autenticarLocal(email, password);
+          if (local) {
+            salvarSessao({
+              id: local.email,
+              name: local.nome,
+              email: local.email,
+              avatar: null,
+              coins: "0.00",
+            });
+            showToast("Entrando...");
+            setTimeout(() => {
+              window.location.href = "index.html";
+            }, 1000);
+            return;
+          }
+
+          /* 3) Conta de empresa (localStorage) */
+          const empresas = JSON.parse(
+            localStorage.getItem("empresasEcoTech") || "[]",
+          );
+          const empresa = empresas.find(
+            (e) => e.email === email && e.senha === hashSenha(password),
+          );
+          if (empresa) {
+            const sessao = {
+              id: empresa.email,
+              nome: empresa.nomeEmpresa,
+              email: empresa.email,
+              avatar: null,
+              tipo: "empresa",
+              logadoEm: new Date().toISOString(),
+            };
+            sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+            if (document.getElementById("lembrarMe").checked) {
+              localStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+            }
+            showToast("Entrando...");
+            setTimeout(() => {
+              window.location.href = "empresa.html";
+            }, 1000);
+            return;
+          }
+
+          showToast("E-mail ou senha incorretos.");
+        } catch (err) {
+          console.error("Erro no login:", err);
+          showToast("Erro de conexão. Tente novamente.");
+        } finally {
+          setLoading(false);
         }
- 
-        showToast("E-mail ou senha incorretos.");
- 
-      } catch (err) {
-        console.error("Erro no login:", err);
-        showToast("Erro de conexão. Tente novamente.");
-      } finally {
-        setLoading(false);
       }
-    }
- 
-    /* Permite pressionar Enter para logar */
-    document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("password").addEventListener("keydown", (e) => {
-        if (e.key === "Enter") handleLogin();
+
+      /* Permite pressionar Enter para logar */
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("password").addEventListener("keydown", (e) => {
+          if (e.key === "Enter") handleLogin();
+        });
+        document.getElementById("email").addEventListener("keydown", (e) => {
+          if (e.key === "Enter") handleLogin();
+        });
       });
-      document.getElementById("email").addEventListener("keydown", (e) => {
-        if (e.key === "Enter") handleLogin();
-      });
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>

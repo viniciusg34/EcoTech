@@ -5,11 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="./assets/fivecom.png" type="image/x-icon" />
     <title>Cadastro — EcoTech</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./css/cadastro.css" />
     <script src="./auth.js"></script>
   </head>
   <body>
+    <a href="index.html" class="btn-back" aria-label="Voltar para o início">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M19 12H5"></path>
+        <path d="M12 19l-7-7 7-7"></path>
+      </svg>
+    </a>
     <main class="page">
       <section class="app">
         <section class="register">
@@ -17,31 +32,58 @@
             <img src="./assets/logo.svg" alt="EcoTech" />
           </div>
           <h1>Crie sua conta!</h1>
-          <p>Cadastre-se para acompanhar nossos projetos<br />e fazer parte da EcoTech.</p>
+          <p>
+            Cadastre-se para acompanhar nossos projetos<br />e fazer parte da
+            EcoTech.
+          </p>
 
           <form id="formCadastro" autocomplete="off">
             <label for="email">E-mail</label>
             <div class="input-box">
               <span>✉</span>
-              <input id="email" type="email" placeholder="seu@email.com" maxlength="120" required />
+              <input
+                id="email"
+                type="email"
+                placeholder="seu@email.com"
+                maxlength="120"
+                required
+              />
             </div>
 
             <label for="cpf">CPF</label>
             <div class="input-box">
               <span>▣</span>
-              <input id="cpf" type="text" placeholder="000.000.000-00" maxlength="14" required />
+              <input
+                id="cpf"
+                type="text"
+                placeholder="000.000.000-00"
+                maxlength="14"
+                required
+              />
             </div>
 
             <label for="nome">Nome completo</label>
             <div class="input-box">
               <span>👤</span>
-              <input id="nome" type="text" placeholder="Digite seu nome completo" maxlength="80" required />
+              <input
+                id="nome"
+                type="text"
+                placeholder="Digite seu nome completo"
+                maxlength="80"
+                required
+              />
             </div>
 
             <label for="nomeMae">Nome da mãe</label>
             <div class="input-box">
               <span>👩</span>
-              <input id="nomeMae" type="text" placeholder="Digite o nome da sua mãe" maxlength="80" required />
+              <input
+                id="nomeMae"
+                type="text"
+                placeholder="Digite o nome da sua mãe"
+                maxlength="80"
+                required
+              />
             </div>
 
             <label for="nascimento">Sua data de nascimento</label>
@@ -53,15 +95,29 @@
             <label for="senha">Senha</label>
             <div class="input-box">
               <span>🔒</span>
-              <input id="senha" type="password" placeholder="Digite sua senha" maxlength="32" required />
+              <input
+                id="senha"
+                type="password"
+                placeholder="Digite sua senha"
+                maxlength="32"
+                required
+              />
               <span class="eye" onclick="togglePassword('senha')">◎</span>
             </div>
 
             <label for="confirmarSenha">Confirmar senha</label>
             <div class="input-box">
               <span>🔐</span>
-              <input id="confirmarSenha" type="password" placeholder="Digite novamente sua senha" maxlength="32" required />
-              <span class="eye" onclick="togglePassword('confirmarSenha')">◎</span>
+              <input
+                id="confirmarSenha"
+                type="password"
+                placeholder="Digite novamente sua senha"
+                maxlength="32"
+                required
+              />
+              <span class="eye" onclick="togglePassword('confirmarSenha')"
+                >◎</span
+              >
             </div>
 
             <div class="terms-card">
@@ -69,7 +125,11 @@
                 <input type="checkbox" id="aceitarTermos" />
                 <span>
                   Ao criar uma conta, você concorda com nossos
-                  <a href="https://www.termsfeed.com/live/7f2df7c4-3d8c-4c6a-b5b8-2e9f8b4c8f95" target="_blank">Termos e Condições</a>
+                  <a
+                    href="https://www.termsfeed.com/live/7f2df7c4-3d8c-4c6a-b5b8-2e9f8b4c8f95"
+                    target="_blank"
+                    >Termos e Condições</a
+                  >
                   e nossa Política de Privacidade.
                 </span>
               </label>
@@ -86,126 +146,129 @@
     <div class="toast" id="toast"></div>
 
     <script>
-      /* ── Autocomplete do e-mail via ?email= na URL ── */
-      (function () {
-        const params = new URLSearchParams(window.location.search);
-        const emailParam = params.get("email");
-        if (emailParam) {
-          const emailInput = document.getElementById("email");
-          if (emailInput) {
-            emailInput.value = decodeURIComponent(emailParam);
-            const cpfInput = document.getElementById("cpf");
-            if (cpfInput) cpfInput.focus();
+      document
+        .getElementById("formCadastro")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const nome = cleanText(document.getElementById("nome").value);
+          const email = cleanText(
+            document.getElementById("email").value,
+          ).toLowerCase();
+          const cpf = document.getElementById("cpf").value.trim();
+          const nomeMae = cleanText(document.getElementById("nomeMae").value);
+          const nascimento = document.getElementById("nascimento").value;
+          const senha = document.getElementById("senha").value;
+          const confirmarSenha =
+            document.getElementById("confirmarSenha").value;
+
+          // ── Validações ──
+          if (!nome || !email || !cpf || !nomeMae || !nascimento || !senha) {
+            showToast("Preencha todos os campos.");
+            return;
           }
-        }
-      })();
+          if (nome.length < 3 || nomeMae.length < 3) {
+            showToast("Nome inválido.");
+            return;
+          }
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            showToast("E-mail inválido.");
+            return;
+          }
+          if (!validarCPF(cpf)) {
+            showToast("CPF inválido.");
+            return;
+          }
+          if (calcularIdade(nascimento) < 13) {
+            showToast("Cadastro permitido apenas para maiores de 13 anos.");
+            return;
+          }
+          if (!senhaSegura(senha)) {
+            showToast("Use 8 caracteres, letra maiúscula, minúscula e número.");
+            return;
+          }
+          if (senha !== confirmarSenha) {
+            showToast("As senhas não coincidem.");
+            return;
+          }
+          if (!document.getElementById("aceitarTermos").checked) {
+            showToast("Você precisa aceitar os Termos e Condições.");
+            return;
+          }
 
-      let toastTimer;
+          const MOCK_API = "https://6a38cde364a2d8269222d659.mockapi.io/pessoa";
+          const btn = document.querySelector(
+            "#formCadastro button[type='submit']",
+          );
+          btn.textContent = "Cadastrando...";
+          btn.disabled = true;
 
-      function showToast(msg, success) {
-        const toast = document.getElementById("toast");
-        toast.textContent = msg;
-        toast.style.background = success ? "#3d9140" : "";
-        toast.classList.add("show");
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => toast.classList.remove("show"), 3000);
-      }
+          try {
+            // Verifica se o e-mail já existe na API
+            const checkRes = await fetch(MOCK_API);
+            if (!checkRes.ok) throw new Error("Falha ao verificar e-mail.");
+            const usuarios = await checkRes.json();
+            const emailJaExiste = usuarios.some(
+              (u) => u.email.toLowerCase() === email,
+            );
+            if (emailJaExiste) {
+              showToast("Este e-mail já está cadastrado.");
+              btn.textContent = "Cadastrar";
+              btn.disabled = false;
+              return;
+            }
 
-      function togglePassword(id) {
-        const campo = document.getElementById(id);
-        campo.type = campo.type === "password" ? "text" : "password";
-      }
+            // Cria o novo usuário na API
+            const novoUsuario = {
+              nome, // mantido para compatibilidade local
+              name: nome, // campo que a API e perfil.html usam
+              email,
+              cpf,
+              nomeMae,
+              nascimento,
+              senha, // MockAPI é ambiente de estudo; em produção nunca envie senha plain
+              coins: 0,
+              avatar: "",
+              reciclado: [],
+            };
 
-      function cleanText(value) {
-        return value.trim().replace(/\s+/g, " ");
-      }
+            const postRes = await fetch(MOCK_API, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(novoUsuario),
+            });
 
-      function formatCPF(value) {
-        return value.replace(/\D/g, "")
-          .replace(/(\d{3})(\d)/, "$1.$2")
-          .replace(/(\d{3})(\d)/, "$1.$2")
-          .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-      }
+            if (!postRes.ok) throw new Error("Falha ao cadastrar na API.");
 
-      function validarCPF(cpf) {
-        cpf = cpf.replace(/\D/g, "");
-        if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
-        let soma = 0, resto;
-        for (let i = 1; i <= 9; i++) soma += parseInt(cpf[i - 1]) * (11 - i);
-        resto = (soma * 10) % 11;
-        if (resto === 10 || resto === 11) resto = 0;
-        if (resto !== parseInt(cpf[9])) return false;
-        soma = 0;
-        for (let i = 1; i <= 10; i++) soma += parseInt(cpf[i - 1]) * (12 - i);
-        resto = (soma * 10) % 11;
-        if (resto === 10 || resto === 11) resto = 0;
-        return resto === parseInt(cpf[10]);
-      }
+            const usuarioCriado = await postRes.json();
 
-      function calcularIdade(dataNascimento) {
-        const hoje = new Date();
-        const nasc = new Date(dataNascimento);
-        let idade = hoje.getFullYear() - nasc.getFullYear();
-        const mes = hoje.getMonth() - nasc.getMonth();
-        if (mes < 0 || (mes === 0 && hoje.getDate() < nasc.getDate())) idade--;
-        return idade;
-      }
+            // Salva sessão com os dados retornados pela API
+            const SESSION_KEY = "ecotech_session";
+            const sessao = {
+              id: usuarioCriado.id,
+              tipo: "pessoa",
+              nome: usuarioCriado.name || nome,
+              email: usuarioCriado.email || email,
+              coins: 0,
+              logadoEm: new Date().toISOString(),
+            };
+            sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+            localStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
 
-      function senhaSegura(senha) {
-        return senha.length >= 8 && /[A-Z]/.test(senha) && /[a-z]/.test(senha) && /\d/.test(senha);
-      }
-
-      document.getElementById("cpf").addEventListener("input", function () {
-        this.value = formatCPF(this.value);
-      });
-
-      document.getElementById("formCadastro").addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        const nome          = cleanText(document.getElementById("nome").value);
-        const email         = cleanText(document.getElementById("email").value).toLowerCase();
-        const cpf           = document.getElementById("cpf").value.trim();
-        const nomeMae       = cleanText(document.getElementById("nomeMae").value);
-        const nascimento    = document.getElementById("nascimento").value;
-        const senha         = document.getElementById("senha").value;
-        const confirmarSenha = document.getElementById("confirmarSenha").value;
-
-        if (!nome || !email || !cpf || !nomeMae || !nascimento || !senha) {
-          showToast("Preencha todos os campos."); return;
-        }
-        if (nome.length < 3 || nomeMae.length < 3) {
-          showToast("Nome inválido."); return;
-        }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          showToast("E-mail inválido."); return;
-        }
-        if (!validarCPF(cpf)) {
-          showToast("CPF inválido."); return;
-        }
-        if (calcularIdade(nascimento) < 13) {
-          showToast("Cadastro permitido apenas para maiores de 13 anos."); return;
-        }
-        if (!senhaSegura(senha)) {
-          showToast("Use 8 caracteres, letra maiúscula, minúscula e número."); return;
-        }
-        if (senha !== confirmarSenha) {
-          showToast("As senhas não coincidem."); return;
-        }
-        if (!document.getElementById("aceitarTermos").checked) {
-          showToast("Você precisa aceitar os Termos e Condições."); return;
-        }
-        if (typeof emailUsuarioExiste === "function" && emailUsuarioExiste(email)) {
-          showToast("Este e-mail já está cadastrado."); return;
-        }
-
-        if (typeof cadastrarUsuario === "function") {
-          cadastrarUsuario({ nome, email, cpf, nomeMae, nascimento, senha });
-        }
-
-        /* ── Confirma e volta para o início ── */
-        showToast("✅ Cadastro realizado com sucesso! Bem-vindo(a) à EcoTech 🌿", true);
-        setTimeout(() => { window.location.href = "index.html"; }, 2000);
-      });
+            showToast(
+              "✅ Cadastro realizado com sucesso! Bem-vindo(a) à EcoTech 🌿",
+              true,
+            );
+            setTimeout(() => {
+              window.location.href = "index.html";
+            }, 2000);
+          } catch (err) {
+            console.error(err);
+            showToast("⚠️ Erro ao conectar com o servidor. Tente novamente.");
+            btn.textContent = "Cadastrar";
+            btn.disabled = false;
+          }
+        });
     </script>
   </body>
 </html>

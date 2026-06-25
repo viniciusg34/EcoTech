@@ -61,7 +61,9 @@
             <a href="cadastro_empresarial.html" class="botao-principal"
               >Quero me afiliar →</a
             >
-            <a href="./assets/proposta.txt" class="botao-contorno" download>Baixar proposta</a>
+            <a href="./assets/proposta.txt" class="botao-contorno" download
+              >Baixar proposta</a
+            >
           </div>
         </div>
 
@@ -79,7 +81,7 @@
         </div>
 
         <div class="card-impacto">
-          <h3>+9 Ecopontos</h3>
+          <h3 id="num-voluntarios">+9 Ecopontos</h3>
           <p>novos pontos inteligentes em implantação</p>
         </div>
 
@@ -205,8 +207,52 @@
   </body>
   <script>
     "use strict";
-    document.addEventListener("DOMContentLoaded", () => {
-      /* ── INICIALIZAÇÃO TEMA ── */
+
+    const API_EMPRESA =
+      "https://6a386bef64a2d82692228142.mockapi.io/api/v1/empresa";
+
+    async function carregarDadosAPI() {
+      try {
+        const res = await fetch(API_EMPRESA);
+        if (!res.ok) throw new Error("Falha ao buscar empresas");
+        const empresas = await res.json();
+
+        const todasPromises = empresas.map((e) =>
+          fetch(`${API_EMPRESA}/${e.id}/ecopontos`)
+            .then((r) => (r.ok ? r.json() : []))
+            .catch(() => []),
+        );
+        const todosEcopontos = await Promise.all(todasPromises);
+        const totalEcopontos = todosEcopontos.reduce(
+          (acc, lista) => acc + lista.length,
+          0,
+        );
+
+        return { totalEcopontos };
+      } catch (err) {
+        console.warn("API indisponível, usando fallback:", err);
+        return { totalEcopontos: 22 };
+      }
+    }
+
+    function animarContador(elementoId, valorAlvo, sufixo = "", prefixo = "") {
+      const el = document.getElementById(elementoId);
+      if (!el) return;
+      let atual = 0;
+      const incremento = Math.ceil(valorAlvo / 60);
+      const interval = setInterval(() => {
+        atual += incremento;
+        if (atual >= valorAlvo) {
+          clearInterval(interval);
+          el.textContent = `${prefixo}${valorAlvo.toLocaleString("pt-BR")}${sufixo}`;
+        } else {
+          el.textContent = `${prefixo}${atual.toLocaleString("pt-BR")}${sufixo}`;
+        }
+      }, 20);
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      // ── Tema ──
       (function () {
         const saved = localStorage.getItem("eco-theme");
         const pref =
@@ -217,25 +263,19 @@
         document.documentElement.setAttribute("data-theme", pref);
       })();
 
-      /* ── DARK MODE TOGGLE ── */
       const themeToggle = document.getElementById("theme-toggle");
       const themeIcon = document.getElementById("theme-icon");
+      themeIcon.textContent =
+        document.documentElement.getAttribute("data-theme") === "dark"
+          ? "🌙"
+          : "☀️";
 
-      // 1. Sincroniza o ícone de acordo com o tema carregado
-      const currentTheme = document.documentElement.getAttribute("data-theme");
-      themeIcon.textContent = currentTheme === "dark" ? "🌙" : "☀️";
-
-      // 2. Alterna o tema ao clicar
       themeToggle.addEventListener("click", () => {
         const root = document.documentElement;
-        const isDark = root.getAttribute("data-theme") === "dark";
-        const newTheme = isDark ? "light" : "dark";
-
-        // Atualiza o DOM e salva no LocalStorage
+        const newTheme =
+          root.getAttribute("data-theme") === "dark" ? "light" : "dark";
         root.setAttribute("data-theme", newTheme);
         localStorage.setItem("eco-theme", newTheme);
-
-        // Animação e troca de ícone
         themeIcon.style.transform = "rotate(360deg)";
         themeIcon.style.transition = "transform 0.3s ease";
         setTimeout(() => {
@@ -243,22 +283,26 @@
           themeIcon.style.transform = "rotate(0deg)";
         }, 150);
       });
-    });
 
-    /* ── MENU ── */
-    const menuToggle = document.getElementById("menu-toggle");
-    const mainNav = document.getElementById("main-nav");
-    menuToggle.addEventListener("click", () => {
-      const open = mainNav.classList.toggle("open");
-      menuToggle.setAttribute("aria-expanded", String(open));
-      menuToggle.textContent = open ? "✕" : "☰";
+      // ── Menu ──
+      const menuToggle = document.getElementById("menu-toggle");
+      const mainNav = document.getElementById("main-nav");
+      menuToggle.addEventListener("click", () => {
+        const open = mainNav.classList.toggle("open");
+        menuToggle.setAttribute("aria-expanded", String(open));
+        menuToggle.textContent = open ? "✕" : "☰";
+      });
+      mainNav.querySelectorAll("a").forEach((a) =>
+        a.addEventListener("click", () => {
+          mainNav.classList.remove("open");
+          menuToggle.setAttribute("aria-expanded", "false");
+          menuToggle.textContent = "☰";
+        }),
+      );
+
+      // ── Contador da API ──
+      const { totalEcopontos } = await carregarDadosAPI();
+      animarContador("num-voluntarios", totalEcopontos, " Ecopontos", "+");
     });
-    mainNav.querySelectorAll("a").forEach((a) =>
-      a.addEventListener("click", () => {
-        mainNav.classList.remove("open");
-        menuToggle.setAttribute("aria-expanded", "false");
-        menuToggle.textContent = "☰";
-      }),
-    );
   </script>
 </html>

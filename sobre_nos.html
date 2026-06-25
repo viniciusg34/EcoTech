@@ -66,8 +66,8 @@
             <span class="icon">🔬</span>
             <span class="icon">🌿</span>
           </div>
-          <h3 class="card-subtitle">Projetos Ativos</h3>
-          <h2 class="card-counter" id="hero-projects">0 Projetos</h2>
+          <h3 class="card-subtitle">Ecopontos Ativos</h3>
+          <h2 class="card-counter" id="hero-projects">0 Ecopontos</h2>
 
           <div class="progress-container">
             <div class="progress-bar" id="progressBar"></div>
@@ -90,7 +90,7 @@
             data-content="EcoTech é uma projeto de faculdade criado em 2026, por um grupo formado por 10 alunos da turma de ADS da faculdade UNISUAM de Campo Grande. Tudo começou com a ideia de criar uma site para incentivar a população a reciclar. Sendo o intermeio entre quem recicla com a pessoa, empresa ou instituição que esteja coletando os materiais."
           >
             <h2>🌱 A EcoTech</h2>
-            <p>Conheça a nossa trajetória e origens no mercado.</p>
+            <p>Conheça a nossa trajetória e origens.</p>
           </button>
 
           <button
@@ -125,17 +125,17 @@
           <div class="numero-item">
             <div class="numero-icon">🌱</div>
             <h3 id="num-arvores">+0 toneladas</h3>
-            <p>de resíduos industriais reciclados</p>
+            <p>de resíduos reciclados</p>
           </div>
           <div class="numero-item">
             <div class="numero-icon">👥</div>
             <h3 id="num-voluntarios">0</h3>
-            <p>parceiros e empresas integradas</p>
+            <p>Ecopontos instalados e aumentando.</p>
           </div>
           <div class="numero-item">
             <div class="numero-icon">🏭</div>
             <h3 id="num-parques">0</h3>
-            <p>polos industriais atendidos</p>
+            <p>cooperando conosco</p>
           </div>
         </div>
       </section>
@@ -279,20 +279,77 @@
     <script>
       "use strict";
 
+      const API_EMPRESA =
+        "https://6a386bef64a2d82692228142.mockapi.io/api/v1/empresa";
+
       const CONFIG_ECOTECH = {
         badgeTexto: "Inovação Verde",
         tituloBanner: "Construindo um amanhã sustentável",
         descricaoBanner:
-          "Soluções ecológicas para a indústria moderna através da reciclagem e tecnologia de ponta.",
+          "Soluções ecológicas para a sociedade moderna através da reciclagem e tecnologia de ponta.",
         porcentagemEficacia: 98,
-        totalProjetos: 22,
-        toneladasRecicladas: 21000,
-        empresasParceiras: 10,
-        polosAtendidos: 22,
-        hectaresProtegidos: 350,
       };
 
-      document.addEventListener("DOMContentLoaded", () => {
+      function animarContador(
+        elementoId,
+        valorAlvo,
+        sufixo = "",
+        prefixo = "",
+      ) {
+        const el = document.getElementById(elementoId);
+        if (!el) return;
+        let atual = 0;
+        const incremento = Math.ceil(valorAlvo / 60);
+        const interval = setInterval(() => {
+          atual += incremento;
+          if (atual >= valorAlvo) {
+            clearInterval(interval);
+            el.textContent = `${prefixo}${valorAlvo.toLocaleString("pt-BR")}${sufixo}`;
+          } else {
+            el.textContent = `${prefixo}${atual.toLocaleString("pt-BR")}${sufixo}`;
+          }
+        }, 20);
+      }
+
+      async function carregarDadosAPI() {
+        try {
+          const res = await fetch(API_EMPRESA);
+          if (!res.ok) throw new Error("Falha ao buscar empresas");
+          const empresas = await res.json();
+
+          // Total de empresas parceiras
+          const totalEmpresas = empresas.length;
+
+          // Soma total de kgColetado (campo saldoMoeda usado como kg no schema)
+          const totalKg = empresas.reduce((acc, e) => {
+            return acc + (parseFloat(e.kgColetado) || 0);
+          }, 0);
+
+          // Busca ecopontos de todas as empresas em paralelo
+          const todasPromises = empresas.map((e) =>
+            fetch(`${API_EMPRESA}/${e.id}/ecopontos`)
+              .then((r) => (r.ok ? r.json() : []))
+              .catch(() => []),
+          );
+          const todosEcopontos = await Promise.all(todasPromises);
+          const totalEcopontos = todosEcopontos.reduce(
+            (acc, lista) => acc + lista.length,
+            0,
+          );
+
+          return {
+            totalEmpresas,
+            totalKg: Math.round(totalKg),
+            totalEcopontos,
+          };
+        } catch (err) {
+          console.warn("API indisponível, usando fallback:", err);
+          return { totalEmpresas: 10, totalKg: 21000, totalEcopontos: 22 };
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        // ── Tema ──
         (function () {
           const saved = localStorage.getItem("eco-theme");
           const pref =
@@ -305,18 +362,17 @@
 
         const themeToggle = document.getElementById("theme-toggle");
         const themeIcon = document.getElementById("theme-icon");
-        const currentTheme =
-          document.documentElement.getAttribute("data-theme");
-        themeIcon.textContent = currentTheme === "dark" ? "🌙" : "☀️";
+        themeIcon.textContent =
+          document.documentElement.getAttribute("data-theme") === "dark"
+            ? "🌙"
+            : "☀️";
 
         themeToggle.addEventListener("click", () => {
           const root = document.documentElement;
-          const isDark = root.getAttribute("data-theme") === "dark";
-          const newTheme = isDark ? "light" : "dark";
-
+          const newTheme =
+            root.getAttribute("data-theme") === "dark" ? "light" : "dark";
           root.setAttribute("data-theme", newTheme);
           localStorage.setItem("eco-theme", newTheme);
-
           themeIcon.style.transform = "rotate(360deg)";
           themeIcon.style.transition = "transform 0.3s ease";
           setTimeout(() => {
@@ -325,6 +381,7 @@
           }, 150);
         });
 
+        // ── Menu mobile ──
         const menuToggle = document.getElementById("menu-toggle");
         const mainNav = document.getElementById("main-nav");
         menuToggle.addEventListener("click", () => {
@@ -340,6 +397,7 @@
           }),
         );
 
+        // ── Bottom sheet ──
         const bottomSheet = document.getElementById("bottomSheet");
         const sheetOverlay = document.getElementById("sheetOverlay");
         const sheetTitle = document.getElementById("sheetTitle");
@@ -348,14 +406,14 @@
 
         function openSheet(title, content) {
           sheetTitle.textContent = title;
-          const paragraphs = content.split("[QUEBRA]");
-          let formattedContent = "";
-          paragraphs.forEach((paragraph) => {
-            if (paragraph.trim() !== "") {
-              formattedContent += `<p style="margin-bottom: 16px; line-height: 1.6; display: block;">${paragraph.trim()}</p>`;
-            }
-          });
-          sheetContent.innerHTML = formattedContent;
+          sheetContent.innerHTML = content
+            .split("[QUEBRA]")
+            .filter((p) => p.trim())
+            .map(
+              (p) =>
+                `<p style="margin-bottom:16px;line-height:1.6;display:block;">${p.trim()}</p>`,
+            )
+            .join("");
           bottomSheet.classList.add("open");
           sheetOverlay.classList.add("open");
           bottomSheet.setAttribute("aria-hidden", "false");
@@ -381,6 +439,7 @@
         if (sheetOverlay)
           sheetOverlay.addEventListener("click", closeBottomSheet);
 
+        // ── Banner estático ──
         document.getElementById("hero-badge").textContent =
           CONFIG_ECOTECH.badgeTexto;
         document.getElementById("hero-title").textContent =
@@ -388,6 +447,7 @@
         document.getElementById("hero-desc").textContent =
           CONFIG_ECOTECH.descricaoBanner;
 
+        // ── Documentos ──
         document.getElementById("doc-link-1").href =
           "assets/EcoTech_Diretrizes_Sustentabilidade_Inclusao.pdf";
         document.getElementById("doc-link-2").href =
@@ -395,53 +455,23 @@
         document.getElementById("doc-link-3").href =
           "assets/EcoTech_Estatuto_Governanca_Verde.pdf";
 
-        const progressBar = document.getElementById("progressBar");
+        // ── Barra de progresso ──
         setTimeout(() => {
-          progressBar.style.width = `${CONFIG_ECOTECH.porcentagemEficacia}%`;
+          document.getElementById("progressBar").style.width =
+            `${CONFIG_ECOTECH.porcentagemEficacia}%`;
         }, 400);
 
-        function animarContador(
-          elementoId,
-          valorAlvo,
-          sufixo = "",
-          prefixo = "",
-        ) {
-          const el = document.getElementById(elementoId);
-          if (!el) return;
-          let atual = 0;
-          const incremento = Math.ceil(valorAlvo / 60);
-          const interval = setInterval(() => {
-            atual += incremento;
-            if (atual >= valorAlvo) {
-              clearInterval(interval);
-              el.textContent = `${prefixo}${valorAlvo.toLocaleString("pt-BR")}${sufixo}`;
-            } else {
-              el.textContent = `${prefixo}${atual.toLocaleString("pt-BR")}${sufixo}`;
-            }
-          }, 20);
-        }
+        // ── Dados da API ──
+        const { totalEmpresas, totalKg, totalEcopontos } =
+          await carregarDadosAPI();
 
         animarContador("percentageNumber", CONFIG_ECOTECH.porcentagemEficacia);
-        animarContador(
-          "hero-projects",
-          CONFIG_ECOTECH.totalProjetos,
-          " Projetos",
-        );
-        animarContador(
-          "num-arvores",
-          CONFIG_ECOTECH.toneladasRecicladas,
-          " toneladas",
-          "+",
-        );
-        animarContador("num-voluntarios", CONFIG_ECOTECH.empresasParceiras);
-        animarContador("num-parques", CONFIG_ECOTECH.polosAtendidos, " polos");
-        animarContador(
-          "num-midias",
-          CONFIG_ECOTECH.hectaresProtegidos,
-          " hectares",
-          "+",
-        );
+        animarContador("hero-projects", totalEcopontos, " Ecopontos");
+        animarContador("num-arvores", totalKg, " toneladas", "+");
+        animarContador("num-voluntarios", totalEcopontos);
+        animarContador("num-parques", totalEmpresas, " Empresas");
 
+        // ── Newsletter ──
         document
           .getElementById("newsletterForm")
           .addEventListener("submit", (e) => {

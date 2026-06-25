@@ -98,6 +98,16 @@
             <div class="menu-row-left"><span>🌍</span>Impacto Ambiental</div>
             <span class="menu-arrow">›</span>
           </div>
+          <div
+            class="menu-row"
+            id="btn-indicar"
+            role="button"
+            tabindex="0"
+            style="margin-top: 8px"
+          >
+            <div class="menu-row-left"><span>📱</span>Indicar Amigos</div>
+            <span class="menu-arrow">›</span>
+          </div>
         </div>
 
         <!-- ── IMPACTO AMBIENTAL PESSOAL ── -->
@@ -125,14 +135,18 @@
               <div class="impact-label">CO₂ evitado</div>
             </div>
           </div>
+        </div>
+
+        <div class="section-card">
+          <h3>Opções conta</h3>
           <div
             class="menu-row"
-            id="btn-indicar"
+            id="btn-logout"
             role="button"
             tabindex="0"
             style="margin-top: 8px"
           >
-            <div class="menu-row-left"><span>📱</span>Indicar Amigos</div>
+            <div class="menu-row-left"><span>📲</span>deslogar!</div>
             <span class="menu-arrow">›</span>
           </div>
         </div>
@@ -661,7 +675,7 @@
         );
       });
 
-      $("salvar-foto").addEventListener("click", () => {
+      $("salvar-foto").addEventListener("click", async () => {
         const url = $("input-foto-url").value.trim();
         if (!url) {
           showToast("Cole uma URL de imagem válida.");
@@ -672,22 +686,42 @@
           return;
         }
 
+        const btn = $("salvar-foto");
+        btn.textContent = "Salvando...";
+        btn.disabled = true;
+
+        if (apiUserId) {
+          try {
+            const payload = {
+              name: currentProfile?.nome,
+              email: currentProfile?.email,
+              avatar: url,
+              coins: currentProfile?.pontos,
+              reciclado: currentProfile?.historico,
+            };
+
+            const response = await fetch(`${MOCK_API}/${apiUserId}`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+
+            if (!response.ok) throw new Error("Falha no PUT");
+
+            if (currentProfile) currentProfile.avatar = url;
+          } catch (error) {
+            console.error(error);
+            showToast("⚠️ Erro ao salvar na nuvem. Foto salva localmente.");
+          }
+        }
+
+        btn.textContent = "Salvar foto";
+        btn.disabled = false;
+
         localStorage.setItem(AVATAR_KEY, url);
         renderAvatar(currentProfile?.nome || "?", url);
         closeModal("modal-foto");
         showToast("✅ Foto de perfil atualizada!");
-      });
-
-      $("remover-foto").addEventListener("click", () => {
-        localStorage.removeItem(AVATAR_KEY);
-        // Tenta usar o avatar da API se houver, ou remove de vez
-        const fallbackAvatar = currentProfile?.avatar || null;
-        renderAvatar(currentProfile?.nome || "?", fallbackAvatar);
-
-        $("input-foto-url").value = fallbackAvatar || "";
-        syncFotoPreview(fallbackAvatar);
-        closeModal("modal-foto");
-        showToast("🗑️ Foto local removida.");
       });
 
       /* ══════════════════════════════════════
@@ -849,6 +883,23 @@
               )
               .catch(fallback)
           : fallback();
+      });
+
+      $("btn-logout").addEventListener("click", () => {
+        [
+          SESSION_KEY,
+          AVATAR_KEY,
+          NOTIF_KEY,
+          "ecotech_user_id",
+          "usuariosEcoTech",
+        ].forEach((k) => {
+          sessionStorage.removeItem(k);
+          localStorage.removeItem(k);
+        });
+        showToast("Até logo! 👋");
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 1500);
       });
     </script>
   </body>
