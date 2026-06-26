@@ -1,193 +1,15 @@
 "use strict";
 
 /* ══════════════════════════════
-   EMPRESAS PARCEIRAS (demo)
-   Cada empresa "é dona" de um subconjunto dos
-   Ecopontos cadastrados na rede EcoTech.
+   CONFIG
 ══════════════════════════════ */
-const COMPANIES = [
-  { id: "verde-rio", name: "Verde Rio Reciclagem", icon: "♻️" },
-  { id: "costa-verde-amb", name: "Costa Verde Ambiental", icon: "🌊" },
-  { id: "metro-eco", name: "Metropolitana EcoSoluções", icon: "🏙️" },
-];
+const API_EMPRESA =
+  "https://6a386bef64a2d82692228142.mockapi.io/api/v1/empresa";
+const SESSION_KEY = "ecotech_session";
 
 /* ══════════════════════════════
-   ECOPONTOS POR EMPRESA
-   Reaproveita os mesmos pontos/códigos do mapa
-   em coleta.html, agora com status operacional
-   e métricas simuladas de coleta.
+   METADADOS ESTÁTICOS
 ══════════════════════════════ */
-const COMPANY_POINTS = {
-  "verde-rio": [
-    {
-      code: "ECO-05",
-      name: "EcoCentro Metal",
-      cats: ["metal", "madeira"],
-      address: "Zona Central, Rio de Janeiro",
-      status: "ativo",
-      monthlyKg: 312,
-      validations: 184,
-      lastActivity: "Hoje, 09h40",
-    },
-    {
-      code: "ECO-06",
-      name: "Vidro Lapa",
-      cats: ["vidro", "papel"],
-      address: "Lapa, Rio de Janeiro",
-      status: "ativo",
-      monthlyKg: 198,
-      validations: 121,
-      lastActivity: "Hoje, 07h15",
-    },
-    {
-      code: "ECO-07",
-      name: "EcoPapel Botafogo",
-      cats: ["papel", "madeira", "plastico"],
-      address: "Botafogo, Zona Sul",
-      status: "ativo",
-      monthlyKg: 455,
-      validations: 263,
-      lastActivity: "Ontem, 18h22",
-    },
-    {
-      code: "ECO-08",
-      name: "TechRecicla Copacabana",
-      cats: ["eletronicos", "metal"],
-      address: "Copacabana, Zona Sul",
-      status: "manutencao",
-      monthlyKg: 87,
-      validations: 42,
-      lastActivity: "Há 4 dias",
-    },
-    {
-      code: "ECO-11",
-      name: "Méier Metais",
-      cats: ["metal", "eletronicos"],
-      address: "Méier, Zona Norte",
-      status: "ativo",
-      monthlyKg: 274,
-      validations: 159,
-      lastActivity: "Hoje, 11h02",
-    },
-  ],
-
-  "costa-verde-amb": [
-    {
-      code: "ECO-01",
-      name: "Centro Recicla Mangaratiba",
-      cats: ["papel", "madeira"],
-      address: "Centro, Mangaratiba",
-      status: "ativo",
-      monthlyKg: 142,
-      validations: 76,
-      lastActivity: "Hoje, 08h05",
-    },
-    {
-      code: "ECO-02",
-      name: "EcoPonto Vila Muriqui",
-      cats: ["metal", "plastico"],
-      address: "Vila Muriqui, Mangaratiba",
-      status: "ativo",
-      monthlyKg: 168,
-      validations: 93,
-      lastActivity: "Ontem, 16h48",
-    },
-    {
-      code: "ECO-03",
-      name: "Itacuruçá Plásticos",
-      cats: ["plastico", "vidro"],
-      address: "Itacuruçá, Mangaratiba",
-      status: "inativo",
-      monthlyKg: 0,
-      validations: 0,
-      lastActivity: "Há 22 dias",
-    },
-    {
-      code: "ECO-04",
-      name: "Jacareí Vidros",
-      cats: ["vidro", "metal"],
-      address: "Distrito de Jacareí, Mangaratiba",
-      status: "ativo",
-      monthlyKg: 121,
-      validations: 58,
-      lastActivity: "Hoje, 10h30",
-    },
-  ],
-
-  "metro-eco": [
-    {
-      code: "ECO-14",
-      name: "Barra PET Coleta",
-      cats: ["plastico", "papel"],
-      address: "Barra da Tijuca, Zona Oeste",
-      status: "ativo",
-      monthlyKg: 389,
-      validations: 241,
-      lastActivity: "Hoje, 13h12",
-    },
-    {
-      code: "ECO-15",
-      name: "Recreio Vidros",
-      cats: ["vidro", "madeira"],
-      address: "Recreio dos Bandeirantes",
-      status: "ativo",
-      monthlyKg: 156,
-      validations: 88,
-      lastActivity: "Ontem, 15h00",
-    },
-    {
-      code: "ECO-16",
-      name: "Bangu Eletrônicos",
-      cats: ["eletronicos", "metal"],
-      address: "Bangu, Zona Oeste",
-      status: "manutencao",
-      monthlyKg: 64,
-      validations: 31,
-      lastActivity: "Há 2 dias",
-    },
-    {
-      code: "ECO-17",
-      name: "Campo Grande Plast",
-      cats: ["plastico", "vidro"],
-      address: "Campo Grande, Zona Oeste",
-      status: "ativo",
-      monthlyKg: 233,
-      validations: 140,
-      lastActivity: "Hoje, 09h58",
-    },
-    {
-      code: "ECO-18",
-      name: "Jacarepaguá Papéis",
-      cats: ["papel", "madeira", "metal"],
-      address: "Jacarepaguá, Zona Oeste",
-      status: "ativo",
-      monthlyKg: 301,
-      validations: 177,
-      lastActivity: "Hoje, 12h20",
-    },
-    {
-      code: "ECO-19",
-      name: "Icaraí Metais (Niterói)",
-      cats: ["metal", "vidro"],
-      address: "Icaraí, Niterói",
-      status: "ativo",
-      monthlyKg: 209,
-      validations: 112,
-      lastActivity: "Ontem, 17h33",
-    },
-  ],
-};
-
-/* ══════════════════════════════
-   SÉRIE MENSAL (últimos 6 meses)
-   simplificada por empresa, em kg coletados.
-══════════════════════════════ */
-const COMPANY_MONTHLY_SERIES = {
-  "verde-rio": [820, 901, 968, 1040, 1180, 1326],
-  "costa-verde-amb": [310, 298, 355, 372, 401, 431],
-  "metro-eco": [980, 1050, 1190, 1240, 1310, 1352],
-};
-
 const MONTH_LABELS = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun"];
 
 const CATEGORY_META = {
@@ -205,10 +27,266 @@ const STATUS_META = {
   inativo: { label: "Inativo", className: "status-inativo" },
 };
 
-function getCompanyById(id) {
-  return COMPANIES.find((c) => c.id === id) || null;
+/* ══════════════════════════════
+   HELPERS
+══════════════════════════════ */
+
+/** Normaliza a string "cats" da API → array de chaves internas
+ *  Ex: "Metal, Plástico" → ["metal", "plastico"]
+ */
+function parseCats(catsField) {
+  if (!catsField || typeof catsField !== "string") return ["papel"];
+  const MAP = {
+    metal: "metal",
+    papel: "papel",
+    vidro: "vidro",
+    plástico: "plastico",
+    plastico: "plastico",
+    eletrônicos: "eletronicos",
+    eletronicos: "eletronicos",
+    madeira: "madeira",
+  };
+  return catsField
+    .split(",")
+    .map((s) => MAP[s.trim().toLowerCase()] || "papel")
+    .filter((v, i, a) => a.indexOf(v) === i); // dedup
 }
 
-function getCompanyPoints(id) {
-  return COMPANY_POINTS[id] || [];
+/** Converte status boolean da API → chave interna */
+function parseStatus(statusField) {
+  if (statusField === true) return "ativo";
+  if (statusField === false) return "inativo";
+  return "inativo";
+}
+
+/** Gera série mensal fictícia baseada no kgColetado total da empresa
+ *  (API não tem histórico mensal, então simulamos crescimento realista)
+ */
+function buildMonthlySeries(kgTotal) {
+  const total = parseFloat(kgTotal) || 0;
+  const base = total / 6;
+  return [0.72, 0.83, 0.91, 1.0, 1.09, 1.18].map((f) => Math.round(base * f));
+}
+
+/** Gera lastActivity fictício baseado no id do ecoponto */
+function fakeLastActivity(id) {
+  const n = parseInt(id, 10) % 5;
+  const opts = [
+    "Hoje, 08h30",
+    "Hoje, 11h15",
+    "Ontem, 16h40",
+    "Há 2 dias",
+    "Há 4 dias",
+  ];
+  return opts[n] || "Hoje";
+}
+
+/** monthlyKg simulado por ecoponto baseado em coletado */
+function pointMonthlyKg(coletado, id) {
+  const total = parseFloat(coletado) || 0;
+  const factor = [0.14, 0.17, 0.19, 0.16, 0.18][parseInt(id, 10) % 5];
+  return Math.round(total * factor);
+}
+
+/* ══════════════════════════════
+   SESSÃO
+══════════════════════════════ */
+function getSessao() {
+  try {
+    const raw =
+      sessionStorage.getItem(SESSION_KEY) || localStorage.getItem(SESSION_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch (_) {
+    return null;
+  }
+}
+
+/* ══════════════════════════════
+   INICIALIZAÇÃO PRINCIPAL
+   Busca dados na API e renderiza o painel.
+   Chamada de empresa.html via: initEmpresaDashboard()
+══════════════════════════════ */
+async function initEmpresaDashboard() {
+  const sessao = getSessao();
+
+  /* ── Redireciona se não estiver logada como empresa ── */
+  if (!sessao || sessao.tipo !== "empresa") {
+    window.location.href = "login.html";
+    return;
+  }
+
+  /* ── Busca os dados da empresa logada ── */
+  let empresaData;
+  try {
+    const res = await fetch(`${API_EMPRESA}/${sessao.id}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    empresaData = await res.json();
+  } catch (err) {
+    console.error("Erro ao carregar dados da empresa:", err);
+    showToast("❌ Erro ao carregar dados da empresa.");
+    return;
+  }
+
+  /* ── Monta objeto `company` compatível com o HTML ── */
+  const company = {
+    id: empresaData.id,
+    name: empresaData.nome,
+    icon: "🏢",
+  };
+
+  /* ── Converte array `sad` (ecopontos) → formato interno ── */
+  const rawPoints = Array.isArray(empresaData.sad) ? empresaData.sad : [];
+  const points = rawPoints.map((ep) => ({
+    ecopontoId: ep.id, // ← id real do ecoponto na API
+    code: ep.code || `ECO-${ep.id}`,
+    name: ep.nome || "Ecoponto",
+    cats: parseCats(ep.cats),
+    address: ep.address
+      ? `${ep.address}, ${ep.city || ""}`
+      : "Endereço não informado",
+    status: parseStatus(ep.status),
+    monthlyKg: pointMonthlyKg(ep.coletado, ep.id),
+    validations: Math.round(pointMonthlyKg(ep.coletado, ep.id) * 0.6),
+    lastActivity: fakeLastActivity(ep.id),
+  }));
+
+  /* ── Série mensal baseada no kgColetado total da empresa ── */
+  const monthly = buildMonthlySeries(empresaData.kgColetado);
+
+  /* ── Renderiza o painel ── */
+  renderDashboard({ company, points, monthly });
+}
+
+/* ══════════════════════════════
+   RENDERIZAÇÃO
+══════════════════════════════ */
+function renderDashboard({ company, points, monthly }) {
+  /* Cabeçalho */
+  document.getElementById("dashCompanyBadge").textContent =
+    `🏢 ${company.name}`;
+  document.getElementById("dashCompanyName").textContent =
+    `Painel de Acompanhamento — ${company.name}`;
+
+  /* Stats */
+  const totalKg = points.reduce((s, p) => s + p.monthlyKg, 0);
+  const totalValidations = points.reduce((s, p) => s + p.validations, 0);
+  const activeCount = points.filter((p) => p.status === "ativo").length;
+
+  document.getElementById("statPoints").textContent = points.length;
+  document.getElementById("statKg").textContent =
+    totalKg.toLocaleString("pt-BR");
+  document.getElementById("statValidations").textContent =
+    totalValidations.toLocaleString("pt-BR");
+  document.getElementById("statActive").textContent = activeCount;
+
+  if (monthly.length >= 2) {
+    const last = monthly[monthly.length - 1];
+    const prev = monthly[monthly.length - 2];
+    const pct = prev > 0 ? Math.round(((last - prev) / prev) * 100) : 0;
+    document.getElementById("statKgDelta").textContent =
+      (pct >= 0 ? "↑ " : "↓ ") + Math.abs(pct) + "% vs mês anterior";
+  }
+
+  /* Gráfico de barras */
+  const chartBars = document.getElementById("chartBars");
+  const maxVal = Math.max(...monthly, 1);
+  chartBars.innerHTML = monthly
+    .map((val, i) => {
+      const h = Math.max((val / maxVal) * 100, 6);
+      return `
+        <div class="dash-chart-col">
+          <div class="dash-chart-bar" style="height:${h}%;">
+            <span class="dash-chart-bar-value">${val.toLocaleString("pt-BR")}</span>
+          </div>
+          <div class="dash-chart-col-label">${MONTH_LABELS[i]}</div>
+        </div>`;
+    })
+    .join("");
+
+  document.getElementById("chartTotalLabel").textContent =
+    "Total: " +
+    monthly.reduce((a, b) => a + b, 0).toLocaleString("pt-BR") +
+    " kg";
+
+  /* Breakdown por material */
+  const catTotals = {};
+  points.forEach((p) => {
+    const share = p.monthlyKg / (p.cats.length || 1);
+    p.cats.forEach((c) => {
+      catTotals[c] = (catTotals[c] || 0) + share;
+    });
+  });
+  const catSum = Object.values(catTotals).reduce((a, b) => a + b, 0) || 1;
+
+  document.getElementById("breakdownList").innerHTML = Object.entries(catTotals)
+    .sort((a, b) => b[1] - a[1])
+    .map(([key, val]) => {
+      const meta = CATEGORY_META[key] || { label: key, color: "#aaa" };
+      const pct = Math.round((val / catSum) * 100);
+      return `
+        <div class="dash-breakdown-item">
+          <div class="dash-breakdown-row">
+            <span class="dash-breakdown-dot" style="background:${meta.color};"></span>
+            <span class="dash-breakdown-label">${meta.label}</span>
+            <span class="dash-breakdown-pct">${pct}%</span>
+          </div>
+          <div class="dash-breakdown-track">
+            <div class="dash-breakdown-fill" style="width:${pct}%; background:${meta.color};"></div>
+          </div>
+        </div>`;
+    })
+    .join("");
+
+  /* Tabela de ecopontos */
+  document.getElementById("tableCount").textContent =
+    points.length + (points.length === 1 ? " Ecoponto" : " Ecopontos");
+
+  document.getElementById("pointsTableBody").innerHTML = points
+    .map((p) => {
+      const sm = STATUS_META[p.status] || STATUS_META.inativo;
+      const catsHtml = p.cats
+        .map((c) => {
+          const meta = CATEGORY_META[c] || { label: c, color: "#aaa" };
+          return `<span class="dash-cat-chip"><span style="background:${meta.color};"></span>${meta.label}</span>`;
+        })
+        .join("");
+      return `
+        <tr>
+          <td>
+            <span class="dash-point-name">${p.name}</span>
+            <span class="dash-point-address">${p.address}</span>
+          </td>
+          <td><span class="dash-point-code">${p.code}</span></td>
+          <td><div class="dash-cats">${catsHtml}</div></td>
+          <td><span class="dash-status-pill ${sm.className}">${sm.label}</span></td>
+          <td>${p.monthlyKg.toLocaleString("pt-BR")} kg</td>
+          <td>${p.lastActivity}</td>
+          <td><button class="dash-table-action" data-code="${p.code}">...</button></td>
+        </tr>`;
+    })
+    .join("");
+
+  /* Select do gerador de QR */
+  const qrSelect = document.getElementById("qrPointSelect");
+  qrSelect.innerHTML = `<option value="" disabled selected>Selecione um Ecoponto</option>`;
+  points.forEach((p) => {
+    const opt = document.createElement("option");
+    opt.value = p.code;
+    opt.textContent = `${p.code} — ${p.name}`;
+    qrSelect.appendChild(opt);
+  });
+
+  /* Expõe `points` globalmente para o script inline do empresa.html */
+  window.__empresaPoints = points;
+
+  /* Re-inicializa listeners de QR (empresa.html usa window.__empresaPoints) */
+  if (typeof bindQrListeners === "function") bindQrListeners();
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2800);
 }

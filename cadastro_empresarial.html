@@ -5,14 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="assets/fivecom.png" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    />
     <link rel="stylesheet" href="css/cadastro_empresarial.css" />
     <title>Cadastro Empresarial — EcoTech</title>
     <script src="/js/auth.js"></script>
     <script>
       (function () {
         const saved = localStorage.getItem("eco-theme");
-        const pref = saved || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        const pref =
+          saved ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
         document.documentElement.setAttribute("data-theme", pref);
       })();
     </script>
@@ -26,7 +33,11 @@
             <span class="top-tag">Cadastro Empresarial</span>
             <h1>Cadastre sua empresa e faça parte da mudança.</h1>
           </div>
-          <img src="assets/predio-sustentavel.jpg" alt="Fachada corporativa sustentável EcoTech" class="building-img" />
+          <img
+            src="assets/predio-sustentavel.jpg"
+            alt="Fachada corporativa sustentável EcoTech"
+            class="building-img"
+          />
         </div>
 
         <div class="side-panel-form">
@@ -39,41 +50,103 @@
             <form id="cadastroEmpresarialForm" action="#" method="POST">
               <div class="input-group">
                 <label for="cnpj">CNPJ</label>
-                <input type="text" id="cnpj" name="cnpj" placeholder="00.000.000/0000-00" required autocomplete="off" maxlength="18" />
+                <input
+                  type="text"
+                  id="cnpj"
+                  name="cnpj"
+                  placeholder="00.000.000/0000-00"
+                  required
+                  autocomplete="off"
+                  maxlength="18"
+                />
               </div>
               <div class="input-group">
                 <label for="nome_empresa">Nome Completo da Empresa</label>
-                <input type="text" id="nome_empresa" name="nome_empresa" placeholder="Digite o nome completo da empresa" required autocomplete="organization" />
+                <input
+                  type="text"
+                  id="nome_empresa"
+                  name="nome_empresa"
+                  placeholder="Digite o nome completo da empresa"
+                  required
+                  autocomplete="organization"
+                />
               </div>
               <div class="input-group">
                 <label for="endereco">Endereço</label>
-                <input type="text" id="endereco" name="endereco" placeholder="Rua, número, bairro, cidade, Estado, CEP" required autocomplete="street-address" />
+                <input
+                  type="text"
+                  id="endereco"
+                  name="endereco"
+                  placeholder="Rua, número, bairro, cidade, Estado, CEP"
+                  required
+                  autocomplete="street-address"
+                />
               </div>
               <div class="input-group">
                 <label for="razao_social">Razão Social</label>
-                <input type="text" id="razao_social" name="razao_social" placeholder="Digite a razão social da empresa" required />
+                <input
+                  type="text"
+                  id="razao_social"
+                  name="razao_social"
+                  placeholder="Digite a razão social da empresa"
+                  required
+                />
               </div>
               <div class="input-group">
                 <label for="email">E-mail</label>
-                <input type="email" id="email" name="email" placeholder="exemplo@empresa.com.br" required autocomplete="email" />
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="exemplo@empresa.com.br"
+                  required
+                  autocomplete="email"
+                />
               </div>
               <div class="input-group group-password">
                 <label for="password">Senha</label>
                 <div class="password-field-wrapper">
-                  <input type="password" id="password" name="password" placeholder="Crie uma senha segura" required autocomplete="new-password" />
-                  <button type="button" class="toggle-password-visibility" id="btnTogglePassword" aria-label="Mostrar ou ocultar senha">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
-                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Crie uma senha segura"
+                    required
+                    autocomplete="new-password"
+                  />
+                  <button
+                    type="button"
+                    class="toggle-password-visibility"
+                    id="btnTogglePassword"
+                    aria-label="Mostrar ou ocultar senha"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="eye-icon"
+                    >
+                      <path
+                        d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                      ></path>
                       <circle cx="12" cy="12" r="3"></circle>
                     </svg>
                   </button>
                 </div>
               </div>
 
-              <button type="submit" class="btn-submit-account">Criar Conta</button>
+              <button type="submit" class="btn-submit-account">
+                Criar Conta
+              </button>
 
               <div class="form-footer-toggle">
-                <span>Já possui uma conta? <a href="login.html">Entrar</a></span>
+                <span
+                  >Já possui uma conta? <a href="login.html">Entrar</a></span
+                >
               </div>
             </form>
           </div>
@@ -120,7 +193,7 @@
       }
 
       /* 4. TOAST */
-      function showToast(msg, success) {
+      function showToast(msg, success = false) {
         const toast = document.getElementById("toast");
         toast.textContent = msg;
         toast.style.background = success ? "#3d9140" : "";
@@ -134,44 +207,119 @@
       }
 
       function senhaSegura(senha) {
-        return senha.length >= 8 && /[A-Z]/.test(senha) && /[a-z]/.test(senha) && /\d/.test(senha);
+        return (
+          senha.length >= 8 &&
+          /[A-Z]/.test(senha) &&
+          /[a-z]/.test(senha) &&
+          /\d/.test(senha)
+        );
       }
 
-      /* 6. SUBMIT */
-      document.getElementById("cadastroEmpresarialForm").addEventListener("submit", (e) => {
-        e.preventDefault();
+      /* 6. SUBMIT COM MOCKAPI */
+      const API_URL =
+        "https://6a386bef64a2d82692228142.mockapi.io/api/v1/empresa";
 
-        const cnpj        = cnpjInput.value.trim();
-        const nomeEmpresa = document.getElementById("nome_empresa").value.trim();
-        const endereco    = document.getElementById("endereco").value.trim();
-        const razaoSocial = document.getElementById("razao_social").value.trim();
-        const email       = document.getElementById("email").value.trim().toLowerCase();
-        const senha       = passwordInput.value;
+      document
+        .getElementById("cadastroEmpresarialForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
 
-        if (!cnpj || !nomeEmpresa || !endereco || !razaoSocial || !email || !senha) {
-          showToast("Preencha todos os campos."); return;
-        }
-        if (!validarCNPJ(cnpj)) {
-          showToast("CNPJ inválido. Use o formato 00.000.000/0000-00."); return;
-        }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          showToast("E-mail inválido."); return;
-        }
-        if (!senhaSegura(senha)) {
-          showToast("A senha precisa ter 8+ caracteres, maiúscula, minúscula e número."); return;
-        }
-        if (typeof emailEmpresaExiste === "function" && emailEmpresaExiste(email)) {
-          showToast("Este e-mail já está cadastrado."); return;
-        }
+          const cnpj = cnpjInput.value.trim();
+          const nomeEmpresa = document
+            .getElementById("nome_empresa")
+            .value.trim();
+          const endereco = document.getElementById("endereco").value.trim();
+          const razaoSocial = document
+            .getElementById("razao_social")
+            .value.trim();
+          const email = document
+            .getElementById("email")
+            .value.trim()
+            .toLowerCase();
+          const senha = passwordInput.value;
 
-        if (typeof cadastrarEmpresa === "function") {
-          cadastrarEmpresa({ cnpj, nomeEmpresa, endereco, razaoSocial, email, senha });
-        }
+          /* Validações */
+          if (
+            !cnpj ||
+            !nomeEmpresa ||
+            !endereco ||
+            !razaoSocial ||
+            !email ||
+            !senha
+          ) {
+            showToast("Preencha todos os campos.");
+            return;
+          }
+          if (!validarCNPJ(cnpj)) {
+            showToast("CNPJ inválido. Use o formato 00.000.000/0000-00.");
+            return;
+          }
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            showToast("E-mail inválido.");
+            return;
+          }
+          if (!senhaSegura(senha)) {
+            showToast(
+              "A senha precisa ter 8+ caracteres, maiúscula, minúscula e número.",
+            );
+            return;
+          }
 
-        /* ── Confirma e volta para o início ── */
-        showToast("✅ Cadastro realizado com sucesso! Bem-vinda à EcoTech 🌿", true);
-        setTimeout(() => { window.location.href = "index.html"; }, 2200);
-      });
+          /* Verificar e-mail duplicado */
+          try {
+            const checkRes = await fetch(API_URL);
+            if (!checkRes.ok) throw new Error("Erro ao verificar e-mail.");
+            const empresas = await checkRes.json();
+            const emailJaExiste = empresas.some((emp) => emp.email === email);
+            if (emailJaExiste) {
+              showToast("Este e-mail já está cadastrado.");
+              return;
+            }
+          } catch (err) {
+            showToast("Erro de conexão ao verificar e-mail. Tente novamente.");
+            console.error(err);
+            return;
+          }
+
+          /* Montar payload */
+          const payload = {
+            nome: nomeEmpresa,
+            cnpj,
+            endereco,
+            razaoSocial,
+            email,
+            senha,
+            saldoMoeda: "0.00",
+            kgColetado: "0.00",
+            Ecopontos: {},
+            sad: [],
+          };
+
+          /* POST na API */
+          try {
+            const res = await fetch(API_URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+
+            if (!res.ok) throw new Error(`Erro ${res.status}`);
+
+            const empresaCriada = await res.json();
+            console.log("Empresa cadastrada:", empresaCriada);
+
+            showToast(
+              "✅ Cadastro realizado com sucesso! Bem-vinda à EcoTech 🌿",
+              true,
+            );
+            setTimeout(() => {
+              window.location.href = "login.html";
+            }, 2200);
+          } catch (err) {
+            showToast("Erro ao cadastrar empresa. Tente novamente.");
+            console.error(err);
+          }
+        });
     </script>
   </body>
 </html>

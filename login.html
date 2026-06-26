@@ -100,91 +100,63 @@
     <div class="toast" id="toast"></div>
 
     <script>
-      /* ─── Configuração da API ─── */
+      /* ─── Configuração das APIs ─── */
       const API_BASE = "https://6a38cde364a2d8269222d659.mockapi.io";
-      const SESSION_KEY = "ecotech_session"; // deve ser igual ao eco-session.js
+      const API_EMPRESA =
+        "https://6a386bef64a2d82692228142.mockapi.io/api/v1/empresa";
+      const SESSION_KEY = "ecotech_session";
 
-      let toastTimer;
-
-      function showToast(msg, tipo = "info") {
-        const toast = document.getElementById("toast");
-        toast.textContent = msg;
-        toast.classList.add("show");
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => toast.classList.remove("show"), 3000);
+      /* ─── Autentica Pessoa Física (/pessoa) ─── */
+      async function autenticarPelaAPI(email, senha) {
+        const resp = await fetch(
+          `${API_BASE}/pessoa?email=${encodeURIComponent(email)}`,
+        );
+        if (!resp.ok) throw new Error("Falha ao contatar servidor de pessoas.");
+        const lista = await resp.json();
+        return (
+          lista.find(
+            (u) =>
+              u.email.toLowerCase() === email.toLowerCase() &&
+              u.senha === senha,
+          ) || null
+        );
       }
 
-      function togglePassword() {
-        const password = document.getElementById("password");
-        password.type = password.type === "password" ? "text" : "password";
+      /* ─── Autentica Empresa (/empresa) ─── */
+      async function autenticarEmpresaAPI(email, senha) {
+        const resp = await fetch(
+          `${API_EMPRESA}?email=${encodeURIComponent(email)}`,
+        );
+        if (!resp.ok)
+          throw new Error("Falha ao contatar servidor de empresas.");
+        const lista = await resp.json();
+        return (
+          lista.find(
+            (e) =>
+              e.email.toLowerCase() === email.toLowerCase() &&
+              e.senha === senha,
+          ) || null
+        );
       }
 
-      function setLoading(ativo) {
-        const btn = document.getElementById("btnEntrar");
-        btn.disabled = ativo;
-        btn.textContent = ativo ? "Verificando..." : "Entrar";
-      }
-
+      /* ─── Salvar sessão (pessoa física) ─── */
       function salvarSessao(usuario) {
         const lembrar = document.getElementById("lembrarMe").checked;
         const sessao = {
           id: usuario.id,
-          nome: usuario.name,
+          nome: usuario.name || usuario.nome,
           email: usuario.email,
-          avatar: usuario.avatar,
-          coins: usuario.coins,
+          avatar: usuario.avatar || null,
+          coins: usuario.coins || "0.00",
+          tipo: "pessoa",
           logadoEm: new Date().toISOString(),
         };
-        // eco-session.js lê de sessionStorage OU localStorage
         sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
-        if (lembrar) {
-          localStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
-        }
-        // Guarda o id para outras páginas (coleta, perfil, etc.)
+        if (lembrar) localStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
         localStorage.setItem("ecotech_user_id", usuario.id);
       }
 
-      /* ─── Login pela API MockAPI ─── */
-      async function autenticarPelaAPI(email, senha) {
-        const url = `${API_BASE}/pessoa?email=${encodeURIComponent(email)}`;
-        const resp = await fetch(url);
-        if (!resp.ok) throw new Error("Falha ao contatar o servidor.");
-
-        const lista = await resp.json();
-        // A API pode retornar array com 0 ou + resultados
-        const usuario = lista.find(
-          (u) =>
-            u.email.toLowerCase() === email.toLowerCase() && u.senha === senha,
-        );
-        return usuario || null;
-      }
-
-      /* ─── Login local (contas criadas no cadastro.html) ─── */
-      function hashSenha(senha) {
-        let hash = 0;
-        const texto = "ecoTechSalt_" + senha;
-        for (let i = 0; i < texto.length; i++) {
-          hash = (hash << 5) - hash + texto.charCodeAt(i);
-          hash |= 0;
-        }
-        return "h" + Math.abs(hash).toString(36) + texto.length;
-      }
-
-      function autenticarLocal(email, senha) {
-        try {
-          const usuarios = JSON.parse(
-            localStorage.getItem("usuariosEcoTech") || "[]",
-          );
-          const encontrado = usuarios.find(
-            (u) =>
-              u.email === email.toLowerCase() && u.senha === hashSenha(senha),
-          );
-          return encontrado || null;
-        } catch (_) {
-          return null;
-        }
-      }
-
+      /* ─── Login principal ─── */
       async function handleLogin() {
         const email = document
           .getElementById("email")
@@ -196,7 +168,6 @@
           showToast("Preencha todos os campos.");
           return;
         }
-
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
           showToast("E-mail inválido.");
           return;
@@ -205,19 +176,43 @@
         setLoading(true);
 
         try {
-          /* 1) Tenta na API MockAPI (usuários da base de dados) */
-          let usuario = await autenticarPelaAPI(email, password);
+          /* 1) Tenta como empresa (tem cnpj) */
+          const empresa = await autenticarEmpresaAPI(email, password);
+          if (empresa && empresa.cnpj) {
+            const sessao = {
+              id: empresa.id,
+              nome: empresa.nome,
+              email: empresa.email,
+              cnpj: empresa.cnpj,
+              avatar: null,
+              tipo: "empresa",
+              logadoEm: new Date().toISOString(),
+            };
+            const lembrar = document.getElementById("lembrarMe").checked;
+            sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+            if (lembrar)
+              localStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+            localStorage.setItem("ecotech_user_id", empresa.id);
 
-          if (usuario) {
-            salvarSessao(usuario);
             showToast("Entrando...");
             setTimeout(() => {
-              window.location.href = "index.html";
+              window.location.href = "empresa.html";
             }, 1000);
             return;
           }
 
-          /* 2) Fallback: conta criada localmente via cadastro.html */
+          /* 2) Tenta como pessoa física (/pessoa) */
+          const usuario = await autenticarPelaAPI(email, password);
+          if (usuario) {
+            salvarSessao(usuario);
+            showToast("Entrando...");
+            setTimeout(() => {
+              window.location.href = "coleta.html";
+            }, 1000);
+            return;
+          }
+
+          /* 3) Fallback: conta criada localmente pelo cadastro.html antigo */
           const local = autenticarLocal(email, password);
           if (local) {
             salvarSessao({
@@ -229,34 +224,7 @@
             });
             showToast("Entrando...");
             setTimeout(() => {
-              window.location.href = "index.html";
-            }, 1000);
-            return;
-          }
-
-          /* 3) Conta de empresa (localStorage) */
-          const empresas = JSON.parse(
-            localStorage.getItem("empresasEcoTech") || "[]",
-          );
-          const empresa = empresas.find(
-            (e) => e.email === email && e.senha === hashSenha(password),
-          );
-          if (empresa) {
-            const sessao = {
-              id: empresa.email,
-              nome: empresa.nomeEmpresa,
-              email: empresa.email,
-              avatar: null,
-              tipo: "empresa",
-              logadoEm: new Date().toISOString(),
-            };
-            sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
-            if (document.getElementById("lembrarMe").checked) {
-              localStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
-            }
-            showToast("Entrando...");
-            setTimeout(() => {
-              window.location.href = "empresa.html";
+              window.location.href = "coleta.html";
             }, 1000);
             return;
           }
@@ -269,16 +237,6 @@
           setLoading(false);
         }
       }
-
-      /* Permite pressionar Enter para logar */
-      document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("password").addEventListener("keydown", (e) => {
-          if (e.key === "Enter") handleLogin();
-        });
-        document.getElementById("email").addEventListener("keydown", (e) => {
-          if (e.key === "Enter") handleLogin();
-        });
-      });
     </script>
   </body>
 </html>
