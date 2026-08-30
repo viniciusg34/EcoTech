@@ -16,7 +16,7 @@ const SESSION_KEY = "ecotech_session"; // sincronizado com eco-session.js
  
 /* ── Hash simples (não é criptografia forte, mas evita senha
    100% em texto puro no localStorage. Suficiente para o
-   propósito deste site). ── */
+   propósito do site). ── */
 function hashSenha(senha) {
   let hash = 0;
   const texto = "ecoTechSalt_" + senha;
