@@ -3,32 +3,44 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="assets/fivecom.png" type="image/x-icon" />
     <link rel="stylesheet" href="css/afilie_se.css" />
     <title>Pontos Inteligentes</title>
   </head>
 
   <body>
     <header class="header">
-      <div class="container nav-container">
-        <a href="index.html" class="logo">
-          <img src="assets/logo.png" alt="Logo" />
-          <span>EcoTech</span>
+      <div class="nav-container">
+        <a href="index.html" class="logo" aria-label="EcoTech">
+          <img src="./assets/logo.svg" alt="EcoTech" class="logo-img" />
+          <div class="logo-name"><em>Eco</em>Tech</div>
         </a>
-
-        <nav class="nav">
+        <nav class="nav" id="main-nav" aria-label="Navegação principal">
           <a href="index.html">Início</a>
+          <a href="coleta.html">Coleta ecológica</a>
           <a href="sobre_nos.html">Sobre nós</a>
-          <a href="afilie_se.html" class="btn-nav active">Afilie-se</a>
+          <a href="afilie_se.html" class="btn-nav active">Afilie-se →</a>
         </nav>
-        
-        <div class="menu-toggle" id="menu-toggle">☰</div>
-        <a href="login-modal.html">
-          <img
-            src="assets/profile-user-account-svgrepo-com.svg"
-            width="50px"
-            alt="Descrição da Imagem"
-          />
-        </a>
+        <div class="nav-actions" style="margin-left: auto">
+          <button
+            class="theme-toggle"
+            id="theme-toggle"
+            aria-label="Alternar tema"
+          >
+            <span id="theme-icon">☀️</span>
+          </button>
+          <a href="login.html" class="icon-btn" aria-label="Perfil">👤</a>
+        </div>
+        <div
+          class="menu-toggle"
+          id="menu-toggle"
+          role="button"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+          tabindex="0"
+        >
+          ☰
+        </div>
       </div>
     </header>
 
@@ -40,24 +52,27 @@
           <h1>Sua empresa pode transformar o futuro com a gente.</h1>
 
           <p>
-            Afili-se ao nosso projeto de pontos inteligentes de coleta de lixo
+            Afilie-se ao nosso projeto de pontos inteligentes de coleta de lixo
             reciclável e gere impacto positivo para o meio ambiente, para a
             sociedade e para o seu negócio.
           </p>
 
           <div class="grupo-botoes">
-            <a href="#" class="botao-principal">Quero me afiliar →</a>
-            <a href="#" class="botao-contorno">Baixar proposta</a>
+            <a href="cadastro_empresarial.html" class="botao-principal"
+              >Quero me afiliar →</a
+            >
+            <a href="./assets/proposta.txt" class="botao-contorno" download
+              >Baixar proposta</a
+            >
           </div>
         </div>
 
         <div class="secao-principal-imagem">
-          <img src="assets/coletor_inteligente.png" alt="Ponto de coleta" />
+          <img src="assets/coletor_inteligente.jpg" alt="Ponto de coleta" />
         </div>
       </div>
     </section>
 
-    <!-- IMPACTO -->
     <section class="impacto">
       <div class="container grade-impacto">
         <div class="card-impacto">
@@ -66,13 +81,15 @@
         </div>
 
         <div class="card-impacto">
-          <h3>+150</h3>
-          <p>pontos inteligentes em implantação</p>
+          <h3 id="num-voluntarios">+9 Ecopontos</h3>
+          <p>novos pontos inteligentes em implantação</p>
         </div>
 
         <div class="card-impacto">
-          <h3>+500 ton</h3>
-          <p>de recicláveis que deixarão de ir para aterros</p>
+          <h3>toneladas recicladas</h3>
+          <p>
+            toneladas de materiais recicláveis que deixarão de ir para aterros
+          </p>
         </div>
 
         <div class="card-impacto">
@@ -82,7 +99,6 @@
       </div>
     </section>
 
-    <!-- BENEFÍCIOS -->
     <section class="beneficios">
       <div class="container">
         <h2>Benefícios para sua empresa</h2>
@@ -90,7 +106,7 @@
         <div class="grade-beneficios">
           <div class="card-beneficio">
             <h4>ESG NA PRÁTICA</h4>
-            <p>Fortaleça suas iniciativas ambientais.</p>
+            <p>Fortaleça suas initiatives ambientais.</p>
           </div>
 
           <div class="card-beneficio">
@@ -105,7 +121,7 @@
 
           <div class="card-beneficio">
             <h4>RELATÓRIOS</h4>
-            <p>Dados transparentes e certificados.</p>
+            <p>Dados transparentes e atualizados.</p>
           </div>
 
           <div class="card-beneficio">
@@ -116,7 +132,6 @@
       </div>
     </section>
 
-    <!-- COMO FUNCIONA -->
     <section class="como-funciona">
       <div class="container">
         <h2>Como funciona a afiliação</h2>
@@ -130,18 +145,12 @@
 
           <div class="passo">
             <span>2</span>
-            <h4>Escolha do plano</h4>
-            <p>Escolha o ideal para sua empresa.</p>
+            <h4>Implementação</h4>
+            <p>Instalação dos Ecopontos inteligentes.</p>
           </div>
 
           <div class="passo">
             <span>3</span>
-            <h4>Implementação</h4>
-            <p>Instalação dos pontos inteligentes.</p>
-          </div>
-
-          <div class="passo">
-            <span>4</span>
             <h4>Impacto</h4>
             <p>Acompanhe os resultados.</p>
           </div>
@@ -149,28 +158,151 @@
       </div>
     </section>
 
-    <!-- CTA -->
     <section class="chamada-acao">
       <div class="container chamada-acao-conteudo">
         <div>
           <h2>Vamos juntos transformar nossa cidade e o planeta.</h2>
-          <p>A sustentabilidade precisa de parceiros. Seja um você.</p>
+          <p>A sustentabilidade precisa de parceiros, junte-se a nós.</p>
         </div>
 
-        <a href="error_page.html" class="botao-principal">
+        <a href="cadastro_empresarial.html" class="botao-principal">
           Quero me afiliar →
         </a>
       </div>
     </section>
-  </body>
 
+    <footer>
+      <div class="footer-socials">
+        <a
+          href="https://www.instagram.com/"
+          target="_blank"
+          rel="noopener"
+          aria-label="Instagram"
+        >
+          <img
+            src="assets/instagram-logo-facebook-2-svgrepo-com.svg"
+            alt="Instagram"
+          />
+        </a>
+        <a
+          href="https://br.linkedin.com/"
+          target="_blank"
+          rel="noopener"
+          aria-label="LinkedIn"
+        >
+          <img src="assets/linkedin-logo-svgrepo-com.svg" alt="LinkedIn" />
+        </a>
+        <a
+          href="https://www.facebook.com/?locale=pt_BR"
+          target="_blank"
+          rel="noopener"
+          aria-label="Facebook"
+        >
+          <img src="assets/facebook-svgrepo-com.svg" alt="Facebook" />
+        </a>
+      </div>
+      <p>© 2026 EcoTech. Todos os direitos reservados.</p>
+    </footer>
+    <script src="js/eco-session.js"></script>
+  </body>
   <script>
-    // Menu mobile
-    const menuToggle = document.getElementById("menu-toggle");
-    const nav = document.querySelector(".nav");
-    menuToggle.addEventListener("click", () => nav.classList.toggle("active"));
-    nav.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => nav.classList.remove("active"));
+    "use strict";
+
+    const API_EMPRESA =
+      "https://6a386bef64a2d82692228142.mockapi.io/api/v1/empresa";
+
+    async function carregarDadosAPI() {
+      try {
+        const res = await fetch(API_EMPRESA);
+        if (!res.ok) throw new Error("Falha ao buscar empresas");
+        const empresas = await res.json();
+
+        const todasPromises = empresas.map((e) =>
+          fetch(`${API_EMPRESA}/${e.id}/ecopontos`)
+            .then((r) => (r.ok ? r.json() : []))
+            .catch(() => []),
+        );
+        const todosEcopontos = await Promise.all(todasPromises);
+        const totalEcopontos = todosEcopontos.reduce(
+          (acc, lista) => acc + lista.length,
+          0,
+        );
+
+        return { totalEcopontos };
+      } catch (err) {
+        console.warn("API indisponível, usando fallback:", err);
+        return { totalEcopontos: 22 };
+      }
+    }
+
+    function animarContador(elementoId, valorAlvo, sufixo = "", prefixo = "") {
+      const el = document.getElementById(elementoId);
+      if (!el) return;
+      let atual = 0;
+      const incremento = Math.ceil(valorAlvo / 60);
+      const interval = setInterval(() => {
+        atual += incremento;
+        if (atual >= valorAlvo) {
+          clearInterval(interval);
+          el.textContent = `${prefixo}${valorAlvo.toLocaleString("pt-BR")}${sufixo}`;
+        } else {
+          el.textContent = `${prefixo}${atual.toLocaleString("pt-BR")}${sufixo}`;
+        }
+      }, 20);
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      // ── Tema ──
+      (function () {
+        const saved = localStorage.getItem("eco-theme");
+        const pref =
+          saved ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+        document.documentElement.setAttribute("data-theme", pref);
+      })();
+
+      const themeToggle = document.getElementById("theme-toggle");
+      const themeIcon = document.getElementById("theme-icon");
+      themeIcon.textContent =
+        document.documentElement.getAttribute("data-theme") === "dark"
+          ? "🌙"
+          : "☀️";
+
+      themeToggle.addEventListener("click", () => {
+        const root = document.documentElement;
+        const newTheme =
+          root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        root.setAttribute("data-theme", newTheme);
+        localStorage.setItem("eco-theme", newTheme);
+        themeIcon.style.transform = "rotate(360deg)";
+        themeIcon.style.transition = "transform 0.3s ease";
+        setTimeout(() => {
+          themeIcon.textContent = newTheme === "dark" ? "🌙" : "☀️";
+          themeIcon.style.transform = "rotate(0deg)";
+        }, 150);
+      });
+
+      // ── Menu ──
+      const menuToggle = document.getElementById("menu-toggle");
+      const mainNav = document.getElementById("main-nav");
+      menuToggle.addEventListener("click", () => {
+        const open = mainNav.classList.toggle("open");
+        menuToggle.setAttribute("aria-expanded", String(open));
+        menuToggle.textContent = open ? "✕" : "☰";
+      });
+      mainNav.querySelectorAll("a").forEach((a) =>
+        a.addEventListener("click", () => {
+          mainNav.classList.remove("open");
+          menuToggle.setAttribute("aria-expanded", "false");
+          menuToggle.textContent = "☰";
+        }),
+      );
+
+      // ── Contador da API ──
+      const { totalEcopontos } = await carregarDadosAPI();
+      animarContador("num-voluntarios", totalEcopontos, " Ecopontos", "+");
     });
   </script>
 </html>

@@ -1,0 +1,647 @@
+/* ==========================================================================
+   ECOTECH — cadastro_empresarial.css
+   ========================================================================== */
+
+/* ── Reset e Configurações Base ── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color     0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                color            0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow       0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.5;
+  }
+  
+  /* Exceções de transição rápida de interface para performance */
+  .btn-nav, .menu-toggle, .theme-toggle, .btn-submit-account, .toggle-password-visibility { transition: none; }
+  
+  /* ── Variáveis de Design Sincronizadas com o Ecossistema EcoTech ── */
+  html[data-theme="light"] {
+    --nav-bg: rgba(248, 251, 248, 0.90);
+    --nav-border: rgba(67, 160, 71, 0.18);
+    --nav-link: #2d4430;
+    --text-color: #0f1f10;
+    --bg-color: #eef6ef;
+    
+    --panel-card-bg: #ffffff;
+    --input-border: #cccccc;
+    --input-focus-border: #43a047;
+    --input-placeholder: #757575;
+    --brand-green-primary: #2e7d32;
+    --brand-green-hover: #1b5e20;
+    --organic-shape-color: rgba(67, 160, 71, 0.12);
+  }
+  
+  html[data-theme="dark"] {
+    --nav-bg: rgba(18, 26, 19, 0.90);
+    --nav-border: rgba(67, 160, 71, 0.30);
+    --nav-link: #c9deca;
+    --text-color: #f1faf2;
+    --bg-color: #0a0f0a;
+    
+    --panel-card-bg: #121a13;
+    --input-border: #334435;
+    --input-focus-border: #66bb6a;
+    --input-placeholder: #667768;
+    --brand-green-primary: #43a047;
+    --brand-green-hover: #66bb6a;
+    --organic-shape-color: rgba(67, 160, 71, 0.06);
+  }
+  
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  
+  /* ==========================================================================
+     HEADER / NAVEGAÇÃO REUTILIZÁVEL E PADRONIZADA
+     ========================================================================= */
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 14px 20px 0;
+    z-index: 950;
+    pointer-events: none;
+  }
+  
+  .nav-container {
+    display: flex;
+    align-items: center;
+    height: 70px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-radius: 30px;
+    border: 1px solid var(--nav-border);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    pointer-events: auto;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #43a047;
+  }
+  .logo img { width: 38px; height: 38px; object-fit: contain; }
+  .logo span { color: var(--text-color); }
+  .logo .eco { color: #43a047; } 
+  
+  .nav { display: flex; align-items: center; gap: 28px; margin-left: auto; }
+  .nav a {
+    text-decoration: none;
+    color: var(--nav-link);
+    font-weight: 500;
+    font-size: 0.92rem;
+  }
+  .nav a:hover { color: #43a047; }
+  
+  .btn-nav {
+    background: linear-gradient(135deg, #43a047, #2e7d32);
+    color: #f1faf2 !important;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.88rem;
+  }
+  .btn-nav:hover { transform: scale(1.03); }
+  
+  .header-right-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: 20px;
+  }
+  
+  .theme-toggle { background: none; border: none; font-size: 1.2rem; cursor: pointer; padding: 6px; border-radius: 50%; }
+  .theme-toggle:hover { background: rgba(67, 160, 71, 0.1); }
+  .nav-profile { display: flex; background: rgba(67, 160, 71, 0.1); padding: 6px; border-radius: 50%; }
+  .nav-profile img { width: 20px; height: 20px; }
+  
+  .menu-toggle { display: none; font-size: 24px; cursor: pointer; color: var(--nav-link); margin-left: 12px; }
+  
+  /* ==========================================================================
+     CONTAINER DA ESTRUTURA CADASTRO (SPLIT CARD)
+     ========================================================================= */
+  .main-split-container {
+    min-height: 100vh;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 120px 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .split-card {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    width: 100%;
+    min-height: 720px;
+    background-color: var(--panel-card-bg);
+    border-radius: 28px;
+    border: 1px solid var(--nav-border);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+  }
+  
+  /* ── Painel Esquerdo: Bloco de Design Visual Corporativo ── */
+  .side-panel-visual {
+    position: relative;
+    background-color: transparent;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+  
+  /* Forma orgânica abstrata baseada na referência */
+  .organic-shape {
+    position: absolute;
+    top: -10%;
+    left: -20%;
+    width: 75%;
+    height: 60%;
+    background-color: var(--organic-shape-color);
+    border-radius: 40% 60% 60% 40% / 50% 30% 70% 50%;
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  .visual-content {
+    position: relative;
+    z-index: 2;
+    max-width: 440px;
+  }
+  
+  .top-tag {
+    display: inline-block;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    color: #43a047;
+    margin-bottom: 20px;
+  }
+  
+  .side-panel-visual h1 {
+    font-size: clamp(1.8rem, 3vw, 2.3rem);
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--brand-green-primary);
+  }
+  
+  .building-img {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 20px;
+    z-index: 2;
+    margin-top: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  }
+  
+  /* ── Painel Direito: Formulário com Inputs Quadrados Arredondados ── */
+  .side-panel-form {
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid var(--nav-border);
+  }
+  
+  .form-wrapper {
+    width: 100%;
+    max-width: 440px;
+  }
+  
+  .form-header {
+    margin-bottom: 30px;
+  }
+  
+  .form-header h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 6px;
+  }
+  
+  .form-header p {
+    font-size: 0.88rem;
+    color: var(--input-placeholder);
+  }
+  
+  /* ── Inputs e Elementos Form ── */
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 18px;
+  }
+  
+  .input-group label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 13px 18px;
+    font-family: inherit;
+    font-size: 0.88rem;
+    background-color: transparent;
+    border: 1px solid var(--input-border);
+    border-radius: 12px;
+    color: var(--text-color);
+    outline: none;
+  }
+  
+  .input-group input:focus {
+    border-color: var(--input-focus-border);
+    box-shadow: 0 0 0 3px rgba(67, 160, 71, 0.12);
+  }
+  
+  .input-group input::placeholder {
+    color: var(--input-placeholder);
+    opacity: 0.8;
+  }
+  
+  /* Campo de Senha Customizado com Toggle Interno */
+  .group-password .password-field-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .group-password input {
+    padding-right: 50px;
+  }
+  
+  .toggle-password-visibility {
+    position: absolute;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--input-placeholder);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .toggle-password-visibility:hover {
+    color: var(--input-focus-border);
+  }
+  
+  .eye-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* ── Botão de Envio Principal ── */
+  .btn-submit-account {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--brand-green-primary);
+    color: #ffffff;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(67, 160, 71, 0.15);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+  
+  .btn-submit-account:hover {
+    background-color: var(--brand-green-hover);
+    transform: translateY(-1px);
+  }
+  
+  /* ── Alternância de Login Rodapé ── */
+  .form-footer-toggle {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.88rem;
+  }
+  
+  .form-footer-toggle span {
+    color: var(--input-placeholder);
+  }
+  
+  .form-footer-toggle a {
+    color: var(--brand-green-primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  .form-footer-toggle a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 960px) {
+    .split-card {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+  
+    .side-panel-visual {
+      padding: 40px 30px 10px;
+    }
+  
+    .building-img {
+      height: 260px;
+      margin-top: 20px;
+    }
+  
+    .side-panel-form {
+      padding: 30px;
+      border-left: none;
+      border-top: 1px solid var(--nav-border);
+    }
+  }
+  
+  .btn-back {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: #173d27; /* no cadastro_empresarial.css usei var(--brand-green-primary) p/ respeitar o dark mode */
+  color: #fff;
+  border-radius: 50%;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(23, 61, 39, 0.28);
+  transition: 0.25s ease;
+  z-index: 1000;
+}
+
+.btn-back:hover {
+  background: #0f2c1c; /* var(--brand-green-hover) no empresarial */
+  transform: translateX(-3px);
+}
+
+.btn-back svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+}
+
+
+  @media (max-width: 760px) {
+    .menu-toggle {
+      display: block;
+    }
+  
+    .nav {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 20px;
+      right: 20px;
+      flex-direction: column;
+      align-items: stretch;
+      background: var(--nav-bg);
+      border: 1px solid var(--nav-border);
+      border-radius: 18px;
+      padding: 12px;
+      display: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+  
+    .nav.open {
+      display: flex;
+    }
+  
+    .nav a {
+      padding: 10px;
+    }
+    
+    .btn-nav { text-align: center; }
+  
+    .header-right-controls {
+      margin-left: auto;
+    }
+    
+    .main-split-container {
+      padding: 100px 14px 24px;
+    }
+  }
+
+.toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  background: #153f2a;
+  color: #fff;
+  padding: 13px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: 0.3s ease;
+  z-index: 999;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 960px) {
+  .split-card {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .side-panel-visual {
+    padding: 40px 30px 10px;
+  }
+
+  .building-img {
+    height: 260px;
+    margin-top: 20px;
+  }
+
+  .side-panel-form {
+    padding: 30px;
+    border-left: none;
+    border-top: 1px solid var(--nav-border);
+  }
+}
+
+/* ── Botão de Voltar Global ── */
+.btn-back {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--brand-green-primary);
+  color: #fff;
+  border-radius: 50%;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(23, 61, 39, 0.28);
+  transition: transform 0.25s ease, background 0.25s ease;
+  z-index: 1000;
+}
+
+.btn-back:hover {
+  background: var(--brand-green-hover);
+  transform: translateX(-3px);
+}
+
+.btn-back svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+}
+
+/* ── Toast Global ── */
+.toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  background: var(--brand-green-hover);
+  color: #fff;
+  padding: 13px 18px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 999;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Ajustes para Tablets Menores e Celulares Grandes ── */
+@media (max-width: 760px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 20px;
+    right: 20px;
+    flex-direction: column;
+    align-items: stretch;
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
+    border-radius: 18px;
+    padding: 12px;
+    display: none;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  }
+
+  .nav.open {
+    display: flex;
+  }
+
+  .nav a {
+    padding: 10px;
+  }
+  
+  .btn-nav { text-align: center; }
+
+  .header-right-controls {
+    margin-left: auto;
+  }
+  
+  .main-split-container {
+    padding: 100px 14px 24px;
+  }
+
+  /* Ajusta o botão voltar para não brigar com o menu em telas pequenas */
+  .btn-back {
+    top: 16px;
+    left: 16px;
+    width: 38px;
+    height: 38px;
+  }
+
+  .btn-back svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Centraliza o Toast na parte inferior do mobile */
+  .toast {
+    right: 16px;
+    left: 16px;
+    bottom: 24px;
+    text-align: center;
+  }
+}
+
+/* ── Ajustes Finos para Smartphones Padrão (< 480px) ── */
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 0 16px;
+  }
+
+  .side-panel-visual {
+    padding: 30px 20px 10px;
+  }
+
+  .side-panel-form {
+    padding: 24px 20px;
+  }
+
+  /* Evita quebras de palavras feias em títulos grandes */
+  .side-panel-visual h1 {
+    font-size: 1.6rem; 
+  }
+
+  .form-header h2 {
+    font-size: 1.4rem;
+  }
+
+  /* Reduz a altura da imagem para o formulário aparecer mais rápido na tela */
+  .building-img {
+    height: 180px;
+    margin-top: 16px;
+  }
+
+  /* Adapta os inputs para poupar espaço em telas pequenas */
+  .input-group input {
+    padding: 12px 16px;
+  }
+}

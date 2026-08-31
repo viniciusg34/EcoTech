@@ -1,0 +1,124 @@
+<svg viewBox="0 0 1180 760" xmlns="http://www.w3.org/2000/svg" font-family="'Plus Jakarta Sans', Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#3d9140" />
+    </marker>
+  </defs>
+  <rect width="1180" height="760" fill="#faf9f6" />
+  <text x="30" y="40" font-size="22" font-weight="800" fill="#1a2e1b">Modelo do Banco de Dados — EcoTech</text>
+  <text x="30" y="62" font-size="12" fill="#6b8f6c">Diagrama Entidade-Relacionamento (DER)</text>
+
+  <!-- PESSOA -->
+  <g>
+    <rect x="30" y="100" width="300" height="270" rx="14" fill="#ffffff" stroke="#3d9140" stroke-width="2" />
+    <rect x="30" y="100" width="300" height="34" rx="14" fill="#3d9140" />
+    <text x="180" y="122" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">PESSOA</text>
+    <g font-size="12.5" fill="#1a2e1b">
+      <text x="44" y="152">🔑 id (PK)</text>
+      <text x="44" y="172">nome</text>
+      <text x="44" y="192">email (único)</text>
+      <text x="44" y="212">senha</text>
+      <text x="44" y="232">cpf</text>
+      <text x="44" y="252">login (6 letras)</text>
+      <text x="44" y="272">sexo</text>
+      <text x="44" y="292">nome_mae</text>
+      <text x="44" y="312">nascimento</text>
+      <text x="44" y="332">telefone_celular / fixo</text>
+      <text x="44" y="352">cep / endereco</text>
+    </g>
+    <text x="44" y="370" font-size="11.5" fill="#6b8f6c">perfil: master | comum · coins</text>
+  </g>
+
+  <!-- EMPRESA -->
+  <g>
+    <rect x="30" y="420" width="300" height="190" rx="14" fill="#ffffff" stroke="#5aab5a" stroke-width="2" />
+    <rect x="30" y="420" width="300" height="34" rx="14" fill="#5aab5a" />
+    <text x="180" y="442" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">EMPRESA</text>
+    <g font-size="12.5" fill="#1a2e1b">
+      <text x="44" y="472">🔑 id (PK)</text>
+      <text x="44" y="492">nome_empresa / razao_social</text>
+      <text x="44" y="512">cnpj</text>
+      <text x="44" y="532">email</text>
+      <text x="44" y="552">senha</text>
+      <text x="44" y="572">endereco</text>
+    </g>
+  </g>
+
+  <!-- ECOPONTO -->
+  <g>
+    <rect x="440" y="420" width="280" height="150" rx="14" fill="#ffffff" stroke="#5aab5a" stroke-width="2" />
+    <rect x="440" y="420" width="280" height="34" rx="14" fill="#5aab5a" />
+    <text x="580" y="442" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">ECOPONTO</text>
+    <g font-size="12.5" fill="#1a2e1b">
+      <text x="454" y="472">🔑 id (PK)</text>
+      <text x="454" y="492">codigo</text>
+      <text x="454" y="512">empresa_id (FK)</text>
+      <text x="454" y="532">localizacao (lat/lng)</text>
+      <text x="454" y="552">coletado (bool)</text>
+    </g>
+  </g>
+
+  <!-- COLETA -->
+  <g>
+    <rect x="440" y="100" width="280" height="190" rx="14" fill="#ffffff" stroke="#3d9140" stroke-width="2" />
+    <rect x="440" y="100" width="280" height="34" rx="14" fill="#3d9140" />
+    <text x="580" y="122" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">COLETA</text>
+    <g font-size="12.5" fill="#1a2e1b">
+      <text x="454" y="152">🔑 id (PK)</text>
+      <text x="454" y="172">pessoa_id (FK)</text>
+      <text x="454" y="192">ecoponto_id (FK)</text>
+      <text x="454" y="212">data_hora</text>
+      <text x="454" y="232">ecocoins_gerados</text>
+    </g>
+  </g>
+
+  <!-- LOG_AUTENTICACAO -->
+  <g>
+    <rect x="850" y="100" width="300" height="190" rx="14" fill="#ffffff" stroke="#f5a623" stroke-width="2" />
+    <rect x="850" y="100" width="300" height="34" rx="14" fill="#f5a623" />
+    <text x="1000" y="122" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">LOG_AUTENTICACAO</text>
+    <g font-size="12.5" fill="#1a2e1b">
+      <text x="864" y="152">🔑 id (PK)</text>
+      <text x="864" y="172">pessoa_id (FK)</text>
+      <text x="864" y="192">data_hora</text>
+      <text x="864" y="212">metodo_2fa</text>
+      <text x="864" y="232">sucesso (bool)</text>
+    </g>
+  </g>
+
+  <!-- RECOMPENSA -->
+  <g>
+    <rect x="850" y="420" width="300" height="150" rx="14" fill="#ffffff" stroke="#f5a623" stroke-width="2" />
+    <rect x="850" y="420" width="300" height="34" rx="14" fill="#f5a623" />
+    <text x="1000" y="442" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">RECOMPENSA</text>
+    <g font-size="12.5" fill="#1a2e1b">
+      <text x="864" y="472">🔑 id (PK)</text>
+      <text x="864" y="492">titulo / descricao</text>
+      <text x="864" y="512">custo_em_coins</text>
+      <text x="864" y="532">pessoa_id (FK, resgatado por)</text>
+    </g>
+  </g>
+
+  <!-- Relationships -->
+  <line x1="330" y1="180" x2="440" y2="180" stroke="#3d9140" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="345" y="172" font-size="11" fill="#3b5e3d">1 : N</text>
+
+  <line x1="330" y1="490" x2="440" y2="490" stroke="#5aab5a" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="345" y="482" font-size="11" fill="#3b5e3d">1 : N</text>
+
+  <line x1="580" y1="290" x2="580" y2="420" stroke="#3d9140" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="590" y="360" font-size="11" fill="#3b5e3d">1 : N</text>
+
+  <line x1="720" y1="180" x2="850" y2="180" stroke="#f5a623" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="735" y="172" font-size="11" fill="#3b5e3d">1 : N</text>
+
+  <path d="M180,370 C180,560 700,650 850,500" fill="none" stroke="#f5a623" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arrow)" />
+  <text x="480" y="600" font-size="11" fill="#3b5e3d">1 : N (resgate)</text>
+
+  <text x="30" y="700" font-size="11.5" fill="#6b8f6c">
+    Legenda: 🔑 chave primária · FK = chave estrangeira · linhas = relacionamentos 1:N
+  </text>
+  <text x="30" y="720" font-size="11.5" fill="#6b8f6c">
+    PESSOA e EMPRESA autenticam via LOG_AUTENTICACAO (segundo fator). PESSOA acumula EcoCoins ao registrar COLETA em um ECOPONTO de uma EMPRESA.
+  </text>
+</svg>

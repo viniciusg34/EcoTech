@@ -1,0 +1,1606 @@
+<!doctype html>
+<html lang="pt-br" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>EcoTech | Coleta Inteligente de Recicláveis</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link rel="shortcut icon" href="assets/fivecom.png" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/coleta.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="nav-container">
+        <a href="index.html" class="logo" aria-label="EcoTech">
+          <img src="./assets/logo.svg" alt="EcoTech" class="logo-img" />
+          <div class="logo-name"><em>Eco</em>Tech</div>
+        </a>
+        <nav class="nav" id="main-nav" aria-label="Navegação principal">
+          <a href="index.html">Início</a>
+          <a href="coleta.html" class="active">Coleta ecológica</a>
+          <a href="sobre_nos.html">Sobre nós</a>
+          <a href="afilie_se.html" class="btn-nav">Afilie-se →</a>
+        </nav>
+        <div class="nav-actions" style="margin-left: auto">
+          <button
+            class="theme-toggle"
+            id="theme-toggle"
+            aria-label="Alternar tema"
+          >
+            <span id="theme-icon">☀️</span>
+          </button>
+          <a href="login.html" class="icon-btn" aria-label="Perfil">👤</a>
+        </div>
+        <div
+          class="menu-toggle"
+          id="menu-toggle"
+          role="button"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+          tabindex="0"
+        >
+          ☰
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="map-section">
+        <div class="map-container">
+          <div class="section-header">
+            <h2>🗺️ Mapa dos Pontos de Coleta</h2>
+            <p>
+              Encontre o Ecoponto mais próximo de você na região metropolitana
+              do Rio de Janeiro e Costa Verde
+            </p>
+          </div>
+          <div class="map-wrapper">
+            <div id="eco-map"></div>
+            <button
+              type="button"
+              id="map-fullscreen-btn"
+              class="map-fullscreen-btn"
+              aria-label="Ver mapa em tela cheia"
+              title="Tela cheia"
+            >
+              ⛶
+            </button>
+            <div
+              id="distance-balloon"
+              class="map-balloon"
+              aria-live="polite"
+            ></div>
+            <div id="map-legend" class="map-legend"></div>
+          </div>
+          <p
+            id="map-status"
+            style="
+              text-align: center;
+              margin-top: 20px;
+              font-size: 0.9rem;
+              color: var(--ink-3);
+            "
+          >
+            ⏳ Carregando ecopontos da API…
+          </p>
+        </div>
+      </div>
+
+      <div class="tools-section">
+        <div
+          class="tools-tabbar"
+          role="tablist"
+          aria-label="Ferramentas EcoTech"
+        >
+          <button
+            type="button"
+            class="tools-tab active"
+            role="tab"
+            aria-selected="true"
+            aria-controls="page-scanner"
+            data-target="page-scanner"
+          >
+            📷 Scanner
+          </button>
+          <button
+            type="button"
+            class="tools-tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="page-recompensas"
+            data-target="page-recompensas"
+          >
+            🎁 Recompensas
+          </button>
+          <button
+            type="button"
+            class="tools-tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="page-historico"
+            data-target="page-historico"
+          >
+            📋 Histórico
+          </button>
+        </div>
+
+        <!-- SCANNER -->
+        <div class="page active" id="page-scanner" role="tabpanel">
+          <div class="scanner-page">
+            <h1>📷 Escanear Ecoponto</h1>
+            <p class="subtitle">
+              Escaneie o código de barras do Ecoponto para começar a reciclar
+            </p>
+            <div class="scanner-box">
+              <div id="video-container" style="display: none">
+                <video id="video" autoplay muted playsinline></video>
+                <div class="scanner-overlay"></div>
+                <div class="scan-line"></div>
+                <div class="scanner-corners"></div>
+              </div>
+              <div id="scanner-placeholder" style="padding: 20px">
+                <div style="font-size: 64px; margin-bottom: 12px">📦</div>
+                <p style="color: var(--ink-3); font-size: 14px">
+                  Clique em <strong>Iniciar Scanner</strong> para usar a
+                  câmera<br />ou insira o código manualmente do produto
+                </p>
+              </div>
+              <div class="scanner-btn-row">
+                <button
+                  class="btn-primary"
+                  onclick="startScanner()"
+                  id="btn-start"
+                >
+                  📷 Iniciar Scanner
+                </button>
+                <button
+                  class="btn-secondary"
+                  onclick="stopScanner()"
+                  id="btn-stop"
+                  style="display: none"
+                >
+                  ⏹ Parar
+                </button>
+              </div>
+              <div class="manual-input-row">
+                <input
+                  type="text"
+                  id="manual-code"
+                  placeholder="Digite o código de barras..."
+                  maxlength="14"
+                />
+                <button
+                  class="btn-primary"
+                  onclick="
+                    validateCode(document.getElementById('manual-code').value)
+                  "
+                >
+                  Validar
+                </button>
+              </div>
+            </div>
+            <div class="scan-result" id="scan-result">
+              <div class="result-icon" id="result-icon">✅</div>
+              <div class="result-title" id="result-title">
+                Produto Validado!
+              </div>
+              <div class="result-points" id="result-points">
+                🪙 +50 EcoCoins ganhos!
+              </div>
+              <div class="result-desc" id="result-desc">
+                Embalagem reciclável detectada.
+              </div>
+              <button
+                class="btn-primary"
+                style="margin-top: 16px; width: 100%; justify-content: center"
+                onclick="clearScan()"
+              >
+                ♻️ Escanear outro produto
+              </button>
+            </div>
+            <div class="history-list">
+              <h3>🕐 Últimas validações</h3>
+              <div id="scan-history"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RECOMPENSAS -->
+        <div class="page" id="page-recompensas" role="tabpanel">
+          <div class="rewards-page">
+            <h1>🎁 Recompensas</h1>
+            <p class="subtitle">
+              Troque seus EcoCoins por descontos nas melhores lojas do Rio de
+              Janeiro
+            </p>
+            <div
+              id="coins-banner"
+              style="
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                background: var(--sage-100, #e8f5e9);
+                border-radius: 16px;
+                padding: 16px 20px;
+                margin-bottom: 20px;
+                border: 1px solid var(--sage-200, #c8e6c9);
+              "
+            >
+              <span style="font-size: 2rem">🪙</span>
+              <div>
+                <div
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--ink-3);
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                  "
+                >
+                  Seu saldo
+                </div>
+                <div
+                  style="
+                    font-size: 1.6rem;
+                    font-weight: 800;
+                    color: var(--sage-600, #43a047);
+                  "
+                >
+                  <span id="coins-display">…</span> EcoCoins
+                </div>
+              </div>
+              <div
+                id="coins-loading"
+                style="
+                  margin-left: auto;
+                  font-size: 0.8rem;
+                  color: var(--ink-3);
+                "
+              ></div>
+            </div>
+            <div class="rewards-filters">
+              <button
+                class="filter-btn active"
+                onclick="filterRewards(this, 'todos')"
+              >
+                Todos
+              </button>
+              <button class="filter-btn" onclick="filterRewards(this, 'food')">
+                🍔 Alimentação
+              </button>
+              <button
+                class="filter-btn"
+                onclick="filterRewards(this, 'transport')"
+              >
+                🚌 Transporte
+              </button>
+              <button class="filter-btn" onclick="filterRewards(this, 'shop')">
+                🛍️ Compras
+              </button>
+              <button
+                class="filter-btn"
+                onclick="filterRewards(this, 'health')"
+              >
+                💊 Saúde
+              </button>
+              <button
+                class="filter-btn"
+                onclick="filterRewards(this, 'leisure')"
+              >
+                🎭 Lazer
+              </button>
+            </div>
+            <div class="rewards-grid" id="rewards-grid"></div>
+          </div>
+        </div>
+
+        <!-- HISTÓRICO -->
+        <div class="page" id="page-historico" role="tabpanel">
+          <div class="history-page">
+            <h1>📋 Histórico de Pontos</h1>
+            <p class="subtitle" id="historico-subtitle">
+              Carregando histórico…
+            </p>
+            <div id="timeline-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABELA DE PONTUAÇÃO -->
+      <div class="content-section">
+        <div class="section-header">
+          <h2>📊 Tabela de Pontuação por Material</h2>
+          <p>Quanto mais você recicla, mais pontos ganha!</p>
+        </div>
+        <div
+          class="info-grid"
+          style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))"
+        >
+          <div class="info-card" style="text-align: center; padding: 24px">
+            <strong
+              style="
+                color: var(--sage-600);
+                font-size: 1.1rem;
+                display: block;
+                margin-bottom: 8px;
+              "
+              >🥤 Plástico PET (1kg)</strong
+            ><span style="color: var(--ink-2); font-weight: 600"
+              >🔹 12 pontos</span
+            >
+          </div>
+          <div class="info-card" style="text-align: center; padding: 24px">
+            <strong
+              style="
+                color: var(--sage-600);
+                font-size: 1.1rem;
+                display: block;
+                margin-bottom: 8px;
+              "
+              >📦 Papelão (1kg)</strong
+            ><span style="color: var(--ink-2); font-weight: 600"
+              >🔹 8 pontos</span
+            >
+          </div>
+          <div class="info-card" style="text-align: center; padding: 24px">
+            <strong
+              style="
+                color: var(--sage-600);
+                font-size: 1.1rem;
+                display: block;
+                margin-bottom: 8px;
+              "
+              >🥫 Latinhas (1kg)</strong
+            ><span style="color: var(--ink-2); font-weight: 600"
+              >🔹 20 pontos</span
+            >
+          </div>
+          <div class="info-card" style="text-align: center; padding: 24px">
+            <strong
+              style="
+                color: var(--sage-600);
+                font-size: 1.1rem;
+                display: block;
+                margin-bottom: 8px;
+              "
+              >🍾 Vidro (1kg)</strong
+            ><span style="color: var(--ink-2); font-weight: 600"
+              >🔹 6 pontos</span
+            >
+          </div>
+          <div class="info-card" style="text-align: center; padding: 24px">
+            <strong
+              style="
+                color: var(--sage-600);
+                font-size: 1.1rem;
+                display: block;
+                margin-bottom: 8px;
+              "
+              >💻 Eletrônicos (un)</strong
+            ><span style="color: var(--ink-2); font-weight: 600"
+              >🔹 25 pontos</span
+            >
+          </div>
+          <div class="info-card" style="text-align: center; padding: 24px">
+            <strong
+              style="
+                color: var(--sage-600);
+                font-size: 1.1rem;
+                display: block;
+                margin-bottom: 8px;
+              "
+              >🪵 Madeira (1kg)</strong
+            ><span style="color: var(--ink-2); font-weight: 600"
+              >🔹 5 pontos</span
+            >
+          </div>
+          <div class="info-card" style="text-align: center; padding: 24px">
+            <strong
+              style="
+                color: var(--sage-600);
+                font-size: 1.1rem;
+                display: block;
+                margin-bottom: 8px;
+              "
+              >🛢️ Óleo (1 litro)</strong
+            ><span style="color: var(--ink-2); font-weight: 600"
+              >🔹 15 pontos</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- GUIA DE COLETA -->
+      <div class="content-section">
+        <div class="section-header">
+          <h2>📋 Guia Completo de Coleta Seletiva</h2>
+          <p>
+            Saiba exatamente como preparar e descartar cada tipo de material
+          </p>
+        </div>
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-icon">♻️</div>
+            <h3>Plásticos</h3>
+            <p>
+              Garrafas PET, potes, embalagens, tampinhas, sacolas plásticas.
+            </p>
+            <ul class="info-list">
+              <li>✓ Lave e seque antes de descartar</li>
+              <li>✓ Amasse garrafas para economizar espaço</li>
+              <li>✓ Remova tampas metálicas</li>
+              <li>✗ Evite isopor e plásticos metalizados</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">📰</div>
+            <h3>Papel e Papelão</h3>
+            <p>
+              Caixas, jornais, revistas, cadernos, envelopes, embalagens longa
+              vida.
+            </p>
+            <ul class="info-list">
+              <li>✓ Dobre ou desmonte caixas</li>
+              <li>✓ Papéis devem estar secos</li>
+              <li>✓ Remova grampos e fitas adesivas</li>
+              <li>✗ Papéis engordurados ou sujos</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">🍾</div>
+            <h3>Vidros</h3>
+            <p>Garrafas, potes, frascos, copos, embalagens de conservas.</p>
+            <ul class="info-list">
+              <li>✓ Lave bem os frascos</li>
+              <li>✓ Separe por cor (verde, âmbar, incolor)</li>
+              <li>✓ Embrulhe cacos quebrados</li>
+              <li>✗ Espelhos, vidros temperados</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">🔋</div>
+            <h3>Eletrônicos e Pilhas</h3>
+            <p>Celulares, baterias, carregadores, pilhas, placas-mãe, cabos.</p>
+            <ul class="info-list">
+              <li>✓ Descarregue totalmente as baterias</li>
+              <li>✓ Armazene pilhas em recipiente plástico</li>
+              <li>✓ Não desmonte componentes</li>
+              <li>⚠️ Produtos tóxicos - descarte especial</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">🥫</div>
+            <h3>Metais</h3>
+            <p>Latinhas, tampas, panelas, fios de cobre, arames, ferragens.</p>
+            <ul class="info-list">
+              <li>✓ Lave latas de alimentos</li>
+              <li>✓ Amasse latinhas de alumínio</li>
+              <li>✓ Separe ferrosos dos não-ferrosos</li>
+              <li>✗ Aerossóis e latas de tinta</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">🪵</div>
+            <h3>Madeira</h3>
+            <p>Paletes, móveis quebrados, restos de obra, caixotes.</p>
+            <ul class="info-list">
+              <li>✓ Remova pregos e parafusos quando possível</li>
+              <li>✓ Corte peças grandes para facilitar o transporte</li>
+              <li>✓ Separe madeira tratada da natural</li>
+              <li>✗ Madeira com cupim ou contaminada</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">🛢️</div>
+            <h3>Óleo de Cozinha</h3>
+            <p>Óleo vegetal usado, gordura de frituras.</p>
+            <ul class="info-list">
+              <li>✓ Espere esfriar completamente</li>
+              <li>✓ Armazene em garrafa PET</li>
+              <li>✓ Feche bem o recipiente</li>
+              <li>⚡ 1 litro de óleo contamina 20 mil litros de água</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-brand">
+        <div class="footer-leaf">🌿</div>
+        <div class="footer-name">EcoTech</div>
+      </div>
+      <div class="footer-socials">
+        <a
+          href="https://www.instagram.com/eco.tech26/"
+          target="_blank"
+          rel="noopener"
+          aria-label="Instagram"
+          ><img
+            src="assets/instagram-logo-facebook-2-svgrepo-com.svg"
+            alt="Instagram"
+        /></a>
+        <a
+          href="https://br.linkedin.com/"
+          target="_blank"
+          rel="noopener"
+          aria-label="LinkedIn"
+          ><img src="assets/linkedin-logo-svgrepo-com.svg" alt="LinkedIn"
+        /></a>
+        <a
+          href="https://www.facebook.com/?locale=pt_BR"
+          target="_blank"
+          rel="noopener"
+          aria-label="Facebook"
+          ><img src="assets/facebook-svgrepo-com.svg" alt="Facebook"
+        /></a>
+      </div>
+      <p>© 2026 EcoTech. Todos os direitos reservados.</p>
+    </footer>
+
+    <div id="toast"></div>
+
+    <script src="js/eco-session.js"></script>
+    <script>
+      requireAuth();
+    </script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/@zxing/library@latest"></script>
+    <script>
+      "use strict";
+
+      /* ══════════════════════════════════════════════════
+         API CONFIG
+      ══════════════════════════════════════════════════ */
+      const API_PESSOA = "https://6a38cde364a2d8269222d659.mockapi.io";
+      const API_EMPRESA = "https://6a386bef64a2d82692228142.mockapi.io/api/v1";
+
+      function getLoggedUserId() {
+        return localStorage.getItem("ecotech_user_id") || "1";
+      }
+
+      /* ── Estado global do usuário ── */
+      let currentUser = null;
+      let userCoins = 0;
+
+      async function fetchUser() {
+        const id = getLoggedUserId();
+        const res = await fetch(`${API_PESSOA}/pessoa/${id}`);
+        if (!res.ok) throw new Error("Usuário não encontrado");
+        currentUser = await res.json();
+        userCoins = parseFloat(currentUser.coins || 0);
+        return currentUser;
+      }
+
+      async function saveUserCoins(newCoins) {
+        const id = getLoggedUserId();
+        const res = await fetch(`${API_PESSOA}/pessoa/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ coins: newCoins.toFixed(2) }),
+        });
+        if (!res.ok) throw new Error("Falha ao salvar coins");
+        const updated = await res.json();
+        userCoins = parseFloat(updated.coins);
+        currentUser.coins = updated.coins;
+        return userCoins;
+      }
+
+      /* ══════════════════════════════════════════════════
+         MAPA — categorias e helpers
+      ══════════════════════════════════════════════════ */
+      const CATEGORIES = [
+        { key: "metal", label: "Metal", color: "#f9a825" },
+        { key: "papel", label: "Papel", color: "#66bb6a" },
+        { key: "vidro", label: "Vidro", color: "#42a5f5" },
+        { key: "plastico", label: "Plástico", color: "#ef5350" },
+        { key: "eletronicos", label: "Eletrônicos", color: "#ab47bc" },
+        { key: "madeira", label: "Madeira", color: "#8d6e63" },
+      ];
+      const catByKey = (key) => CATEGORIES.find((c) => c.key === key);
+
+      const CAT_FALLBACK_ORDER = [
+        "metal",
+        "papel",
+        "vidro",
+        "plastico",
+        "eletronicos",
+        "madeira",
+      ];
+
+      // Combinações fixas de múltiplos materiais usadas no fallback.
+      // Quando o campo "cats" da API for uma string livre (Faker.js word.noun),
+      // tentamos match por palavra-chave — se não bater, usamos o id do ponto
+      // para escolher aleatoriamente uma combinação com 1–3 materiais.
+      // Assim o mapa sempre exibe pontos mistos como na primeira versão.
+      const CAT_COMBOS = [
+        ["plastico"],
+        ["metal", "plastico"],
+        ["papel", "madeira"],
+        ["vidro", "plastico"],
+        ["eletronicos", "metal"],
+        ["papel", "madeira", "plastico"],
+        ["metal", "vidro"],
+        ["plastico", "vidro", "metal"],
+        ["madeira", "metal"],
+        ["papel", "plastico"],
+        ["eletronicos", "vidro"],
+        ["vidro", "madeira"],
+      ];
+
+      /**
+       * Converte o campo "cats" do MockAPI em array de chaves válidas.
+       * - Se vier como "plastico,vidro" (com vírgula): divide e valida cada parte.
+       * - Se tiver palavra-chave reconhecível: retorna a categoria correspondente.
+       * - Fallback: usa o id numérico do ponto para escolher uma combinação
+       *   de CAT_COMBOS, garantindo pontos com múltiplos materiais.
+       */
+      function mapApiCat(catStr, pointId) {
+        if (!catStr) return pickCombo(pointId);
+
+        // Suporte a formato "plastico,vidro" quando o MockAPI for configurado assim
+        if (catStr.includes(",")) {
+          const parts = catStr.split(",").map((s) => s.trim().toLowerCase());
+          const valid = parts.filter((p) => CAT_FALLBACK_ORDER.includes(p));
+          if (valid.length > 0) return valid;
+        }
+
+        const s = catStr.toLowerCase();
+        if (s.includes("metal") || s.includes("ferro") || s.includes("iron"))
+          return pickComboStartingWith("metal", pointId);
+        if (s.includes("papel") || s.includes("paper") || s.includes("card"))
+          return pickComboStartingWith("papel", pointId);
+        if (s.includes("vidro") || s.includes("glass"))
+          return pickComboStartingWith("vidro", pointId);
+        if (s.includes("plast") || s.includes("pet"))
+          return pickComboStartingWith("plastico", pointId);
+        if (s.includes("eletr") || s.includes("tech") || s.includes("printer"))
+          return pickComboStartingWith("eletronicos", pointId);
+        if (s.includes("mad") || s.includes("wood") || s.includes("timber"))
+          return pickComboStartingWith("madeira", pointId);
+
+        // Fallback completo: determina combinação pelo id
+        return pickCombo(pointId);
+      }
+
+      function pickCombo(pointId) {
+        const idx = (parseInt(pointId) || 0) % CAT_COMBOS.length;
+        return CAT_COMBOS[idx];
+      }
+
+      function pickComboStartingWith(firstCat, pointId) {
+        // Filtra combos que começam com firstCat; se não achar, usa pickCombo
+        const filtered = CAT_COMBOS.filter((c) => c[0] === firstCat);
+        if (filtered.length === 0) return [firstCat];
+        const idx = (parseInt(pointId) || 0) % filtered.length;
+        return filtered[idx];
+      }
+
+      /**
+       * Busca todos os ecopontos da API:
+       * 1. GET /empresa → lista de empresas
+       * 2. GET /empresa/:id/ecopontos para cada empresa (paralelo)
+       * 3. Normaliza para o formato interno do mapa
+       */
+      async function loadEcopontos() {
+        // 1. Descobre quais empresas existem
+        const empRes = await fetch(`${API_EMPRESA}/empresa`);
+        if (!empRes.ok)
+          throw new Error(`Erro ao buscar empresas: ${empRes.status}`);
+        const empresas = await empRes.json();
+
+        // 2. Busca ecopontos em paralelo com Promise.allSettled para
+        //    não quebrar mesmo quando algumas empresas retornam 404.
+        //    Nota: o browser sempre loga respostas 4xx no DevTools —
+        //    isso é comportamento normal ok?.
+        const settled = await Promise.allSettled(
+          empresas.map((emp) =>
+            fetch(`${API_EMPRESA}/empresa/${emp.id}/ecopontos`).then((r) =>
+              r.ok ? r.json() : [],
+            ),
+          ),
+        );
+
+        // 3. Pega apenas as promessas que resolveram com sucesso
+        const pontos = settled
+          .filter((r) => r.status === "fulfilled")
+          .flatMap((r) => (Array.isArray(r.value) ? r.value : []));
+
+        // 4. Normaliza para o formato interno do mapa
+        return pontos
+          .filter((p) => p.lat != null && p.lng != null)
+          .map((p) => ({
+            lat: parseFloat(p.lat),
+            lng: parseFloat(p.lng),
+            code: `ECO-${String(p.id).padStart(2, "0")}`,
+            name: p.nome || `Ecoponto ${p.id}`,
+            cats: mapApiCat(p.cats, p.id),
+            desc: [p.adress, p.city, p.state].filter(Boolean).join(", "),
+            status: p.status,
+            coletado: p.coletado,
+          }));
+      }
+
+      /* ══════════════════════════════════════════════════
+         CATÁLOGO DE RECOMPENSAS
+      ══════════════════════════════════════════════════ */
+      const rewardsCatalog = [
+        {
+          cat: "food",
+          icon: "🍔",
+          name: "Cupom McDonald's",
+          desc: "20% OFF em combos",
+          cost: 200,
+        },
+        {
+          cat: "food",
+          icon: "☕",
+          name: "Café Grátis",
+          desc: "Starbucks ou cafeteria parceira",
+          cost: 80,
+        },
+        {
+          cat: "transport",
+          icon: "🎫",
+          name: "Passe Metrô Rio",
+          desc: "1 viagem gratuita",
+          cost: 150,
+        },
+        {
+          cat: "food",
+          icon: "🥤",
+          name: "Eco Garrafa",
+          desc: "Starbucks ou cafeteria parceira",
+          cost: 120,
+        },
+        {
+          cat: "health",
+          icon: "🌱",
+          name: "Kit Sementes",
+          desc: "Sementes de Árvores Nativas",
+          cost: 100,
+        },
+        {
+          cat: "shop",
+          icon: "🛍️",
+          name: "Bolsa EcoTech",
+          desc: "Sacola Sustentável da EcoTech",
+          cost: 180,
+        },
+        {
+          cat: "transport",
+          icon: "🚲",
+          name: "Bike Itaú 1h",
+          desc: "1 hora de uso grátis",
+          cost: 90,
+        },
+        {
+          cat: "shop",
+          icon: "🛍️",
+          name: "Vale Compras R$30",
+          desc: "Lojas parceiras EcoTech",
+          cost: 300,
+        },
+        {
+          cat: "shop",
+          icon: "👕",
+          name: "Camiseta Sustentável",
+          desc: "Algodão orgânico reciclado",
+          cost: 220,
+        },
+        {
+          cat: "health",
+          icon: "💊",
+          name: "Desconto Farmácia",
+          desc: "15% OFF em medicamentos",
+          cost: 120,
+        },
+        {
+          cat: "leisure",
+          icon: "🎭",
+          name: "Ingresso de Cinema",
+          desc: "Meia-entrada em qualquer sessão",
+          cost: 250,
+        },
+      ];
+
+      /* ══════════════════════════════════════════════════
+         DATABASE DE PRODUTOS (scanner)
+      ══════════════════════════════════════════════════ */
+      const productDB = {
+        7896004004777: {
+          name: "Garrafa PET 500ml",
+          pts: 30,
+          icon: "🧴",
+          mat: "Plástico PET",
+        },
+        7891234567890: {
+          name: "Lata de Alumínio 350ml",
+          pts: 40,
+          icon: "🥫",
+          mat: "Alumínio",
+        },
+        7896666000014: {
+          name: "Caixa de Papelão",
+          pts: 20,
+          icon: "📦",
+          mat: "Papelão",
+        },
+        7899000001234: {
+          name: "Vidro de Conserva",
+          pts: 35,
+          icon: "🫙",
+          mat: "Vidro",
+        },
+        7891910000197: {
+          name: "Pilha Alcalina AA",
+          pts: 80,
+          icon: "🔋",
+          mat: "Pilha/Bateria",
+        },
+        7896000000001: {
+          name: "Embalagem Tetra Pak",
+          pts: 25,
+          icon: "🧃",
+          mat: "Tetra Pak",
+        },
+      };
+
+      /* ══════════════════════════════════════════════════
+         HELPERS DE UI
+      ══════════════════════════════════════════════════ */
+      function showToast(msg) {
+        const t = document.getElementById("toast");
+        if (t) {
+          t.textContent = msg;
+          t.classList.add("show");
+          setTimeout(() => t.classList.remove("show"), 2800);
+        }
+      }
+
+      function updateCoinsUI() {
+        const el = document.getElementById("coins-display");
+        if (el) el.textContent = Math.floor(userCoins).toLocaleString("pt-BR");
+        document.querySelectorAll(".reward-card[data-cost]").forEach((card) => {
+          const cost = parseInt(card.dataset.cost);
+          const btn = card.querySelector(".reward-redeem-btn");
+          if (btn) {
+            const cant = userCoins < cost;
+            btn.disabled = cant;
+            btn.style.opacity = cant ? "0.45" : "1";
+            btn.style.cursor = cant ? "not-allowed" : "pointer";
+          }
+        });
+      }
+
+      /* ══════════════════════════════════════════════════
+         RECOMPENSAS — render e resgate
+      ══════════════════════════════════════════════════ */
+      let currentFilter = "todos";
+
+      function renderRewardsGrid(filter = currentFilter) {
+        currentFilter = filter;
+        const el = document.getElementById("rewards-grid");
+        if (!el) return;
+        const items =
+          filter === "todos"
+            ? rewardsCatalog
+            : rewardsCatalog.filter((r) => r.cat === filter);
+        el.innerHTML = items
+          .map(
+            (r) => `
+          <div class="reward-card" data-cost="${r.cost}">
+            <div class="reward-icon">${r.icon}</div>
+            <h4>${r.name}</h4>
+            <p>${r.desc}</p>
+            <p class="reward-cost">${r.cost} 🪙</p>
+            <button class="reward-redeem-btn btn-primary" data-name="${r.name}" data-cost="${r.cost}"
+              onclick="redeemReward(this,'${r.name}',${r.cost})">Resgatar</button>
+          </div>`,
+          )
+          .join("");
+        updateCoinsUI();
+      }
+
+      function filterRewards(btn, cat) {
+        document
+          .querySelectorAll(".filter-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        renderRewardsGrid(cat);
+      }
+
+      async function redeemReward(btn, name, cost) {
+        if (userCoins < cost) {
+          showToast(`❌ Saldo insuficiente para ${name}. Recicle mais!`);
+          return;
+        }
+        btn.disabled = true;
+        btn.textContent = "Aguarde…";
+        try {
+          const newCoins = userCoins - cost;
+          await saveUserCoins(newCoins);
+          updateCoinsUI();
+          showToast(
+            `🎉 Resgatado: ${name}! Saldo: ${Math.floor(userCoins)} coins`,
+          );
+          addTimelineEntry({
+            type: "redeem",
+            icon: "🎁",
+            desc: `${name} resgatado`,
+            pts: `-${cost}`,
+            time: "Agora",
+          });
+        } catch (err) {
+          showToast("❌ Erro ao resgatar. Tente novamente.");
+          console.error(err);
+        } finally {
+          btn.textContent = "Resgatar";
+          updateCoinsUI();
+        }
+      }
+
+      /* ══════════════════════════════════════════════════
+         HISTÓRICO
+      ══════════════════════════════════════════════════ */
+      let timelineEntries = [];
+
+      function buildTimelineFromUser(user) {
+        const reciclado = Array.isArray(user.reciclado) ? user.reciclado : [];
+        return reciclado.map((item) => ({
+          type: "earn",
+          icon: item.icon || "♻️",
+          desc: item.name || "Item reciclado",
+          pts: `+${item.pts || 0}`,
+          time: item.time || "—",
+        }));
+      }
+
+      function addTimelineEntry(entry) {
+        timelineEntries.unshift(entry);
+        renderTimeline();
+      }
+
+      function renderTimeline() {
+        const el = document.getElementById("timeline-list");
+        const sub = document.getElementById("historico-subtitle");
+        if (!el) return;
+        if (timelineEntries.length === 0) {
+          el.innerHTML = `<div style="text-align:center; padding:40px; color:var(--ink-3);">
+            <div style="font-size:3rem; margin-bottom:12px;">📭</div>
+            <p>Nenhum item reciclado ainda.<br/>Escaneie um produto para começar!</p>
+          </div>`;
+          if (sub) sub.textContent = "Sem registros ainda.";
+          return;
+        }
+        if (sub)
+          sub.textContent = `${timelineEntries.length} registro(s) encontrado(s)`;
+        el.innerHTML = timelineEntries
+          .map(
+            (t) => `
+          <div class="timeline-item ${t.type === "redeem" ? "redeem" : ""}">
+            <div class="timeline-icon">${t.icon}</div>
+            <div class="timeline-info"><strong>${t.desc}</strong><small>${t.time}</small></div>
+            <div class="timeline-pts ${t.type === "redeem" ? "redeem" : ""}">${t.pts}🪙</div>
+          </div>`,
+          )
+          .join("");
+      }
+
+      /* ══════════════════════════════════════════════════
+         SCANNER
+      ══════════════════════════════════════════════════ */
+      let stream = null;
+
+      async function startScanner() {
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: "environment" },
+          });
+          const video = document.getElementById("video");
+          video.srcObject = stream;
+          document.getElementById("video-container").style.display = "block";
+          document.getElementById("scanner-placeholder").style.display = "none";
+          document.getElementById("btn-start").style.display = "none";
+          document.getElementById("btn-stop").style.display = "flex";
+          if (window.ZXing) {
+            const formats = [
+              window.ZXing.BarcodeFormat.EAN_13,
+              window.ZXing.BarcodeFormat.QR_CODE,
+              window.ZXing.BarcodeFormat.CODE_128,
+            ];
+            const hints = new Map();
+            hints.set(window.ZXing.DecodeHintType.POSSIBLE_FORMATS, formats);
+            const reader = new window.ZXing.BrowserMultiFormatReader(hints);
+            reader.decodeFromVideoDevice(null, "video", function (result) {
+              if (result) {
+                validateCode(result.getText());
+                stopScanner();
+              }
+            });
+          }
+        } catch (e) {
+          showToast("❌ Câmera não disponível. Use o campo manual.");
+        }
+      }
+
+      function stopScanner() {
+        if (stream) stream.getTracks().forEach((t) => t.stop());
+        document.getElementById("video-container").style.display = "none";
+        document.getElementById("scanner-placeholder").style.display = "block";
+        document.getElementById("btn-start").style.display = "flex";
+        document.getElementById("btn-stop").style.display = "none";
+      }
+      async function validateCode(code) {
+        if (!code || code.trim().length < 3) {
+          showToast("❌ Código inválido");
+          return;
+        }
+
+        const raw = code.trim();
+
+        // ── Detecta QR de Ecoponto: "ECO-ECO-104|emp=1|ep=3" ou "ECO-104|emp=1|ep=3"
+        if (raw.startsWith("ECO-")) {
+          await validateEcoponto(raw);
+          return;
+        }
+
+        // ── Código de produto (barras / manual)
+        if (raw.length < 8) {
+          showToast("❌ Código muito curto");
+          return;
+        }
+
+        const product = productDB[raw] || {
+          name: "Embalagem Reciclável",
+          pts: 30,
+          icon: "♻️",
+          mat: "Reciclável",
+        };
+
+        // Salva na API
+        try {
+          const newCoins = userCoins + product.pts;
+          const novoItem = {
+            name: product.name,
+            pts: product.pts,
+            icon: product.icon,
+            codigo: raw,
+            time: new Date().toLocaleTimeString("pt-BR", {
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
+          };
+          const reciclado = Array.isArray(currentUser?.reciclado)
+            ? [novoItem, ...currentUser.reciclado]
+            : [novoItem];
+
+          await fetch(`${API_PESSOA}/pessoa/${getLoggedUserId()}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ coins: newCoins.toFixed(2), reciclado }),
+          });
+
+          userCoins = newCoins;
+          if (currentUser) {
+            currentUser.coins = newCoins.toFixed(2);
+            currentUser.reciclado = reciclado;
+          }
+          updateCoinsUI();
+        } catch (err) {
+          console.warn("Não foi possível salvar na API:", err);
+        }
+
+        document.getElementById("result-icon").textContent = product.icon;
+        document.getElementById("result-title").textContent =
+          product.name + " — Validado!";
+        document.getElementById("result-points").textContent =
+          "🪙 +" + product.pts + " EcoCoins ganhos!";
+        document.getElementById("result-desc").textContent =
+          "Material: " +
+          product.mat +
+          ". Descarte no Ecoponto mais próximo para confirmar.";
+        document.getElementById("scan-result").classList.add("show");
+        addTimelineEntry({
+          type: "earn",
+          icon: product.icon,
+          desc: product.name + " escaneado",
+          pts: "+" + product.pts,
+          time: "Agora",
+        });
+        renderScanHistory(raw, product);
+        document.getElementById("manual-code").value = "";
+        stopScanner();
+      }
+
+      /* ── Valida QR de Ecoponto e registra a coleta ── */
+      async function validateEcoponto(raw) {
+        // Parse do payload: "ECO-ECO-104|emp=1|ep=3"
+        // (o gerador adiciona "ECO-" antes de p.code que já começa com "ECO-")
+        const parts = raw.split("|");
+        const codeRaw = parts[0]; // "ECO-ECO-104" ou "ECO-104"
+        const empPart = parts.find((p) => p.startsWith("emp=")) || "";
+        const epPart = parts.find((p) => p.startsWith("ep=")) || "";
+        const empresaId = empPart.replace("emp=", "").trim();
+        const ecopontoId = epPart.replace("ep=", "").trim();
+
+        // Normaliza o code removendo "ECO-ECO-" duplicado
+        const displayCode = codeRaw.replace(/^ECO-ECO-/, "ECO-");
+
+        if (!empresaId || !ecopontoId) {
+          showToast("❌ QR inválido — escaneie a placa do Ecoponto.");
+          return;
+        }
+
+        // Busca dados atuais do ecoponto
+        let ecoponto;
+        try {
+          const res = await fetch(
+            `${API_EMPRESA}/empresa/${empresaId}/ecopontos/${ecopontoId}`,
+          );
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          ecoponto = await res.json();
+        } catch (err) {
+          console.error("Erro ao buscar ecoponto:", err);
+          showToast("❌ Ecoponto não encontrado na API.");
+          return;
+        }
+
+        const KG_POR_SCAN = 0.5; // kg registrado por validação
+        const COINS_ECOPONTO = 50; // EcoCoins ganhos por check-in em ecoponto
+
+        const coletadoAtual = parseFloat(ecoponto.coletado || 0);
+        const novoColetado = (coletadoAtual + KG_POR_SCAN).toFixed(2);
+
+        // Atualiza ecoponto na API
+        try {
+          await fetch(
+            `${API_EMPRESA}/empresa/${empresaId}/ecopontos/${ecopontoId}`,
+            {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ coletado: novoColetado }),
+            },
+          );
+        } catch (err) {
+          console.error("Erro ao atualizar ecoponto:", err);
+          showToast(
+            "⚠️ Não foi possível registrar no ecoponto. Tente novamente.",
+          );
+          return;
+        }
+
+        // Adiciona EcoCoins ao usuário
+        try {
+          const newCoins = userCoins + COINS_ECOPONTO;
+          const novoItem = {
+            name: ecoponto.nome || displayCode,
+            pts: COINS_ECOPONTO,
+            icon: "♻️",
+            codigo: displayCode,
+            time: new Date().toLocaleTimeString("pt-BR", {
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
+          };
+          const reciclado = Array.isArray(currentUser?.reciclado)
+            ? [novoItem, ...currentUser.reciclado]
+            : [novoItem];
+
+          await fetch(`${API_PESSOA}/pessoa/${getLoggedUserId()}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ coins: newCoins.toFixed(2), reciclado }),
+          });
+
+          userCoins = newCoins;
+          if (currentUser) {
+            currentUser.coins = newCoins.toFixed(2);
+            currentUser.reciclado = reciclado;
+          }
+          updateCoinsUI();
+        } catch (err) {
+          console.warn("Não foi possível salvar coins do usuário:", err);
+        }
+
+        // UI de sucesso
+        const nomePonto = ecoponto.nome || displayCode;
+        document.getElementById("result-icon").textContent = "♻️";
+        document.getElementById("result-title").textContent =
+          `Check-in em ${nomePonto}!`;
+        document.getElementById("result-points").textContent =
+          `🪙 +${COINS_ECOPONTO} EcoCoins ganhos!`;
+        document.getElementById("result-desc").textContent =
+          `✅ ${KG_POR_SCAN} kg registrado em ${displayCode}. Total no ponto: ${novoColetado} kg.`;
+        document.getElementById("scan-result").classList.add("show");
+
+        addTimelineEntry({
+          type: "earn",
+          icon: "♻️",
+          desc: `Check-in: ${nomePonto}`,
+          pts: `+${COINS_ECOPONTO}`,
+          time: "Agora",
+        });
+        renderScanHistory(displayCode, {
+          name: nomePonto,
+          pts: COINS_ECOPONTO,
+          icon: "♻️",
+        });
+        document.getElementById("manual-code").value = "";
+        stopScanner();
+        showToast(
+          `✅ +${COINS_ECOPONTO} coins — ${novoColetado} kg registrado em ${displayCode}`,
+        );
+      }
+
+      function clearScan() {
+        document.getElementById("scan-result").classList.remove("show");
+      }
+
+      let scanHistoryLocal = [];
+
+      function renderScanHistory(code, product) {
+        if (code && product)
+          scanHistoryLocal.unshift({
+            code,
+            name: product.name,
+            pts: product.pts,
+            icon: product.icon,
+            time: "Agora",
+          });
+        const el = document.getElementById("scan-history");
+        if (!el) return;
+        const apiItems =
+          currentUser && Array.isArray(currentUser.reciclado)
+            ? currentUser.reciclado.map((r) => ({
+                code: r.codigo,
+                name: r.name,
+                pts: r.pts,
+                icon: r.icon,
+                time: "Histórico",
+              }))
+            : [];
+        const merged = [...scanHistoryLocal, ...apiItems].slice(0, 8);
+        if (merged.length === 0) {
+          el.innerHTML = `<p style="color:var(--ink-3); font-size:14px; text-align:center; padding:16px;">Nenhuma validação ainda.</p>`;
+          return;
+        }
+        el.innerHTML = merged
+          .map(
+            (h) => `
+          <div class="history-item">
+            <div class="history-icon">${h.icon}</div>
+            <div class="history-info"><strong>${h.name}</strong><small>${h.code} • ${h.time}</small></div>
+            <div class="history-pts">+${h.pts}🪙</div>
+          </div>`,
+          )
+          .join("");
+      }
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        /* ── TEMA ── */
+        (function () {
+          const saved = localStorage.getItem("eco-theme");
+          const pref =
+            saved ||
+            (window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light");
+          document.documentElement.setAttribute("data-theme", pref);
+        })();
+
+        const themeToggle = document.getElementById("theme-toggle");
+        const themeIcon = document.getElementById("theme-icon");
+        themeIcon.textContent =
+          document.documentElement.getAttribute("data-theme") === "dark"
+            ? "🌙"
+            : "☀️";
+        themeToggle.addEventListener("click", () => {
+          const root = document.documentElement;
+          const newTheme =
+            root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+          root.setAttribute("data-theme", newTheme);
+          localStorage.setItem("eco-theme", newTheme);
+          themeIcon.style.transform = "rotate(360deg)";
+          themeIcon.style.transition = "transform 0.3s ease";
+          setTimeout(() => {
+            themeIcon.textContent = newTheme === "dark" ? "🌙" : "☀️";
+            themeIcon.style.transform = "rotate(0deg)";
+          }, 150);
+        });
+
+        /* ── MENU ── */
+        const menuToggleBtn = document.getElementById("menu-toggle");
+        const mainNav = document.getElementById("main-nav");
+        if (menuToggleBtn && mainNav)
+          menuToggleBtn.addEventListener("click", () =>
+            mainNav.classList.toggle("open"),
+          );
+
+        /* ── TABS ── */
+        const tabs = document.querySelectorAll(".tools-tab");
+        const pages = document.querySelectorAll(".page");
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            const targetId = tab.dataset.target;
+            tabs.forEach((t) => {
+              t.classList.remove("active");
+              t.setAttribute("aria-selected", "false");
+            });
+            tab.classList.add("active");
+            tab.setAttribute("aria-selected", "true");
+            pages.forEach((p) =>
+              p.classList.toggle("active", p.id === targetId),
+            );
+          });
+        });
+
+        /* ── BUSCA USUÁRIO DA API ── */
+        const coinsLoading = document.getElementById("coins-loading");
+        try {
+          if (coinsLoading) coinsLoading.textContent = "Carregando…";
+          await fetchUser();
+          timelineEntries = buildTimelineFromUser(currentUser);
+          renderTimeline();
+          renderScanHistory();
+          updateCoinsUI();
+          if (coinsLoading) coinsLoading.textContent = "";
+        } catch (err) {
+          console.warn("[EcoTech] Não foi possível carregar usuário:", err);
+          if (coinsLoading) coinsLoading.textContent = "Offline";
+          renderTimeline();
+          renderScanHistory();
+        }
+
+        /* ── RECOMPENSAS ── */
+        renderRewardsGrid("todos");
+
+        /* ══════════════════════════════════════════════════
+           MAPA — inicializa Leaflet, depois carrega ecopontos da API
+        ══════════════════════════════════════════════════ */
+        const htmlEl = document.documentElement;
+        const statusEl = document.getElementById("map-status");
+
+        const map = L.map("eco-map").setView([-22.9, -43.6], 9);
+        const TILE_LIGHT = L.tileLayer(
+          "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+          { attribution: "© OpenStreetMap" },
+        );
+        const TILE_DARK = L.tileLayer(
+          "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+          { attribution: "© OpenStreetMap" },
+        );
+
+        function updateMapTile() {
+          if (htmlEl.getAttribute("data-theme") === "dark") {
+            map.removeLayer(TILE_LIGHT);
+            TILE_DARK.addTo(map);
+          } else {
+            map.removeLayer(TILE_DARK);
+            TILE_LIGHT.addTo(map);
+          }
+        }
+        updateMapTile();
+        new MutationObserver(updateMapTile).observe(htmlEl, {
+          attributes: true,
+          attributeFilter: ["data-theme"],
+        });
+
+        function buildIcon(cats) {
+          const colors = cats.map((k) => catByKey(k).color);
+          const bg =
+            colors.length === 1
+              ? colors[0]
+              : `conic-gradient(${colors.map((c, i) => `${c} ${(i * 100) / colors.length}% ${((i + 1) * 100) / colors.length}%`).join(", ")})`;
+          return L.divIcon({
+            html: `<div class="eco-marker" style="background:${bg};">${cats.length > 1 ? cats.length : catByKey(cats[0]).label[0]}</div>`,
+            iconSize: [30, 30],
+            className: "",
+          });
+        }
+
+        /* ── Legenda ── */
+        const legendEl = document.getElementById("map-legend");
+        legendEl.innerHTML =
+          "<strong style='font-family:Lora,serif; font-size:1rem;'>🗑️ Filtro</strong><br>";
+        let visibleCats = new Set(CATEGORIES.map((c) => c.key));
+
+        CATEGORIES.forEach((cat) => {
+          const item = document.createElement("div");
+          item.style.cssText =
+            "display:flex; align-items:center; gap:8px; margin-top:8px; cursor:pointer; font-size:0.9rem; font-weight:500; color:var(--ink-2); transition:opacity 0.2s;";
+          item.innerHTML = `<span style="background:${cat.color}; width:14px; height:14px; border-radius:50%; display:inline-block;"></span>${cat.label}`;
+          item.onclick = () => {
+            if (visibleCats.has(cat.key)) {
+              visibleCats.delete(cat.key);
+              item.style.opacity = "0.4";
+            } else {
+              visibleCats.add(cat.key);
+              item.style.opacity = "1";
+            }
+            updateMarkerVisibility();
+          };
+          legendEl.appendChild(item);
+        });
+
+        /* ── Marcadores — preenchidos após fetch ── */
+        let markerRefs = [];
+
+        function updateMarkerVisibility() {
+          markerRefs.forEach(({ marker, point }) => {
+            const visible = point.cats.some((k) => visibleCats.has(k));
+            const onMap = map.hasLayer(marker);
+            if (visible && !onMap) marker.addTo(map);
+            if (!visible && onMap) map.removeLayer(marker);
+          });
+        }
+
+        function addMarkers(POINTS) {
+          POINTS.forEach((p) => {
+            const gmapsUrl = `https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`;
+            const catBadges = p.cats
+              .map((k) => {
+                const c = catByKey(k);
+                return `<span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--ink-2);margin:0 8px 4px 0;">
+                <span style="width:8px;height:8px;border-radius:50%;background:${c.color};display:inline-block;"></span>${c.label}
+              </span>`;
+              })
+              .join("");
+            const accentColor = catByKey(p.cats[0]).color;
+            const statusBadge = p.status
+              ? `<span style="font-size:11px;color:#43a047;font-weight:600;">● Ativo</span>`
+              : `<span style="font-size:11px;color:#e53935;font-weight:600;">● Inativo</span>`;
+            const coletadoBadge = p.coletado
+              ? `<p style="font-size:11px;color:var(--ink-3);margin:4px 0 8px;">📦 ${parseFloat(p.coletado).toFixed(1)} kg coletados</p>`
+              : "";
+            const popup = `
+              <div style="min-width:200px; font-family:'Plus Jakarta Sans',sans-serif;">
+                <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+                  <p style="margin:0; font-size:14px; font-weight:700; color:var(--ink);">${p.name}</p>
+                  ${statusBadge}
+                </div>
+                <p style="margin:0 0 4px; font-size:11px; letter-spacing:0.5px; color:var(--ink-3);">CÓDIGO: ${p.code}</p>
+                <p style="margin:0 0 4px; font-size:12px; color:var(--ink-3);">${p.desc}</p>
+                ${coletadoBadge}
+                <div style="margin-bottom:12px;">${catBadges}</div>
+                <a href="${gmapsUrl}" target="_blank" rel="noopener"
+                  style="display:inline-flex;align-items:center;gap:6px;background:${accentColor};color:white;padding:7px 14px;border-radius:20px;text-decoration:none;font-size:12px;font-weight:600;">🗺️ Abrir Rota</a>
+              </div>`;
+            const marker = L.marker([p.lat, p.lng], {
+              icon: buildIcon(p.cats),
+            }).bindPopup(popup, { maxWidth: 260 });
+            marker.addTo(map);
+            markerRefs.push({ marker, point: p });
+          });
+        }
+
+        /* ── Carrega ecopontos da API ── */
+        try {
+          const pontos = await loadEcopontos();
+          addMarkers(pontos);
+          if (statusEl) {
+            statusEl.textContent = `📍 ${pontos.length} ecopontos carregados | Clique nos marcadores para ver detalhes | Filtre por categoria na legenda`;
+          }
+        } catch (err) {
+          console.error("[EcoTech] Erro ao carregar ecopontos:", err);
+          if (statusEl) {
+            statusEl.innerHTML = `⚠️ Não foi possível carregar os ecopontos da API. <button onclick="location.reload()" style="border:none;background:none;color:var(--sage-600);cursor:pointer;font-weight:600;text-decoration:underline;">Tentar novamente</button>`;
+          }
+        }
+
+        /* ── Balão de distância ── */
+        const balloonEl = document.getElementById("distance-balloon");
+        let userMarker = null;
+
+        function haversineKm(lat1, lon1, lat2, lon2) {
+          const R = 6371,
+            dLat = ((lat2 - lat1) * Math.PI) / 180,
+            dLon = ((lon2 - lon1) * Math.PI) / 180;
+          const a =
+            Math.sin(dLat / 2) ** 2 +
+            Math.cos((lat1 * Math.PI) / 180) *
+              Math.cos((lat2 * Math.PI) / 180) *
+              Math.sin(dLon / 2) ** 2;
+          return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        }
+
+        function locateUser() {
+          if (!navigator.geolocation) {
+            balloonEl.innerHTML = `<span>📍 Geolocalização não suportada</span>`;
+            return;
+          }
+          balloonEl.innerHTML = `<span>📡 Localizando você...</span>`;
+          navigator.geolocation.getCurrentPosition(
+            (pos) => {
+              const { latitude, longitude } = pos.coords;
+              // Usa os pontos já carregados em markerRefs
+              let nearest = null,
+                nearestDist = Infinity;
+              markerRefs.forEach(({ point: p }) => {
+                const d = haversineKm(latitude, longitude, p.lat, p.lng);
+                if (d < nearestDist) {
+                  nearestDist = d;
+                  nearest = p;
+                }
+              });
+              if (userMarker) map.removeLayer(userMarker);
+              userMarker = L.marker([latitude, longitude], {
+                icon: L.divIcon({
+                  html: `<div style="background:#2962ff;width:16px;height:16px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 4px rgba(41,98,255,0.25);"></div>`,
+                  iconSize: [16, 16],
+                  className: "",
+                }),
+              })
+                .addTo(map)
+                .bindPopup("Você está aqui");
+
+              if (nearest) {
+                balloonEl.innerHTML = `
+                  <div class="balloon-text"><strong>${nearestDist.toFixed(1)} km</strong><span>até ${nearest.name}</span></div>
+                  <button class="balloon-refresh" id="refreshLocation" aria-label="Atualizar">🔄</button>`;
+                document
+                  .getElementById("refreshLocation")
+                  .addEventListener("click", locateUser);
+              } else {
+                balloonEl.innerHTML = `<span>📍 Você está aqui</span>`;
+              }
+            },
+            () => {
+              balloonEl.innerHTML = `
+                <div class="balloon-text"><span>📍 Ative a localização para ver a distância</span></div>
+                <button class="balloon-refresh is-text" id="retryLocation">Tentar de novo</button>`;
+              document
+                .getElementById("retryLocation")
+                .addEventListener("click", locateUser);
+            },
+            { enableHighAccuracy: true, timeout: 8000 },
+          );
+        }
+        locateUser();
+
+        /* ── Tela cheia do mapa ── */
+        const mapWrapperEl = document.querySelector(".map-wrapper");
+        const fullscreenBtn = document.getElementById("map-fullscreen-btn");
+
+        function setMapFullscreen(active) {
+          if (!mapWrapperEl) return;
+          mapWrapperEl.classList.toggle("is-fullscreen", active);
+          document.body.classList.toggle("map-fullscreen-active", active);
+          if (fullscreenBtn) {
+            fullscreenBtn.textContent = active ? "✕" : "⛶";
+            fullscreenBtn.setAttribute(
+              "aria-label",
+              active ? "Sair da tela cheia" : "Ver mapa em tela cheia",
+            );
+          }
+          setTimeout(() => map.invalidateSize(), 200);
+        }
+
+        if (fullscreenBtn)
+          fullscreenBtn.addEventListener("click", () =>
+            setMapFullscreen(!mapWrapperEl.classList.contains("is-fullscreen")),
+          );
+        document.addEventListener("keydown", (e) => {
+          if (
+            e.key === "Escape" &&
+            mapWrapperEl &&
+            mapWrapperEl.classList.contains("is-fullscreen")
+          )
+            setMapFullscreen(false);
+        });
+      }); // fim DOMContentLoaded
+    </script>
+  </body>
+</html>

@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login — EcoTech</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/login.css" />
+  </head>
+
+  <body>
+    <main class="page">
+      <a href="index.html" class="btn-back" aria-label="Voltar para o início">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M19 12H5"></path>
+          <path d="M12 19l-7-7 7-7"></path>
+        </svg>
+      </a>
+      <section class="app">
+        <section class="content">
+          <section class="hero">
+            <span class="tag">Nossa Essência</span>
+
+            <h1>A união de<br />dados, ciência<br />e amor pela<br />terra.</h1>
+
+            <p>
+              Somos uma equipe dedicada a criar soluções tecnológicas para a
+              preservação ambiental e o monitoramento do nosso planeta.
+            </p>
+
+            <div class="stat-card">
+              <strong>85%</strong>
+              <p>de eficiência<br />em nossos<br />projetos</p>
+            </div>
+
+            <div class="hero-card">
+              <div>♧</div>
+              <p>
+                Tecnologia e ciência trabalhando juntas por um futuro
+                sustentável.
+              </p>
+            </div>
+          </section>
+
+          <section class="login">
+            <div class="eco-logo">
+              <img src="./assets/logo.svg" alt="EcoTech" />
+            </div>
+
+            <h2>Bem-vindo de volta!</h2>
+            <p>
+              Faça login para acessar sua conta<br />e acompanhar nossos
+              projetos.
+            </p>
+
+            <label for="email">E-mail</label>
+            <div class="input-box">
+              <span>✉</span>
+              <input type="email" id="email" placeholder="seu@email.com" />
+            </div>
+
+            <label for="password">Senha</label>
+            <div class="input-box">
+              <span>🔒</span>
+              <input type="password" id="password" placeholder="••••••••" />
+              <span class="eye" onclick="togglePassword()">◎</span>
+            </div>
+
+            <div class="options">
+              <label>
+                <input type="checkbox" id="lembrarMe" />
+                Lembrar-me
+              </label>
+
+              <a href="esqueci_senha.html">Esqueceu sua senha?</a>
+            </div>
+
+            <button class="primary" id="btnEntrar" onclick="handleLogin()">
+              Entrar
+            </button>
+
+            <small style="display: block; margin-top: 20px; text-align: center">
+              Ainda não tem uma conta? <a href="cadastro.html">cadastre-se</a>
+            </small>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="./js/ui-toast.js"></script>
+    <script src="./js/eco-helpers.js"></script>
+    <script src="./js/eco-admin.js"></script>
+    <script>
+      /* ─── Configuração das APIs ─── */
+      const API_BASE = "https://6a38cde364a2d8269222d659.mockapi.io";
+      const API_EMPRESA =
+        "https://6a386bef64a2d82692228142.mockapi.io/api/v1/empresa";
+      const SESSION_KEY = "ecotech_session";
+
+      /* ─── Autentica Pessoa Física (/pessoa) ─── */
+      async function autenticarPelaAPI(email, senha) {
+        const resp = await fetch(
+          `${API_BASE}/pessoa?email=${encodeURIComponent(email)}`,
+        );
+        if (!resp.ok) throw new Error("Falha ao contatar servidor de pessoas.");
+        const lista = await resp.json();
+        return (
+          lista.find(
+            (u) =>
+              u.email.toLowerCase() === email.toLowerCase() &&
+              u.senha === senha,
+          ) || null
+        );
+      }
+
+      /* ─── Autentica Empresa (/empresa) ─── */
+      async function autenticarEmpresaAPI(email, senha) {
+        const resp = await fetch(
+          `${API_EMPRESA}?email=${encodeURIComponent(email)}`,
+        );
+        if (!resp.ok)
+          throw new Error("Falha ao contatar servidor de empresas.");
+        const lista = await resp.json();
+        return (
+          lista.find(
+            (e) =>
+              e.email.toLowerCase() === email.toLowerCase() &&
+              e.senha === senha,
+          ) || null
+        );
+      }
+
+      /* ─── Salvar sessão (pessoa física) ─── */
+      function salvarSessao(usuario) {
+        const lembrar = document.getElementById("lembrarMe").checked;
+        const sessao = {
+          id: usuario.id,
+          nome: usuario.name || usuario.nome,
+          email: usuario.email,
+          avatar: usuario.avatar || null,
+          coins: usuario.coins || "0.00",
+          tipo: "pessoa",
+          logadoEm: new Date().toISOString(),
+        };
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+        if (lembrar) localStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+        localStorage.setItem("ecotech_user_id", usuario.id);
+      }
+
+      /* ─── Estado de carregamento do botão Entrar ─── */
+      function setLoading(ativo) {
+        const btn = document.getElementById("btnEntrar");
+        if (!btn) return;
+        btn.disabled = ativo;
+        btn.textContent = ativo ? "Entrando..." : "Entrar";
+      }
+
+      /* ─── Login principal ─── */
+      async function handleLogin() {
+        const email = document
+          .getElementById("email")
+          .value.trim()
+          .toLowerCase();
+        const password = document.getElementById("password").value;
+
+        if (!email || !password) {
+          showToast("Preencha todos os campos.");
+          return;
+        }
+
+        /* 0) Tenta como usuário MASTER local (perfil administrativo) — usa
+           "login" (ex: MASTER), não necessariamente um e-mail, então essa
+           checagem precisa vir ANTES da validação de formato de e-mail. */
+        const master = autenticarMasterLocal(email, password);
+        if (master) {
+          setLoading(true);
+          const lembrar = document.getElementById("lembrarMe").checked;
+          sessionStorage.setItem(
+            "ecotech_pending_2fa",
+            JSON.stringify({
+              id: master.id,
+              nome: master.nome,
+              email: master.email,
+              cpf: "",
+              nomeMae: master.nomeMae,
+              nascimento: master.nascimento,
+              cep: master.cep,
+              tipo: "pessoa",
+              perfil: "master",
+              lembrar,
+              redirectTo: "perfil.html",
+              tentativas: 0,
+            }),
+          );
+          window.location.href = "2fa.html";
+          return;
+        }
+
+        // (Removido o bloqueio rígido de "formato de e-mail inválido":
+        // ele impedia mensagens corretas quando o login não era um
+        // e-mail, como no caso do usuário master, gerando confusão
+        // quando a senha estava errada. As tentativas abaixo já lidam
+        // bem com entradas que não são e-mails válidos.)
+
+        setLoading(true);
+
+        try {
+          /* 1) Tenta como empresa (tem cnpj) */
+          const empresa = await autenticarEmpresaAPI(email, password);
+          if (empresa && empresa.cnpj) {
+            const sessao = {
+              id: empresa.id,
+              nome: empresa.nome,
+              email: empresa.email,
+              cnpj: empresa.cnpj,
+              avatar: null,
+              tipo: "empresa",
+              logadoEm: new Date().toISOString(),
+            };
+            const lembrar = document.getElementById("lembrarMe").checked;
+            sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+            if (lembrar)
+              localStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+            localStorage.setItem("ecotech_user_id", empresa.id);
+
+            showToast("Entrando...");
+            setTimeout(() => {
+              window.location.href = "empresa.html";
+            }, 1000);
+            return;
+          }
+
+          /* 2) Tenta como pessoa física (/pessoa) */
+          const usuario = await autenticarPelaAPI(email, password);
+          if (usuario) {
+            const lembrar = document.getElementById("lembrarMe").checked;
+            sessionStorage.setItem(
+              "ecotech_pending_2fa",
+              JSON.stringify({
+                id: usuario.id,
+                nome: usuario.name || usuario.nome,
+                email: usuario.email,
+                avatar: usuario.avatar || null,
+                coins: usuario.coins || "0.00",
+                cpf: usuario.cpf || "",
+                nomeMae: usuario.nomeMae || "",
+                nascimento: usuario.nascimento || "",
+                cep: usuario.cep || "",
+                tipo: "pessoa",
+                perfil: usuario.perfil || "comum",
+                lembrar,
+                redirectTo: "coleta.html",
+                tentativas: 0,
+              }),
+            );
+            window.location.href = "2fa.html";
+            return;
+          }
+
+          /* 3) Fallback: conta criada localmente pelo cadastro.html antigo */
+          const local = autenticarLocal(email, password);
+          if (local) {
+            salvarSessao({
+              id: local.email,
+              name: local.nome,
+              email: local.email,
+              avatar: null,
+              coins: "0.00",
+            });
+            showToast("Entrando...");
+            setTimeout(() => {
+              window.location.href = "coleta.html";
+            }, 1000);
+            return;
+          }
+
+          showToast("E-mail ou senha incorretos.");
+        } catch (err) {
+          console.error("Erro no login:", err);
+          showToast("Erro de conexão. Tente novamente.");
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      document.getElementById("email").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") handleLogin();
+      });
+      document.getElementById("password").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") handleLogin();
+      });
+    </script>
+  </body>
+</html>

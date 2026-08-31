@@ -1,83 +1,423 @@
 <!doctype html>
-<html lang="pt-br">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="shortcut icon" href="assets/fivecom.png" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./assets/fivecom.png" type="image/x-icon" />
+    <title>Cadastro — EcoTech</title>
     <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
     />
-    <link rel="stylesheet" href="css/cadastro.css" />
-    <title>Cadastro - EcoTech</title>
+    <link rel="stylesheet" href="./css/cadastro.css" />
+    <script src="./auth.js"></script>
   </head>
   <body>
+    <a href="index.html" class="btn-back" aria-label="Voltar para o início">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M19 12H5"></path>
+        <path d="M12 19l-7-7 7-7"></path>
+      </svg>
+    </a>
+    <main class="page">
+      <section class="app">
+        <section class="register">
+          <div class="eco-logo">
+            <img src="./assets/logo.svg" alt="EcoTech" />
+          </div>
+          <h1>Crie sua conta!</h1>
+          <p>
+            Cadastre-se para acompanhar nossos projetos<br />e fazer parte da
+            EcoTech.
+          </p>
 
-    <main class="container">
-      <section class="card">
-        <h1>Cadastro</h1>
-        <p>Crie sua conta na EcoTech</p>
+          <form id="formCadastro" autocomplete="off">
+            <label for="email">E-mail</label>
+            <div class="input-box">
+              <span>✉</span>
+              <input
+                id="email"
+                type="email"
+                placeholder="seu@email.com"
+                maxlength="120"
+                required
+              />
+            </div>
 
-        <form>
-          <label for="nome">Nome completo</label>
-          <input id="nome" type="text" placeholder="Digite seu nome" required />
+            <label for="cpf">CPF</label>
+            <div class="input-box">
+              <span>▣</span>
+              <input
+                id="cpf"
+                type="text"
+                placeholder="000.000.000-00"
+                maxlength="14"
+                required
+              />
+            </div>
 
-          <label for="email">E-mail</label>
-          <input
-            id="email"
-            type="email"
-            placeholder="Digite seu e-mail"
-            required
-          />
+            <label for="nome">Nome completo</label>
+            <div class="input-box">
+              <span>👤</span>
+              <input
+                id="nome"
+                type="text"
+                placeholder="Digite seu nome completo"
+                maxlength="80"
+                required
+              />
+            </div>
 
-          <label for="cpf">CPF</label>
-          <input id="cpf" type="text" placeholder="Digite seu CPF" required />
+            <label for="nomeMae">Nome da mãe</label>
+            <div class="input-box">
+              <span>👩</span>
+              <input
+                id="nomeMae"
+                type="text"
+                placeholder="Digite o nome da sua mãe"
+                maxlength="80"
+                required
+              />
+            </div>
 
-          <label for="nascimento">Data de nascimento</label>
-          <input id="nascimento" type="date" required />
+            <label for="nascimento">Sua data de nascimento</label>
+            <div class="input-box">
+              <span>📅</span>
+              <input id="nascimento" type="date" required />
+            </div>
 
-          <label for="senha">Senha</label>
-          <input
-            id="senha"
-            type="password"
-            placeholder="Digite sua senha"
-            required
-          />
+            <label for="sexo">Sexo</label>
+            <div class="input-box">
+              <span>⚧</span>
+              <select id="sexo" required style="border:none; outline:none; width:100%; background:transparent; font:inherit;">
+                <option value="">Selecione…</option>
+                <option value="feminino">Feminino</option>
+                <option value="masculino">Masculino</option>
+                <option value="outro">Outro</option>
+                <option value="nao_informar">Prefiro não informar</option>
+              </select>
+            </div>
 
-          <button type="submit">Cadastrar</button>
-        </form>
+            <label for="telefoneCelular">Telefone Celular</label>
+            <div class="input-box">
+              <span>📱</span>
+              <input
+                id="telefoneCelular"
+                type="text"
+                placeholder="(XX) XXXXX-XXXX"
+                maxlength="15"
+                inputmode="tel"
+                required
+              />
+            </div>
 
-        <a class="link-extra" href="esqueci_senha.html">Esqueci minha senha</a>
+            <label for="telefoneFixo">Telefone Fixo</label>
+            <div class="input-box">
+              <span>☎</span>
+              <input
+                id="telefoneFixo"
+                type="text"
+                placeholder="(XX) XXXX-XXXX"
+                maxlength="14"
+                inputmode="tel"
+                required
+              />
+            </div>
+
+            <label for="cep">CEP</label>
+            <div class="input-box">
+              <span>📍</span>
+              <input id="cep" type="text" placeholder="00000-000" maxlength="9" required />
+            </div>
+
+            <label for="logradouro">Endereço (rua/avenida)</label>
+            <div class="input-box">
+              <span>🏠</span>
+              <input id="logradouro" type="text" placeholder="Preenchido automaticamente pelo CEP" required />
+            </div>
+
+            <div style="display:flex; gap:12px;">
+              <div style="flex:1;">
+                <label for="numero">Número</label>
+                <div class="input-box">
+                  <span>#</span>
+                  <input id="numero" type="text" placeholder="Nº" required />
+                </div>
+              </div>
+              <div style="flex:2;">
+                <label for="bairro">Bairro</label>
+                <div class="input-box">
+                  <span>▤</span>
+                  <input id="bairro" type="text" required />
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:12px;">
+              <div style="flex:2;">
+                <label for="cidade">Cidade</label>
+                <div class="input-box">
+                  <span>🏙</span>
+                  <input id="cidade" type="text" required />
+                </div>
+              </div>
+              <div style="flex:1;">
+                <label for="uf">UF</label>
+                <div class="input-box">
+                  <span>▣</span>
+                  <input id="uf" type="text" maxlength="2" required />
+                </div>
+              </div>
+            </div>
+
+            <label for="login">Login <small style="font-weight:400;">(exatamente 6 letras)</small></label>
+            <div class="input-box">
+              <span>🆔</span>
+              <input id="login" type="text" placeholder="Ex: JOAOSV" maxlength="6" required />
+            </div>
+
+            <label for="senha">Senha</label>
+            <div class="input-box">
+              <span>🔒</span>
+              <input
+                id="senha"
+                type="password"
+                placeholder="Digite sua senha"
+                maxlength="32"
+                required
+              />
+              <span class="eye" onclick="togglePassword('senha')">◎</span>
+            </div>
+
+            <label for="confirmarSenha">Confirmar senha</label>
+            <div class="input-box">
+              <span>🔐</span>
+              <input
+                id="confirmarSenha"
+                type="password"
+                placeholder="Digite novamente sua senha"
+                maxlength="32"
+                required
+              />
+              <span class="eye" onclick="togglePassword('confirmarSenha')"
+                >◎</span
+              >
+            </div>
+
+            <div class="terms-card">
+              <label class="terms-label">
+                <input type="checkbox" id="aceitarTermos" />
+                <span>
+                  Ao criar uma conta, você concorda com nossos
+                  <a
+                    href="https://www.termsfeed.com/live/7f2df7c4-3d8c-4c6a-b5b8-2e9f8b4c8f95"
+                    target="_blank"
+                    >Termos e Condições</a
+                  >
+                  e nossa Política de Privacidade.
+                </span>
+              </label>
+            </div>
+
+            <div style="display:flex; gap:12px;">
+              <button type="submit" style="flex:2;">Cadastrar</button>
+              <button type="button" id="btnLimparTela" style="flex:1; background:transparent; border:1.5px solid currentColor;">Limpar</button>
+            </div>
+          </form>
+
+          <small>Já tem uma conta? <a href="login.html">Entrar</a></small>
+        </section>
       </section>
     </main>
 
+    <div class="toast" id="toast"></div>
+
+    <script src="js/ui-toast.js"></script>
+    <script src="js/eco-helpers.js"></script>
     <script>
-      const formCadastro = document.querySelector("form");
-
-      formCadastro.addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        const nome = document.getElementById("nome").value;
-        const email = document.getElementById("email").value;
-        const cpf = document.getElementById("cpf").value;
-        const nascimento = document.getElementById("nascimento").value;
-        const senha = document.getElementById("senha").value;
-
-        if (
-          nome === "" ||
-          email === "" ||
-          cpf === "" ||
-          nascimento === "" ||
-          senha === ""
-        ) {
-          alert("Preencha todos os campos!");
-          return;
-        }
-
-        localStorage.setItem("emailUsuario", email);
-        localStorage.setItem("senhaUsuario", senha);
-
-        alert("Cadastro realizado com sucesso!");
+      /* ── Máscaras e autopreenchimento (campos novos) ── */
+      aplicarMascaraComCursor(document.getElementById("telefoneCelular"), formatarTelefoneCelular);
+      aplicarMascaraComCursor(document.getElementById("telefoneFixo"), formatarTelefoneFixo);
+      aplicarMascaraComCursor(document.getElementById("cpf"), formatarCPF);
+      aplicarMascaraComCursor(document.getElementById("cep"), formatarCEP);
+      document.getElementById("cep").addEventListener("blur", async (e) => {
+        const resultado = await buscarEnderecoPorCEP(e.target.value, {
+          logradouro: document.getElementById("logradouro"),
+          bairro: document.getElementById("bairro"),
+          cidade: document.getElementById("cidade"),
+          uf: document.getElementById("uf"),
+        });
+        if (!resultado.ok) showToast(resultado.motivo);
       });
+      document.getElementById("login").addEventListener("input", (e) => {
+        e.target.value = e.target.value.replace(/[^A-Za-zÀ-ÿ]/g, "").slice(0, 6);
+      });
+      document.getElementById("btnLimparTela").addEventListener("click", () => {
+        document.getElementById("formCadastro").reset();
+      });
+
+      document
+        .getElementById("formCadastro")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const nome = cleanText(document.getElementById("nome").value);
+          const email = cleanText(
+            document.getElementById("email").value,
+          ).toLowerCase();
+          const cpf = document.getElementById("cpf").value.trim();
+          const nomeMae = cleanText(document.getElementById("nomeMae").value);
+          const nascimento = document.getElementById("nascimento").value;
+          const sexo = document.getElementById("sexo").value;
+          const telefoneCelular = document.getElementById("telefoneCelular").value.trim();
+          const telefoneFixo = document.getElementById("telefoneFixo").value.trim();
+          const cep = document.getElementById("cep").value.trim();
+          const logradouro = cleanText(document.getElementById("logradouro").value);
+          const numero = cleanText(document.getElementById("numero").value);
+          const bairro = cleanText(document.getElementById("bairro").value);
+          const cidade = cleanText(document.getElementById("cidade").value);
+          const uf = cleanText(document.getElementById("uf").value).toUpperCase();
+          const login = document.getElementById("login").value.trim();
+          const senha = document.getElementById("senha").value;
+          const confirmarSenha =
+            document.getElementById("confirmarSenha").value;
+
+          // ── Validações ──
+          if (
+            !nome || !email || !cpf || !nomeMae || !nascimento || !sexo ||
+            !telefoneCelular || !telefoneFixo || !cep || !logradouro || !numero ||
+            !bairro || !cidade || !uf || !login || !senha
+          ) {
+            showToast("Preencha todos os campos.");
+            return;
+          }
+          if (nome.length < 15 || nome.length > 80) {
+            showToast("O nome deve ter entre 15 e 80 caracteres.");
+            return;
+          }
+          if (nomeMae.length < 3) {
+            showToast("Nome da mãe inválido.");
+            return;
+          }
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            showToast("E-mail inválido.");
+            return;
+          }
+          if (!validarCPF(cpf)) {
+            showToast("CPF inválido.");
+            return;
+          }
+          if (!telefoneValido(telefoneCelular, 9) || !telefoneValido(telefoneFixo, 8)) {
+            showToast("Telefones devem seguir o formato (XX) XXXXX-XXXX.");
+            return;
+          }
+          if (!validarLoginField(login)) {
+            showToast("O Login deve ter exatamente 6 caracteres alfabéticos.");
+            return;
+          }
+          if (calcularIdade(nascimento) < 13) {
+            showToast("Cadastro permitido apenas para maiores de 13 anos.");
+            return;
+          }
+          if (!senhaSegura(senha)) {
+            showToast("Use 8 caracteres, letra maiúscula, minúscula e número.");
+            return;
+          }
+          if (senha !== confirmarSenha) {
+            showToast("As senhas não coincidem.");
+            return;
+          }
+          if (!document.getElementById("aceitarTermos").checked) {
+            showToast("Você precisa aceitar os Termos e Condições.");
+            return;
+          }
+
+          const MOCK_API = "https://6a38cde364a2d8269222d659.mockapi.io/pessoa";
+          const btn = document.querySelector(
+            "#formCadastro button[type='submit']",
+          );
+          btn.textContent = "Cadastrando...";
+          btn.disabled = true;
+
+          try {
+            // Verifica se o e-mail já existe na API
+            const checkRes = await fetch(MOCK_API);
+            if (!checkRes.ok) throw new Error("Falha ao verificar e-mail.");
+            const usuarios = await checkRes.json();
+            const emailJaExiste = usuarios.some(
+              (u) => u.email.toLowerCase() === email,
+            );
+            if (emailJaExiste) {
+              showToast("Este e-mail já está cadastrado.");
+              btn.textContent = "Cadastrar";
+              btn.disabled = false;
+              return;
+            }
+
+            // Cria o novo usuário na API
+            const novoUsuario = {
+              nome, // mantido para compatibilidade local
+              name: nome, // campo que a API e perfil.html usam
+              email,
+              cpf,
+              nomeMae,
+              nascimento,
+              sexo,
+              telefoneCelular,
+              telefoneFixo,
+              cep,
+              endereco: `${logradouro}, ${numero} - ${bairro}, ${cidade}/${uf}`,
+              login,
+              perfil: "comum", // só o master é criado via banco de dados (item 4 do PDF)
+              senha, // MockAPI é só para estudos, em produção nunca envie senha enviem suas senhas de costume.
+              coins: 0,
+              avatar: "",
+              reciclado: [],
+            };
+
+            const postRes = await fetch(MOCK_API, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(novoUsuario),
+            });
+
+            if (!postRes.ok) throw new Error("Falha ao cadastrar na API.");
+
+            const usuarioCriado = await postRes.json();
+
+            // Salva sessão com os dados retornados pela API
+            const SESSION_KEY = "ecotech_session";
+            const sessao = {
+              id: usuarioCriado.id,
+              tipo: "pessoa",
+              nome: usuarioCriado.name || nome,
+              email: usuarioCriado.email || email,
+              coins: 0,
+              logadoEm: new Date().toISOString(),
+            };
+            sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+            localStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+
+            showToast(
+              "✅ Cadastro realizado com sucesso! Bem-vindo(a) à EcoTech 🌿",
+              true,
+            );
+            setTimeout(() => {
+              window.location.href = "index.html";
+            }, 2000);
+          } catch (err) {
+            console.error(err);
+            showToast("⚠️ Erro ao conectar com o servidor. Tente novamente.");
+            btn.textContent = "Cadastrar";
+            btn.disabled = false;
+          }
+        });
     </script>
   </body>
 </html>

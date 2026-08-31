@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./assets/fivecom.png" type="image/x-icon" />
+    <title>Consulta de Usuários — EcoTech</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lora:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/admin-shared.css" />
+    <style>
+      .search-row {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+      .search-row .field { flex: 1; min-width: 220px; margin-bottom: 0; }
+      .search-row .btn { white-space: nowrap; }
+      .count-tag { color: var(--ink-3); font-size: 0.82rem; margin-bottom: 14px; }
+    </style>
+  </head>
+  <body>
+    <header class="admin-header">
+      <a href="index.html" class="brand">
+        <img src="./assets/logo.svg" alt="" />
+        <span><em>Eco</em>Tech</span>
+      </a>
+      <div class="header-actions">
+        <a href="perfil.html" class="icon-btn" aria-label="Perfil">👤</a>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">
+          <span id="theme-icon">☀️</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <a href="perfil.html" class="btn-back-pill no-print" style="margin-bottom:20px;">← Voltar</a>
+      <h1 class="admin-title">Consulta de Usuários</h1>
+      <p class="admin-subtitle">
+        Pesquise pelo nome (ou parte dele) para localizar usuários comuns cadastrados no sistema.
+      </p>
+
+      <div class="access-note no-print" id="accessNote" style="display:none;">
+        ⚠️ Esta tela é exclusiva do perfil <strong>master</strong>.
+      </div>
+
+      <div id="content">
+        <div class="card">
+          <div class="search-row no-print">
+            <div class="field">
+              <label for="busca">Buscar por nome</label>
+              <input id="busca" type="text" placeholder="Digite parte do nome…" autocomplete="off" />
+            </div>
+            <div style="display:flex;align-items:flex-end;gap:10px;">
+              <button class="btn btn-ghost" id="btnLimpar" type="button">Limpar</button>
+              <button class="btn btn-primary" id="btnPdf" type="button">⬇ Baixar lista em PDF</button>
+            </div>
+          </div>
+
+          <p class="count-tag" id="countTag"></p>
+
+          <div class="table-wrap">
+            <table class="data-table" id="tabelaUsuarios">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>E-mail</th>
+                  <th>CPF</th>
+                  <th class="no-print">Ação</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyUsuarios">
+                <tr><td colspan="4" style="text-align:center;padding:30px;color:var(--ink-3);">Carregando usuários…</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="empty-state" id="emptyState" style="display:none;">
+            <span class="emoji">🔍</span>
+            Nenhum usuário encontrado para essa busca.
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal de confirmação de exclusão (sem alert nativo) -->
+    <div class="modal-overlay" id="modalExcluir">
+      <div class="modal-box">
+        <h3>Excluir usuário?</h3>
+        <p id="modalExcluirTexto">Esta ação não pode ser desfeita.</p>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" id="btnCancelarExclusao">Cancelar</button>
+          <button class="btn btn-danger" id="btnConfirmarExclusao">Excluir</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="./js/ui-theme.js"></script>
+    <script src="./js/ui-toast.js"></script>
+    <script src="./js/eco-session.js"></script>
+    <script src="./js/eco-helpers.js"></script>
+    <script src="./js/eco-admin.js"></script>
+    <script>
+      initTheme();
+      initThemeToggle();
+
+      const API_PESSOA = "https://6a38cde364a2d8269222d659.mockapi.io/pessoa";
+
+      const sessao = getSession();
+      let acessoLiberado = true;
+      if (!sessao) {
+        window.location.replace("login.html");
+      } else if (!isMaster(sessao)) {
+        acessoLiberado = false;
+        document.getElementById("accessNote").style.display = "flex";
+        document.getElementById("content").style.display = "none";
+      }
+
+      let usuarios = [];
+      let idPendenteExclusao = null;
+
+      async function carregarUsuarios() {
+        if (!acessoLiberado) return;
+        try {
+          const resp = await fetch(API_PESSOA);
+          if (!resp.ok) throw new Error("Falha ao consultar API.");
+          const lista = await resp.json();
+          usuarios = lista.filter((u) => (u.perfil || "comum") !== "master");
+          renderizar("");
+        } catch (err) {
+          console.error(err);
+          document.getElementById("tbodyUsuarios").innerHTML =
+            '<tr><td colspan="4" style="text-align:center;padding:30px;color:var(--danger);">Não foi possível carregar os usuários. Verifique sua conexão.</td></tr>';
+        }
+      }
+
+      function renderizar(filtro) {
+        const termo = (filtro || "").trim().toLowerCase();
+        const filtrados = termo
+          ? usuarios.filter((u) => (u.name || u.nome || "").toLowerCase().includes(termo))
+          : usuarios;
+
+        const tbody = document.getElementById("tbodyUsuarios");
+        document.getElementById("countTag").textContent =
+          `${filtrados.length} usuário(s) encontrado(s)`;
+
+        if (filtrados.length === 0) {
+          tbody.innerHTML = "";
+          document.getElementById("emptyState").style.display = "block";
+          return;
+        }
+        document.getElementById("emptyState").style.display = "none";
+
+        tbody.innerHTML = filtrados
+          .map(
+            (u) => `
+          <tr data-id="${u.id}">
+            <td>${(u.name || u.nome || "—")}</td>
+            <td>${u.email || "—"}</td>
+            <td>${u.cpf || "—"}</td>
+            <td class="no-print">
+              <button class="btn btn-danger" style="padding:8px 14px;font-size:0.8rem;" data-excluir="${u.id}">
+                Excluir
+              </button>
+            </td>
+          </tr>`,
+          )
+          .join("");
+
+        tbody.querySelectorAll("[data-excluir]").forEach((btn) => {
+          btn.addEventListener("click", () => abrirModalExclusao(btn.getAttribute("data-excluir")));
+        });
+      }
+
+      document.getElementById("busca").addEventListener("input", (e) => renderizar(e.target.value));
+      document.getElementById("btnLimpar").addEventListener("click", () => {
+        document.getElementById("busca").value = "";
+        renderizar("");
+      });
+      document.getElementById("btnPdf").addEventListener("click", () => window.print());
+
+      function abrirModalExclusao(id) {
+        idPendenteExclusao = id;
+        const u = usuarios.find((x) => String(x.id) === String(id));
+        document.getElementById("modalExcluirTexto").textContent =
+          `Tem certeza que deseja excluir "${u ? (u.name || u.nome) : "este usuário"}"? Esta ação não pode ser desfeita.`;
+        document.getElementById("modalExcluir").classList.add("show");
+      }
+      function fecharModalExclusao() {
+        document.getElementById("modalExcluir").classList.remove("show");
+        idPendenteExclusao = null;
+      }
+      document.getElementById("btnCancelarExclusao").addEventListener("click", fecharModalExclusao);
+      document.getElementById("modalExcluir").addEventListener("click", (e) => {
+        if (e.target.id === "modalExcluir") fecharModalExclusao();
+      });
+
+      document.getElementById("btnConfirmarExclusao").addEventListener("click", async () => {
+        if (!idPendenteExclusao) return;
+        const btn = document.getElementById("btnConfirmarExclusao");
+        btn.disabled = true;
+        btn.textContent = "Excluindo...";
+        try {
+          const resp = await fetch(`${API_PESSOA}/${idPendenteExclusao}`, { method: "DELETE" });
+          if (!resp.ok) throw new Error("Falha ao excluir.");
+          usuarios = usuarios.filter((u) => String(u.id) !== String(idPendenteExclusao));
+          renderizar(document.getElementById("busca").value);
+          showToast("Usuário excluído com sucesso.");
+        } catch (err) {
+          console.error(err);
+          showToast("Não foi possível excluir. Tente novamente.");
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "Excluir";
+          fecharModalExclusao();
+        }
+      });
+
+      carregarUsuarios();
+    </script>
+  </body>
+</html>
