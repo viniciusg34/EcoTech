@@ -103,7 +103,7 @@
       "use strict";
 
       /* ─── Configuração das APIs ─── */
-      const API_BASE = "https://6a38cde364a2d8269222d659.mockapi.io";
+      const API_BASE = "https://6a38cde364a2d8269222d659.mockapi.io/api/v1";
       const API_EMPRESA =
         "https://6a386bef64a2d82692228142.mockapi.io/api/v1/empresa";
       const SESSION_KEY = "ecotech_session";
@@ -134,6 +134,7 @@
         const resp = await fetch(
           `${API_BASE}/pessoa?email=${encodeURIComponent(email)}`,
         );
+        if (resp.status === 404) return null;
         if (!resp.ok) throw new Error("Falha ao contatar servidor de pessoas.");
         const lista = await resp.json();
         return (
@@ -145,11 +146,11 @@
         );
       }
 
-      /* ─── Autenticar Empresa (/empresa) ─── */
       async function autenticarEmpresaAPI(email, senha) {
         const resp = await fetch(
           `${API_EMPRESA}?email=${encodeURIComponent(email)}`,
         );
+        if (resp.status === 404) return null;
         if (!resp.ok)
           throw new Error("Falha ao contatar servidor de empresas.");
         const lista = await resp.json();
