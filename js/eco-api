@@ -1,0 +1,104 @@
+const EcoAPI = (function () {
+  const BASE_URL = "http://localhost/ecotech-backend/api";
+
+  async function request(caminho, opcoes) {
+    opcoes = opcoes || {};
+    const headers = Object.assign(
+      { "Content-Type": "application/json" },
+      opcoes.headers || {}
+    );
+
+    const resposta = await fetch(BASE_URL + caminho, {
+      method: opcoes.method || "GET",
+      headers: headers,
+      body: opcoes.body ? JSON.stringify(opcoes.body) : undefined
+    });
+
+    const texto = await resposta.text();
+    let corpo;
+
+    try {
+      corpo = JSON.parse(texto);
+    } catch (err) {
+      throw new Error("Resposta inválida do servidor: " + texto.slice(0, 100));
+    }
+
+    if (!resposta.ok && resposta.status !== 401) {
+      throw new Error(corpo.erro || "Erro na requisição (" + resposta.status + ")");
+    }
+
+    return corpo;
+  }
+
+  function login(email, senha) {
+    return request("/login.php", {
+      method: "POST",
+      body: { email: email, password: senha }
+    });
+  }
+
+  function getUsuarios() {
+    return request("/usuario.php");
+  }
+
+  function getUsuario(id) {
+    return request("/usuario.php?id=" + encodeURIComponent(id));
+  }
+
+  function criarUsuario(dados) {
+    return request("/usuario.php", { method: "POST", body: dados });
+  }
+
+  function atualizarUsuario(dados) {
+    return request("/usuario.php", { method: "PUT", body: dados });
+  }
+
+  function getEmpresas() {
+    return request("/empresa.php");
+  }
+
+  function getEmpresa(id) {
+    return request("/empresa.php?id=" + encodeURIComponent(id));
+  }
+
+  function criarEmpresa(dados) {
+    return request("/empresa.php", { method: "POST", body: dados });
+  }
+
+  function atualizarEmpresa(dados) {
+    return request("/empresa.php", { method: "PUT", body: dados });
+  }
+
+  function getEcopontos(empresaId) {
+    const query = empresaId ? "?empresa=" + encodeURIComponent(empresaId) : "";
+    return request("/ecopontos.php" + query);
+  }
+
+  function getEcoponto(id) {
+    return request("/ecopontos.php?id=" + encodeURIComponent(id));
+  }
+
+  function criarEcoponto(dados) {
+    return request("/ecopontos.php", { method: "POST", body: dados });
+  }
+
+  function atualizarEcoponto(dados) {
+    return request("/ecopontos.php", { method: "PUT", body: dados });
+  }
+
+  return {
+    login: login,
+    getUsuarios: getUsuarios,
+    getUsuario: getUsuario,
+    criarUsuario: criarUsuario,
+    atualizarUsuario: atualizarUsuario,
+    getEmpresas: getEmpresas,
+    getEmpresa: getEmpresa,
+    criarEmpresa: criarEmpresa,
+    atualizarEmpresa: atualizarEmpresa,
+    getEcopontos: getEcopontos,
+    getEcoponto: getEcoponto,
+    criarEcoponto: criarEcoponto,
+    atualizarEcoponto: atualizarEcoponto
+  };
+})();
