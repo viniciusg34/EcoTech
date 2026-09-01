@@ -102,7 +102,6 @@
     <script src="./js/eco-api.js"></script>
     <script src="./js/ui-toast.js"></script>
     <script src="./js/eco-helpers.js"></script>
-    <script src="./js/eco-admin.js"></script>
     <script>
       const SESSION_KEY = "ecotech_session";
 
@@ -138,31 +137,6 @@
 
         if (!email || !password) {
           showToast("Preencha todos os campos.");
-          return;
-        }
-
-        const master = autenticarMasterLocal(email, password);
-        if (master) {
-          setLoading(true);
-          const lembrar = document.getElementById("lembrarMe").checked;
-          sessionStorage.setItem(
-            "ecotech_pending_2fa",
-            JSON.stringify({
-              id: master.id,
-              nome: master.nome,
-              email: master.email,
-              cpf: "",
-              nomeMae: master.nomeMae,
-              nascimento: master.nascimento,
-              cep: master.cep,
-              tipo: "pessoa",
-              perfil: "master",
-              lembrar,
-              redirectTo: "perfil.html",
-              tentativas: 0,
-            }),
-          );
-          window.location.href = "2fa.html";
           return;
         }
 
@@ -223,22 +197,6 @@
               }),
             );
             window.location.href = "2fa.html";
-            return;
-          }
-
-          const local = autenticarLocal(email, password);
-          if (local) {
-            salvarSessao({
-              id: local.email,
-              nome: local.nome,
-              email: local.email,
-              avatar: null,
-              coins: "0.00",
-            });
-            showToast("Entrando...");
-            setTimeout(() => {
-              window.location.href = "coleta.html";
-            }, 1000);
             return;
           }
 

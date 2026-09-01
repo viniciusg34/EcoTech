@@ -1,10 +1,15 @@
 "use strict";
 
 /* ══════════════════════════════
-   TEMA (claro/escuro) + MENU MOBILE
+   Esse módulo foi unificado em app-ui.js.
+   Mantido apenas como compatibilidade com páginas antigas.
 ══════════════════════════════ */
 
-function initTheme() {
+if (typeof window.EcoUI !== "object") {
+  window.EcoUI = {};
+}
+
+window.EcoUI.initTheme = function initTheme() {
   const saved = localStorage.getItem("eco-theme");
   const pref =
     saved ||
@@ -12,9 +17,9 @@ function initTheme() {
       ? "dark"
       : "light");
   document.documentElement.setAttribute("data-theme", pref);
-}
+};
 
-function initThemeToggle() {
+window.EcoUI.initThemeToggle = function initThemeToggle() {
   const themeToggle = document.getElementById("theme-toggle");
   const themeIcon = document.getElementById("theme-icon");
   if (!themeToggle || !themeIcon) return;
@@ -37,9 +42,9 @@ function initThemeToggle() {
       themeIcon.style.transform = "rotate(0deg)";
     }, 150);
   });
-}
+};
 
-function initMobileMenu() {
+window.EcoUI.initMobileMenu = function initMobileMenu() {
   const menuToggleBtn = document.getElementById("menu-toggle");
   const mainNav = document.getElementById("main-nav");
   if (menuToggleBtn && mainNav) {
@@ -47,4 +52,4 @@ function initMobileMenu() {
       mainNav.classList.toggle("open");
     });
   }
-}
+};

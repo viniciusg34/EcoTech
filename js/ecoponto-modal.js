@@ -14,32 +14,6 @@
      - coleta.css                       (estilos base já carregados)
 ══════════════════════════════════════════════════════════════ */
 
-/* ── Espelho da lista de pontos do mapa ── */
-const ECOPONTOS = [
-  { code: "ECO-01", name: "Centro Recicla Mangaratiba",  cats: ["papel","madeira"],                desc: "Papelão, caixotes e restos de madeira" },
-  { code: "ECO-02", name: "EcoPonto Vila Muriqui",        cats: ["metal","plastico"],               desc: "Latinhas, ferragens e embalagens plásticas" },
-  { code: "ECO-03", name: "Itacuruçá Plásticos",          cats: ["plastico","vidro"],               desc: "Garrafas PET, tampinhas e potes de vidro" },
-  { code: "ECO-04", name: "Jacareí Vidros",               cats: ["vidro","metal"],                  desc: "Potes de vidro e sucata metálica" },
-  { code: "ECO-05", name: "EcoCentro Metal",              cats: ["metal","madeira"],                desc: "Sucata de metal e paletes de madeira" },
-  { code: "ECO-06", name: "Vidro Lapa",                   cats: ["vidro","papel"],                  desc: "Garrafas de vidro e papelão" },
-  { code: "ECO-07", name: "EcoPapel Botafogo",            cats: ["papel","madeira","plastico"],     desc: "Papel, móveis quebrados e embalagens plásticas" },
-  { code: "ECO-08", name: "TechRecicla Copacabana",       cats: ["eletronicos","metal"],            desc: "Eletrônicos, pilhas e sucata metálica" },
-  { code: "ECO-09", name: "Ipanema Plásticos",            cats: ["plastico","vidro"],               desc: "PET, sacolas e frascos de vidro" },
-  { code: "ECO-10", name: "Tijuca Sustentável",           cats: ["papel","madeira"],                desc: "Jornais, caixas e restos de obra em madeira" },
-  { code: "ECO-11", name: "Méier Metais",                 cats: ["metal","eletronicos"],            desc: "Latinhas, ferros e pequenos eletrônicos" },
-  { code: "ECO-12", name: "Madureira Vidros",             cats: ["vidro","plastico"],               desc: "Cacos de vidro e plásticos diversos" },
-  { code: "ECO-13", name: "Ilha Eco-Tech",                cats: ["eletronicos","metal","plastico"], desc: "Eletroeletrônicos, metais e plásticos" },
-  { code: "ECO-14", name: "Barra PET Coleta",             cats: ["plastico","papel"],               desc: "Embalagens plásticas e papelão" },
-  { code: "ECO-15", name: "Recreio Vidros",               cats: ["vidro","madeira"],                desc: "Vidros, potes e madeira de móveis" },
-  { code: "ECO-16", name: "Bangu Eletrônicos",            cats: ["eletronicos","metal"],            desc: "Cabos, pilhas, baterias e sucata" },
-  { code: "ECO-17", name: "Campo Grande Plast",           cats: ["plastico","vidro"],               desc: "Reciclagem de plásticos e vidros" },
-  { code: "ECO-18", name: "Jacarepaguá Papéis",           cats: ["papel","madeira","metal"],        desc: "Papelão comercial, madeira e ferragens" },
-  { code: "ECO-19", name: "Icaraí Metais (Niterói)",      cats: ["metal","vidro"],                  desc: "Alumínio, metais diversos e vidro" },
-  { code: "ECO-20", name: "São Gonçalo Plásticos",        cats: ["plastico","papel"],               desc: "PET e papelão" },
-  { code: "ECO-21", name: "Nova Iguaçu Vidros",           cats: ["vidro","metal","madeira"],        desc: "Potes de vidro, sucata e madeira" },
-  { code: "ECO-22", name: "Duque de Caxias Papel",        cats: ["papel","plastico"],               desc: "Cooperativa de papelão e plásticos" },
-];
-
 /* ── Catálogo de materiais aceitos por categoria ── */
 const MATERIAIS = {
   plastico:    { label: "Plástico PET",   emoji: "🥤", pts: 12, unit: "kg"  },

@@ -88,14 +88,12 @@
 
     <div class="toast" id="toast"></div>
 
-    <script src="./js/ui-theme.js"></script>
+    <script src="./js/app-ui.js"></script>
     <script src="./js/ui-toast.js"></script>
     <script src="./js/eco-session.js"></script>
     <script src="./js/eco-helpers.js"></script>
-    <script src="./js/eco-admin.js"></script>
     <script>
-      initTheme();
-      initThemeToggle();
+      window.EcoUI.initAppUI();
 
       const PENDING_KEY = "ecotech_pending_2fa";
       const MAX_TENTATIVAS = 3;
