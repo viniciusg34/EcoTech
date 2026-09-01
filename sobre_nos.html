@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="pt-br" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="assets/fivecom.png" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="css/sobre_nos.css" />
+    <title>Sobre Nós — EcoTech</title>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="nav-container">
+        <a href="index.html" class="logo" aria-label="EcoTech">
+          <img src="./assets/logo.svg" alt="EcoTech" class="logo-img" />
+          <div class="logo-name"><em>Eco</em>Tech</div>
+        </a>
+        <nav class="nav" id="main-nav" aria-label="Navegação principal">
+          <a href="index.html">Início</a>
+          <a href="coleta.html">Coleta ecológica</a>
+          <a href="sobre_nos.html" class="active">Sobre nós</a>
+          <a href="afilie_se.html" class="btn-nav">Afilie-se →</a>
+        </nav>
+
+        <div class="nav-actions" style="margin-left: auto">
+          <button
+            class="theme-toggle"
+            id="theme-toggle"
+            aria-label="Alternar tema"
+          >
+            <span id="theme-icon">☀️</span>
+          </button>
+          <a href="login.html" class="icon-btn" aria-label="Perfil">👤</a>
+        </div>
+
+        <div
+          class="menu-toggle"
+          id="menu-toggle"
+          role="button"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+          tabindex="0"
+        >
+          ☰
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="container-imagem-topo">
+        <img src="assets/banner.jpg" alt="EcoTech Banner" class="imagem-topo" />
+
+        <div class="banner-content">
+          <span class="badge-essencia" id="hero-badge"></span>
+          <h1 class="banner-title" id="hero-title"></h1>
+          <p class="banner-description" id="hero-desc"></p>
+        </div>
+
+        <div class="interactive-card" id="interactiveCard">
+          <div class="card-icons">
+            <span class="icon">🔬</span>
+            <span class="icon">🌿</span>
+          </div>
+          <h3 class="card-subtitle">Ecopontos Ativos</h3>
+          <h2 class="card-counter" id="hero-projects">0 Ecopontos</h2>
+
+          <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+
+          <p class="card-percentage">
+            <span id="percentageNumber">0</span>% de eficácia
+          </p>
+          <small class="card-footer-text">*Dados do último trimestre</small>
+        </div>
+      </div>
+
+      <h1 id="ecotech">Nossos pilares</h1>
+
+      <section class="carrossel">
+        <div class="cards">
+          <button
+            class="card"
+            data-title="🌱 Uma breve história sobre a EcoTech"
+            data-content="EcoTech é uma projeto de faculdade criado em 2026, por um grupo formado por 10 alunos da turma de ADS da faculdade UNISUAM de Campo Grande. Tudo começou com a ideia de criar uma site para incentivar a população a reciclar. Sendo o intermeio entre quem recicla com a pessoa, empresa ou instituição que esteja coletando os materiais."
+          >
+            <h2>🌱 A EcoTech</h2>
+            <p>Conheça a nossa trajetória e origens.</p>
+          </button>
+
+          <button
+            class="card"
+            data-title="♻️ Nossa Missão"
+            data-content="Nossa missão é pegar produtos que degradam a natureza, e transformá-los em matéria de baixo custo, reduzindo a extração da matéria direto da natureza. Assim, reduzindo a quantidade de materias não degradaveis na flora da nossa nação."
+          >
+            <h2>♻️ Missão</h2>
+            <p>Nosso propósito fundamental e impacto ecológico.</p>
+          </button>
+
+          <button
+            class="card"
+            data-title="🎯 Nossos Valores"
+            data-content="• A empresa prega o respeito com seus colaboradores[QUEBRA]• Respeito com os animais e a natureza de forma geral[QUEBRA]• Excelência com Integridade: Buscamos alta performance com transparência e ética.[QUEBRA]• Inovação Responsável: Progresso aliado à sustentabilidade e bem-estar.[QUEBRA]• Colaboração e União: Valorizamos o trabalho em equipe para o sucesso coletivo."
+          >
+            <h2>🎯 Valores</h2>
+            <p>Os pilares éticos que guiam nossas ações.</p>
+          </button>
+        </div>
+      </section>
+
+      <section class="section-numeros">
+        <div class="numeros-header">
+          <h2>EcoTech em números</h2>
+          <p>
+            Resultados acumulados do nosso compromisso e tecnologia de
+            reciclagem industrial.
+          </p>
+        </div>
+        <div class="numeros-grid">
+          <div class="numero-item">
+            <div class="numero-icon">🌱</div>
+            <h3 id="num-arvores">+0 toneladas</h3>
+            <p>de resíduos reciclados</p>
+          </div>
+          <div class="numero-item">
+            <div class="numero-icon">👥</div>
+            <h3 id="num-voluntarios">0</h3>
+            <p>Ecopontos instalados e aumentando.</p>
+          </div>
+          <div class="numero-item">
+            <div class="numero-icon">🏭</div>
+            <h3 id="num-parques">0</h3>
+            <p>cooperando conosco</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-documentos">
+        <div class="documentos-header">
+          <h2>Documentos institucionais</h2>
+        </div>
+        <div class="documentos-grid">
+          <div class="doc-card">
+            <div class="doc-info">
+              <div class="doc-icon-file">📄</div>
+              <div>
+                <h3>Diretrizes de Sustentabilidade e Inclusão</h3>
+                <span>2026</span>
+              </div>
+            </div>
+            <a href="#" id="doc-link-1" class="btn-download" download>Baixar</a>
+          </div>
+          <div class="doc-card">
+            <div class="doc-info">
+              <div class="doc-icon-file">📄</div>
+              <div>
+                <h3>Acordo de Conduta Ambiental</h3>
+                <span>2026</span>
+              </div>
+            </div>
+            <a href="#" id="doc-link-2" class="btn-download" download>Baixar</a>
+          </div>
+          <div class="doc-card">
+            <div class="doc-info">
+              <div class="doc-icon-file">📄</div>
+              <div>
+                <h3>Estatuto de Governança Verde</h3>
+                <span>2026</span>
+              </div>
+            </div>
+            <a href="#" id="doc-link-3" class="btn-download" download>Baixar</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-newsletter">
+        <div class="news-container">
+          <div class="news-text">
+            <h2>Assine nossa newsletter</h2>
+            <p>
+              Enviaremos sempre as novidades sobre novas matérias-primas
+              desenvolvidas, relatórios ecológicos e soluções de mercado.
+            </p>
+          </div>
+          <form class="news-form" id="newsletterForm">
+            <div class="inputs-group">
+              <input
+                type="text"
+                placeholder="Informe seu nome"
+                required
+                autocomplete="name"
+              />
+              <input
+                type="email"
+                placeholder="E-mail profissional"
+                required
+                autocomplete="email"
+              />
+              <button type="submit" class="btn-submit">Enviar</button>
+            </div>
+            <div class="checkbox-group">
+              <label class="check-item">
+                <input type="checkbox" required />
+                <span
+                  >Aceito receber comunicados e atualizações da EcoTech.</span
+                >
+              </label>
+              <label class="check-item">
+                <input type="checkbox" required />
+                <span
+                  >Estou de acordo com as
+                  <a href="#">Políticas de Privacidade</a> deste website.</span
+                >
+              </label>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <div class="sheet-overlay" id="sheetOverlay" aria-hidden="true"></div>
+    <div
+      class="bottom-sheet"
+      id="bottomSheet"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="sheetTitle"
+      aria-hidden="true"
+    >
+      <div class="sheet-handle" aria-hidden="true"></div>
+      <div class="sheet-header">
+        <h2 id="sheetTitle"></h2>
+        <button class="close-sheet" id="closeSheet" aria-label="Fechar">
+          &times;
+        </button>
+      </div>
+      <div class="sheet-content" id="sheetContent"></div>
+    </div>
+
+    <footer>
+      <div class="footer-socials">
+        <a
+          href="https://www.instagram.com/eco.tech26/"
+          target="_blank"
+          rel="noopener"
+          aria-label="Instagram"
+        >
+          <img
+            src="assets/instagram-logo-facebook-2-svgrepo-com.svg"
+            alt="Instagram"
+          />
+        </a>
+        <a
+          href="https://br.linkedin.com/"
+          target="_blank"
+          rel="noopener"
+          aria-label="LinkedIn"
+        >
+          <img src="assets/linkedin-logo-svgrepo-com.svg" alt="LinkedIn" />
+        </a>
+        <a
+          href="https://www.facebook.com/?locale=pt_BR"
+          target="_blank"
+          rel="noopener"
+          aria-label="Facebook"
+        >
+          <img src="assets/facebook-svgrepo-com.svg" alt="Facebook" />
+        </a>
+      </div>
+      <p>© 2026 EcoTech. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="js/eco-session.js"></script>
+    <script>
+      "use strict";
+
+      const API_EMPRESA =
+        "https://6a386bef64a2d82692228142.mockapi.io/api/v1/empresa";
+
+      const CONFIG_ECOTECH = {
+        badgeTexto: "Inovação Verde",
+        tituloBanner: "Construindo um amanhã sustentável",
+        descricaoBanner:
+          "Soluções ecológicas para a sociedade moderna através da reciclagem e tecnologia de ponta.",
+        porcentagemEficacia: 98,
+      };
+
+      function animarContador(
+        elementoId,
+        valorAlvo,
+        sufixo = "",
+        prefixo = "",
+      ) {
+        const el = document.getElementById(elementoId);
+        if (!el) return;
+        let atual = 0;
+        const incremento = Math.ceil(valorAlvo / 60);
+        const interval = setInterval(() => {
+          atual += incremento;
+          if (atual >= valorAlvo) {
+            clearInterval(interval);
+            el.textContent = `${prefixo}${valorAlvo.toLocaleString("pt-BR")}${sufixo}`;
+          } else {
+            el.textContent = `${prefixo}${atual.toLocaleString("pt-BR")}${sufixo}`;
+          }
+        }, 20);
+      }
+
+      async function carregarDadosAPI() {
+        try {
+          const res = await fetch(API_EMPRESA);
+          if (!res.ok) throw new Error("Falha ao buscar empresas");
+          const empresas = await res.json();
+
+          // Total de empresas parceiras
+          const totalEmpresas = empresas.length;
+
+          // Soma total de kgColetado (campo saldoMoeda usado como kg no schema)
+          const totalKg = empresas.reduce((acc, e) => {
+            return acc + (parseFloat(e.kgColetado) || 0);
+          }, 0);
+
+          // Busca ecopontos de todas as empresas em paralelo
+          const todasPromises = empresas.map((e) =>
+            fetch(`${API_EMPRESA}/${e.id}/ecopontos`)
+              .then((r) => (r.ok ? r.json() : []))
+              .catch(() => []),
+          );
+          const todosEcopontos = await Promise.all(todasPromises);
+          const totalEcopontos = todosEcopontos.reduce(
+            (acc, lista) => acc + lista.length,
+            0,
+          );
+
+          return {
+            totalEmpresas,
+            totalKg: Math.round(totalKg),
+            totalEcopontos,
+          };
+        } catch (err) {
+          console.warn("API indisponível, usando fallback:", err);
+          return { totalEmpresas: 10, totalKg: 21000, totalEcopontos: 22 };
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        // ── Tema ──
+        (function () {
+          const saved = localStorage.getItem("eco-theme");
+          const pref =
+            saved ||
+            (window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light");
+          document.documentElement.setAttribute("data-theme", pref);
+        })();
+
+        const themeToggle = document.getElementById("theme-toggle");
+        const themeIcon = document.getElementById("theme-icon");
+        themeIcon.textContent =
+          document.documentElement.getAttribute("data-theme") === "dark"
+            ? "🌙"
+            : "☀️";
+
+        themeToggle.addEventListener("click", () => {
+          const root = document.documentElement;
+          const newTheme =
+            root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+          root.setAttribute("data-theme", newTheme);
+          localStorage.setItem("eco-theme", newTheme);
+          themeIcon.style.transform = "rotate(360deg)";
+          themeIcon.style.transition = "transform 0.3s ease";
+          setTimeout(() => {
+            themeIcon.textContent = newTheme === "dark" ? "🌙" : "☀️";
+            themeIcon.style.transform = "rotate(0deg)";
+          }, 150);
+        });
+
+        // ── Menu mobile ──
+        const menuToggle = document.getElementById("menu-toggle");
+        const mainNav = document.getElementById("main-nav");
+        menuToggle.addEventListener("click", () => {
+          const open = mainNav.classList.toggle("open");
+          menuToggle.setAttribute("aria-expanded", String(open));
+          menuToggle.textContent = open ? "✕" : "☰";
+        });
+        mainNav.querySelectorAll("a").forEach((a) =>
+          a.addEventListener("click", () => {
+            mainNav.classList.remove("open");
+            menuToggle.setAttribute("aria-expanded", "false");
+            menuToggle.textContent = "☰";
+          }),
+        );
+
+        // ── Bottom sheet ──
+        const bottomSheet = document.getElementById("bottomSheet");
+        const sheetOverlay = document.getElementById("sheetOverlay");
+        const sheetTitle = document.getElementById("sheetTitle");
+        const sheetContent = document.getElementById("sheetContent");
+        const closeSheet = document.getElementById("closeSheet");
+
+        function openSheet(title, content) {
+          sheetTitle.textContent = title;
+          sheetContent.innerHTML = content
+            .split("[QUEBRA]")
+            .filter((p) => p.trim())
+            .map(
+              (p) =>
+                `<p style="margin-bottom:16px;line-height:1.6;display:block;">${p.trim()}</p>`,
+            )
+            .join("");
+          bottomSheet.classList.add("open");
+          sheetOverlay.classList.add("open");
+          bottomSheet.setAttribute("aria-hidden", "false");
+          document.body.style.overflow = "hidden";
+        }
+
+        function closeBottomSheet() {
+          bottomSheet.classList.remove("open");
+          sheetOverlay.classList.remove("open");
+          bottomSheet.setAttribute("aria-hidden", "true");
+          document.body.style.overflow = "";
+        }
+
+        document.querySelectorAll(".card").forEach((card) => {
+          card.addEventListener("click", () => {
+            const title = card.getAttribute("data-title");
+            const content = card.getAttribute("data-content");
+            if (title && content) openSheet(title, content);
+          });
+        });
+
+        if (closeSheet) closeSheet.addEventListener("click", closeBottomSheet);
+        if (sheetOverlay)
+          sheetOverlay.addEventListener("click", closeBottomSheet);
+
+        // ── Banner estático ──
+        document.getElementById("hero-badge").textContent =
+          CONFIG_ECOTECH.badgeTexto;
+        document.getElementById("hero-title").textContent =
+          CONFIG_ECOTECH.tituloBanner;
+        document.getElementById("hero-desc").textContent =
+          CONFIG_ECOTECH.descricaoBanner;
+
+        // ── Documentos ──
+        document.getElementById("doc-link-1").href =
+          "assets/EcoTech_Diretrizes_Sustentabilidade_Inclusao.pdf";
+        document.getElementById("doc-link-2").href =
+          "assets/EcoTech_Acordo_Conduta_Ambiental.pdf";
+        document.getElementById("doc-link-3").href =
+          "assets/EcoTech_Estatuto_Governanca_Verde.pdf";
+
+        // ── Barra de progresso ──
+        setTimeout(() => {
+          document.getElementById("progressBar").style.width =
+            `${CONFIG_ECOTECH.porcentagemEficacia}%`;
+        }, 400);
+
+        // ── Dados da API ──
+        const { totalEmpresas, totalKg, totalEcopontos } =
+          await carregarDadosAPI();
+
+        animarContador("percentageNumber", CONFIG_ECOTECH.porcentagemEficacia);
+        animarContador("hero-projects", totalEcopontos, " Ecopontos");
+        animarContador("num-arvores", totalKg, " toneladas", "+");
+        animarContador("num-voluntarios", totalEcopontos);
+        animarContador("num-parques", totalEmpresas, " Empresas");
+
+        // ── Newsletter ──
+        document
+          .getElementById("newsletterForm")
+          .addEventListener("submit", (e) => {
+            e.preventDefault();
+            alert(
+              "Obrigado por se inscrever! Seu e-mail foi cadastrado com sucesso em nossa base verde.",
+            );
+            e.target.reset();
+          });
+      });
+    </script>
+  </body>
+</html>
