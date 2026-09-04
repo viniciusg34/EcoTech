@@ -100,21 +100,22 @@
 
     <div class="toast" id="toast"></div>
 
-    <script src="./js/app-ui.js"></script>
+    <script src="./js/ui-theme.js"></script>
     <script src="./js/ui-toast.js"></script>
     <script src="./js/eco-session.js"></script>
     <script src="./js/eco-helpers.js"></script>
+    <script src="./js/eco-admin.js"></script>
     <script>
-      window.EcoUI.initAppUI();
+      initTheme();
+      initThemeToggle();
 
       const API_PESSOA = "https://6a38cde364a2d8269222d659.mockapi.io/pessoa";
-      const isMasterSession = (session) => !!session && (session.perfil === "master" || session.perfil === "admin" || session.role === "master" || session.role === "admin");
 
       const sessao = getSession();
       let acessoLiberado = true;
       if (!sessao) {
         window.location.replace("login.html");
-      } else if (!isMasterSession(sessao)) {
+      } else if (!isMaster(sessao)) {
         acessoLiberado = false;
         document.getElementById("accessNote").style.display = "flex";
         document.getElementById("content").style.display = "none";

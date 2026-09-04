@@ -317,6 +317,13 @@
     width: 20px;
     height: 20px;
   }
+
+  /* Remove o "olho" nativo do Edge/IE nos campos de senha — ele
+     ficava sobreposto ao nosso ícone customizado. */
+  input[type="password"]::-ms-reveal,
+  input[type="password"]::-ms-clear {
+    display: none;
+  }
   
   /* ── Botão de Envio Principal ── */
   .btn-submit-account {

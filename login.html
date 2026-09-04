@@ -1,8 +1,9 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./assets/fivecom.png" type="image/x-icon" />
     <title>Login — EcoTech</title>
 
     <link
@@ -26,6 +27,15 @@
           <path d="M12 19l-7-7 7-7"></path>
         </svg>
       </a>
+
+      <button
+        class="theme-toggle-float"
+        id="theme-toggle"
+        aria-label="Alternar tema"
+      >
+        <span id="theme-icon">☀️</span>
+      </button>
+
       <section class="app">
         <section class="content">
           <section class="hero">
@@ -99,17 +109,59 @@
 
     <div class="toast" id="toast"></div>
 
-    <script src="./js/eco-api.js"></script>
+    <script src="./js/ui-theme.js"></script>
     <script src="./js/ui-toast.js"></script>
     <script src="./js/eco-helpers.js"></script>
+    <script src="./js/eco-admin.js"></script>
     <script>
+      initTheme();
+      initThemeToggle();
+
+      /* ─── Configuração das APIs ─── */
+      const API_BASE = "https://6a38cde364a2d8269222d659.mockapi.io";
+      const API_EMPRESA =
+        "https://6a386bef64a2d82692228142.mockapi.io/api/v1/empresa";
       const SESSION_KEY = "ecotech_session";
 
+      /* ─── Autentica Pessoa Física (/pessoa) ─── */
+      async function autenticarPelaAPI(email, senha) {
+        const resp = await fetch(
+          `${API_BASE}/pessoa?email=${encodeURIComponent(email)}`,
+        );
+        if (!resp.ok) throw new Error("Falha ao contatar servidor de pessoas.");
+        const lista = await resp.json();
+        return (
+          lista.find(
+            (u) =>
+              u.email.toLowerCase() === email.toLowerCase() &&
+              u.senha === senha,
+          ) || null
+        );
+      }
+
+      /* ─── Autentica Empresa (/empresa) ─── */
+      async function autenticarEmpresaAPI(email, senha) {
+        const resp = await fetch(
+          `${API_EMPRESA}?email=${encodeURIComponent(email)}`,
+        );
+        if (!resp.ok)
+          throw new Error("Falha ao contatar servidor de empresas.");
+        const lista = await resp.json();
+        return (
+          lista.find(
+            (e) =>
+              e.email.toLowerCase() === email.toLowerCase() &&
+              e.senha === senha,
+          ) || null
+        );
+      }
+
+      /* ─── Salvar sessão (pessoa física) ─── */
       function salvarSessao(usuario) {
         const lembrar = document.getElementById("lembrarMe").checked;
         const sessao = {
           id: usuario.id,
-          nome: usuario.nome,
+          nome: usuario.name || usuario.nome,
           email: usuario.email,
           avatar: usuario.avatar || null,
           coins: usuario.coins || "0.00",
@@ -121,6 +173,7 @@
         localStorage.setItem("ecotech_user_id", usuario.id);
       }
 
+      /* ─── Estado de carregamento do botão Entrar ─── */
       function setLoading(ativo) {
         const btn = document.getElementById("btnEntrar");
         if (!btn) return;
@@ -128,6 +181,7 @@
         btn.textContent = ativo ? "Entrando..." : "Entrar";
       }
 
+      /* ─── Login principal ─── */
       async function handleLogin() {
         const email = document
           .getElementById("email")
@@ -140,24 +194,52 @@
           return;
         }
 
+        /* 0) Tenta como usuário MASTER local (perfil administrativo) — usa
+           "login" (ex: MASTER), não necessariamente um e-mail, então essa
+           checagem precisa vir ANTES da validação de formato de e-mail. */
+        const master = autenticarMasterLocal(email, password);
+        if (master) {
+          setLoading(true);
+          const lembrar = document.getElementById("lembrarMe").checked;
+          sessionStorage.setItem(
+            "ecotech_pending_2fa",
+            JSON.stringify({
+              id: master.id,
+              nome: master.nome,
+              email: master.email,
+              cpf: "",
+              nomeMae: master.nomeMae,
+              nascimento: master.nascimento,
+              cep: master.cep,
+              tipo: "pessoa",
+              perfil: "master",
+              lembrar,
+              redirectTo: "perfil.html",
+              tentativas: 0,
+            }),
+          );
+          window.location.href = "2fa.html";
+          return;
+        }
+
+        // (Removido o bloqueio rígido de "formato de e-mail inválido":
+        // ele impedia mensagens corretas quando o login não era um
+        // e-mail, como no caso do usuário master, gerando confusão
+        // quando a senha estava errada. As tentativas abaixo já lidam
+        // bem com entradas que não são e-mails válidos.)
+
         setLoading(true);
 
         try {
-          const resultado = await EcoAPI.login(email, password);
-
-          if (resultado.erro) {
-            showToast(resultado.erro);
-            return;
-          }
-
-          if (resultado.tipo === "empresa") {
-            const empresa = resultado.dados;
+          /* 1) Tenta como empresa (tem cnpj) */
+          const empresa = await autenticarEmpresaAPI(email, password);
+          if (empresa && empresa.cnpj) {
             const sessao = {
-              id: empresa.empre_id,
-              nome: empresa.name,
+              id: empresa.id,
+              nome: empresa.nome,
               email: empresa.email,
               cnpj: empresa.cnpj,
-              avatar: empresa.logo || null,
+              avatar: null,
               tipo: "empresa",
               logadoEm: new Date().toISOString(),
             };
@@ -165,7 +247,7 @@
             sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
             if (lembrar)
               localStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
-            localStorage.setItem("ecotech_user_id", empresa.empre_id);
+            localStorage.setItem("ecotech_user_id", empresa.id);
 
             showToast("Entrando...");
             setTimeout(() => {
@@ -174,29 +256,47 @@
             return;
           }
 
-          if (resultado.tipo === "comum" || resultado.tipo === "admin") {
-            const usuario = resultado.dados;
+          /* 2) Tenta como pessoa física (/pessoa) */
+          const usuario = await autenticarPelaAPI(email, password);
+          if (usuario) {
             const lembrar = document.getElementById("lembrarMe").checked;
             sessionStorage.setItem(
               "ecotech_pending_2fa",
               JSON.stringify({
-                id: usuario.user_id,
-                nome: `${usuario.first_name} ${usuario.last_name || ""}`.trim(),
+                id: usuario.id,
+                nome: usuario.name || usuario.nome,
                 email: usuario.email,
                 avatar: usuario.avatar || null,
                 coins: usuario.coins || "0.00",
                 cpf: usuario.cpf || "",
-                nomeMae: usuario.mothers_fullname || "",
-                nascimento: usuario.birth_day || "",
+                nomeMae: usuario.nomeMae || "",
+                nascimento: usuario.nascimento || "",
                 cep: usuario.cep || "",
                 tipo: "pessoa",
-                perfil: resultado.tipo,
+                perfil: usuario.perfil || "comum",
                 lembrar,
-                redirectTo: resultado.tipo === "admin" ? "admin.html" : "coleta.html",
+                redirectTo: "coleta.html",
                 tentativas: 0,
               }),
             );
             window.location.href = "2fa.html";
+            return;
+          }
+
+          /* 3) Fallback: conta criada localmente pelo cadastro.html antigo */
+          const local = autenticarLocal(email, password);
+          if (local) {
+            salvarSessao({
+              id: local.email,
+              name: local.nome,
+              email: local.email,
+              avatar: null,
+              coins: "0.00",
+            });
+            showToast("Entrando...");
+            setTimeout(() => {
+              window.location.href = "coleta.html";
+            }, 1000);
             return;
           }
 

@@ -84,19 +84,19 @@
       </div>
     </main>
 
-    <script src="./js/app-ui.js"></script>
+    <script src="./js/ui-theme.js"></script>
     <script src="./js/eco-session.js"></script>
     <script src="./js/eco-helpers.js"></script>
+    <script src="./js/eco-admin.js"></script>
     <script>
-      window.EcoUI.initAppUI();
-
-      const isMasterSession = (session) => !!session && (session.perfil === "master" || session.perfil === "admin" || session.role === "master" || session.role === "admin");
+      initTheme();
+      initThemeToggle();
 
       const sessao = getSession();
       let acessoLiberado = true;
       if (!sessao) {
         window.location.replace("login.html");
-      } else if (!isMasterSession(sessao)) {
+      } else if (!isMaster(sessao)) {
         acessoLiberado = false;
         document.getElementById("accessNote").style.display = "flex";
         document.getElementById("content").style.display = "none";

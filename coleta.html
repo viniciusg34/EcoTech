@@ -19,7 +19,6 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/coleta.css" />
-    <link rel="stylesheet" href="css/base.css" />
   </head>
   <body>
     <header class="header">
@@ -69,10 +68,6 @@
           </div>
           <div class="map-wrapper">
             <div id="eco-map"></div>
-            <div id="map-loading" class="map-loading-overlay">
-              <div class="map-loading-spinner"><span>🌱</span></div>
-              <p class="map-loading-text">Carregando ecopontos…</p>
-            </div>
             <button
               type="button"
               id="map-fullscreen-btn"
@@ -1377,14 +1372,12 @@
         ══════════════════════════════════════════════════ */
         const htmlEl = document.documentElement;
         const statusEl = document.getElementById("map-status");
-        const loadingOverlay = document.getElementById("map-loading");
-        const map = L.map("eco-map").setView([-22.9, -43.6], 9);
 
+        const map = L.map("eco-map").setView([-22.9, -43.6], 9);
         const TILE_LIGHT = L.tileLayer(
           "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
           { attribution: "© OpenStreetMap" },
         );
-
         const TILE_DARK = L.tileLayer(
           "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
           { attribution: "© OpenStreetMap" },
@@ -1494,31 +1487,22 @@
         }
 
         /* ── Carrega ecopontos da API ── */
-        const minWait = wait(500);
         try {
           const pontos = await loadEcopontos();
-          await minWait;
           addMarkers(pontos);
           if (statusEl) {
             statusEl.textContent = `📍 ${pontos.length} ecopontos carregados | Clique nos marcadores para ver detalhes | Filtre por categoria na legenda`;
           }
-          if (loadingOverlay) loadingOverlay.classList.add("hide");
         } catch (err) {
           console.error("[EcoTech] Erro ao carregar ecopontos:", err);
-          await minWait;
           if (statusEl) {
             statusEl.innerHTML = `⚠️ Não foi possível carregar os ecopontos da API. <button onclick="location.reload()" style="border:none;background:none;color:var(--sage-600);cursor:pointer;font-weight:600;text-decoration:underline;">Tentar novamente</button>`;
           }
-          if (loadingOverlay) loadingOverlay.classList.add("hide");
         }
 
         /* ── Balão de distância ── */
         const balloonEl = document.getElementById("distance-balloon");
         let userMarker = null;
-
-        function wait(ms) {
-          return new Promise((resolve) => setTimeout(resolve, ms));
-        }
 
         function haversineKm(lat1, lon1, lat2, lon2) {
           const R = 6371,

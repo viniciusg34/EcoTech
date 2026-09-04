@@ -13,7 +13,6 @@
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     />
-    <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/index.css" />
     <title>ECOTECH</title>
   </head>
@@ -507,45 +506,62 @@
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="js/eco-api.js"></script>
     <script src="js/eco-session.js"></script>
-
+    
     <script>
       "use strict";
+
+      /* ════════════════════════════════════════════════════
+         CONFIGURAÇÃO DA API
+      ════════════════════════════════════════════════════ */
+      const API_BASE = "https://6a386bef64a2d82692228142.mockapi.io/api/v1";
+      const API_PESSOA = "https://6a38cde364a2d8269222d659.mockapi.io";
 
       /* ════════════════════════════════════════════════════
          CARREGA ESTATÍSTICAS DA API E ATUALIZA O DOM
       ════════════════════════════════════════════════════ */
       async function loadStats(ecopontosMapCount) {
+        // --- Toneladas: soma kgColetado de /empresa ---
         let tons = null;
         try {
-          const resultado = await EcoAPI.getEmpresas();
-          if (resultado.sucesso && Array.isArray(resultado.dados)) {
-            const totalKg = resultado.dados.reduce(
-              (sum, e) => sum + parseFloat(e.colected || 0),
-              0,
-            );
-            tons = parseFloat((totalKg / 1000).toFixed(1));
+          const res = await fetch(`${API_BASE}/empresa`);
+          if (res.ok) {
+            const empresas = await res.json();
+            if (Array.isArray(empresas) && empresas.length > 0) {
+              const totalKg = empresas.reduce(
+                (sum, e) => sum + parseFloat(e.kgColetado || 0),
+                0,
+              );
+              tons = parseFloat((totalKg / 1000).toFixed(1));
+              console.info(`[EcoTech API] ✅ /empresa → ${tons}t coletadas`);
+            }
           }
         } catch (err) {
-          console.warn("[EcoTech API] empresas indisponível:", err);
+          console.warn("[EcoTech API] /empresa indisponível:", err);
         }
 
+        // --- Membros ativos: total de registros em /pessoa ---
         let members = null;
         try {
-          const resultado = await EcoAPI.getUsuarios();
-          if (resultado.sucesso && Array.isArray(resultado.dados)) {
-            members = resultado.dados.length;
+          const res = await fetch(`${API_PESSOA}/pessoa`);
+          if (res.ok) {
+            const pessoas = await res.json();
+            if (Array.isArray(pessoas)) {
+              members = pessoas.length;
+              console.info(`[EcoTech API] ✅ /pessoa → ${members} membros`);
+            }
           }
         } catch (err) {
-          console.warn("[EcoTech API] usuários indisponível:", err);
+          console.warn("[EcoTech API] /pessoa indisponível:", err);
         }
 
+        // --- Ecopontos: fallback para contagem do mapa ---
         let ecopontos = ecopontosMapCount;
         try {
-          const resultado = await EcoAPI.getEcopontos();
-          if (resultado.sucesso && Array.isArray(resultado.dados)) {
-            ecopontos = resultado.dados.length;
+          const res = await fetch(`${API_BASE}/ecopontos`);
+          if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data)) ecopontos = data.length;
           }
         } catch (_) {
           /* usa fallback */

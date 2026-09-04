@@ -22,6 +22,12 @@
         user-select: none;
       }
       .field { position: relative; }
+      /* Remove o "olho" nativo do Edge/IE nos campos de senha —
+         ele ficava sobreposto ao nosso ícone customizado. */
+      input[type="password"]::-ms-reveal,
+      input[type="password"]::-ms-clear {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -72,12 +78,13 @@
 
     <div class="toast" id="toast"></div>
 
-    <script src="./js/app-ui.js"></script>
+    <script src="./js/ui-theme.js"></script>
     <script src="./js/ui-toast.js"></script>
     <script src="./js/eco-session.js"></script>
     <script src="./js/eco-helpers.js"></script>
     <script>
-      window.EcoUI.initAppUI();
+      initTheme();
+      initThemeToggle();
 
       const API_PESSOA = "https://6a38cde364a2d8269222d659.mockapi.io/pessoa";
       const sessao = requireAuth();

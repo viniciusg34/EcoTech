@@ -1,15 +1,10 @@
 "use strict";
 
 /* ══════════════════════════════
-   Esse módulo foi unificado em app-ui.js.
-   Mantido apenas como compatibilidade com páginas antigas.
+   TEMA (claro/escuro) + MENU MOBILE
 ══════════════════════════════ */
 
-if (typeof window.EcoUI !== "object") {
-  window.EcoUI = {};
-}
-
-window.EcoUI.initTheme = function initTheme() {
+function initTheme() {
   const saved = localStorage.getItem("eco-theme");
   const pref =
     saved ||
@@ -17,9 +12,9 @@ window.EcoUI.initTheme = function initTheme() {
       ? "dark"
       : "light");
   document.documentElement.setAttribute("data-theme", pref);
-};
+}
 
-window.EcoUI.initThemeToggle = function initThemeToggle() {
+function initThemeToggle() {
   const themeToggle = document.getElementById("theme-toggle");
   const themeIcon = document.getElementById("theme-icon");
   if (!themeToggle || !themeIcon) return;
@@ -42,9 +37,9 @@ window.EcoUI.initThemeToggle = function initThemeToggle() {
       themeIcon.style.transform = "rotate(0deg)";
     }, 150);
   });
-};
+}
 
-window.EcoUI.initMobileMenu = function initMobileMenu() {
+function initMobileMenu() {
   const menuToggleBtn = document.getElementById("menu-toggle");
   const mainNav = document.getElementById("main-nav");
   if (menuToggleBtn && mainNav) {
@@ -52,4 +47,4 @@ window.EcoUI.initMobileMenu = function initMobileMenu() {
       mainNav.classList.toggle("open");
     });
   }
-};
+}
