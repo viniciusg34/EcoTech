@@ -1724,7 +1724,7 @@ main { display: block; }
 .news-container {
   max-width: 1000px;
   margin: 0 auto;
-  background: var(--ink);
+  background: var(--footer-bg);
   border-radius: var(--br-lg);
   padding: 44px 40px;
   display: grid;

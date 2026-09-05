@@ -246,7 +246,7 @@ table.data-table tbody tr:hover { background: var(--sage-50); }
   bottom: 28px;
   transform: translateX(-50%) translateY(20px);
   background: var(--ink);
-  color: #fff;
+  color: var(--cream);
   padding: 13px 22px;
   border-radius: var(--br-pill);
   font-size: 0.88rem;
