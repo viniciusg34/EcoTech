@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./assets/fivecom.png" type="image/x-icon" />
+    <title>Alterar Senha — EcoTech</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lora:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/admin-shared.css" />
+    <style>
+      .senha-shell { max-width: 460px; margin: 0 auto; }
+      .eye-toggle {
+        position: absolute;
+        right: 14px;
+        top: 40px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        color: var(--ink-3);
+        user-select: none;
+      }
+      .field { position: relative; }
+      /* Remove o "olho" nativo do Edge/IE nos campos de senha —
+         ele ficava sobreposto ao nosso ícone customizado. */
+      input[type="password"]::-ms-reveal,
+      input[type="password"]::-ms-clear {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="admin-header">
+      <a href="index.html" class="brand">
+        <img src="./assets/logo.svg" alt="" />
+        <span><em>Eco</em>Tech</span>
+      </a>
+      <div class="header-actions">
+        <a href="perfil.html" class="icon-btn" aria-label="Perfil">👤</a>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">
+          <span id="theme-icon">☀️</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="admin-main senha-shell">
+      <a href="perfil.html" class="btn-back-pill" style="margin-bottom:20px;">← Voltar ao perfil</a>
+      <h1 class="admin-title">Alterar minha senha</h1>
+      <p class="admin-subtitle">Apenas você tem acesso para alterar a sua própria senha.</p>
+
+      <div class="access-note" id="masterNote" style="display:none;">
+        ⚠️ Contas com perfil <strong>master</strong> são gerenciadas diretamente no banco de dados — não é possível alterar a senha por aqui.
+      </div>
+
+      <div class="card" id="formCard">
+        <form id="formAlterarSenha">
+          <div class="field">
+            <label for="senhaAtual">Senha atual</label>
+            <input id="senhaAtual" type="password" required autocomplete="current-password" />
+            <span class="eye-toggle" onclick="togglePassword('senhaAtual')">mostrar</span>
+          </div>
+          <div class="field">
+            <label for="novaSenha">Nova senha</label>
+            <input id="novaSenha" type="password" required autocomplete="new-password" />
+            <span class="eye-toggle" onclick="togglePassword('novaSenha')">mostrar</span>
+            <small class="hint">Mínimo 8 caracteres, com letra maiúscula, minúscula e número.</small>
+          </div>
+          <div class="field">
+            <label for="confirmarNovaSenha">Confirmar nova senha</label>
+            <input id="confirmarNovaSenha" type="password" required autocomplete="new-password" />
+            <span class="eye-toggle" onclick="togglePassword('confirmarNovaSenha')">mostrar</span>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" id="btnSalvar">Salvar nova senha</button>
+        </form>
+      </div>
+    </main>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="./js/ui-theme.js"></script>
+    <script src="./js/ui-toast.js"></script>
+    <script src="./js/eco-session.js"></script>
+    <script src="./js/eco-helpers.js"></script>
+    <script>
+      initTheme();
+      initThemeToggle();
+
+      const API_PESSOA = "https://6a38cde364a2d8269222d659.mockapi.io/pessoa";
+      const sessao = requireAuth();
+
+      if (sessao.perfil === "master") {
+        document.getElementById("masterNote").style.display = "flex";
+        document.getElementById("formCard").style.display = "none";
+      }
+
+      document.getElementById("formAlterarSenha").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const senhaAtual = document.getElementById("senhaAtual").value;
+        const novaSenha = document.getElementById("novaSenha").value;
+        const confirmarNovaSenha = document.getElementById("confirmarNovaSenha").value;
+
+        if (!senhaAtual || !novaSenha || !confirmarNovaSenha) {
+          showToast("Preencha todos os campos.");
+          return;
+        }
+        if (!senhaSegura(novaSenha)) {
+          showToast("A nova senha não atende aos requisitos mínimos.");
+          return;
+        }
+        if (novaSenha !== confirmarNovaSenha) {
+          showToast("As senhas não coincidem.");
+          return;
+        }
+
+        const btn = document.getElementById("btnSalvar");
+        btn.disabled = true;
+        btn.textContent = "Salvando...";
+
+        try {
+          const resp = await fetch(`${API_PESSOA}/${sessao.id}`);
+          if (!resp.ok) throw new Error("Falha ao consultar usuário.");
+          const usuario = await resp.json();
+
+          if (usuario.senha !== senhaAtual) {
+            showToast("Senha atual incorreta.");
+            btn.disabled = false;
+            btn.textContent = "Salvar nova senha";
+            return;
+          }
+
+          const putResp = await fetch(`${API_PESSOA}/${sessao.id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ senha: novaSenha }),
+          });
+          if (!putResp.ok) throw new Error("Falha ao atualizar senha.");
+
+          showToast("✅ Senha alterada com sucesso!");
+          document.getElementById("formAlterarSenha").reset();
+        } catch (err) {
+          console.error(err);
+          showToast("⚠️ Erro ao conectar com o servidor. Tente novamente.");
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "Salvar nova senha";
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./assets/fivecom.png" type="image/x-icon" />
+    <title>Log de Autenticação — EcoTech</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lora:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/admin-shared.css" />
+    <style>
+      .search-row { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+      .search-row .field { flex: 1; min-width: 200px; margin-bottom: 0; }
+      .search-row .field.filtro-tipo { flex: 0 0 170px; min-width: 150px; }
+      .count-tag { color: var(--ink-3); font-size: 0.82rem; margin-bottom: 14px; }
+    </style>
+  </head>
+  <body>
+    <header class="admin-header">
+      <a href="index.html" class="brand">
+        <img src="./assets/logo.svg" alt="" />
+        <span><em>Eco</em>Tech</span>
+      </a>
+      <div class="header-actions">
+        <a href="perfil.html" class="icon-btn" aria-label="Perfil">👤</a>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">
+          <span id="theme-icon">☀️</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <a href="perfil.html" class="btn-back-pill" style="margin-bottom:20px;">← Voltar</a>
+      <h1 class="admin-title">Log de Autenticação</h1>
+      <p class="admin-subtitle">
+        Resumo das entradas dos usuários no sistema, com o segundo fator utilizado, do mais recente para o mais antigo.
+      </p>
+
+      <div class="access-note" id="accessNote" style="display:none;">
+        ⚠️ Esta tela é exclusiva do perfil <strong>master</strong>.
+      </div>
+
+      <div id="content">
+        <div class="card">
+          <div class="search-row">
+            <div class="field filtro-tipo">
+              <label for="filtroTipo">Buscar por</label>
+              <select id="filtroTipo">
+                <option value="todos">Todos</option>
+                <option value="nome">Nome</option>
+                <option value="cpf">CPF</option>
+              </select>
+            </div>
+            <div class="field" id="campoTermoWrap">
+              <label for="termo">Termo</label>
+              <input id="termo" type="text" placeholder="Digite o nome ou CPF…" autocomplete="off" disabled />
+            </div>
+          </div>
+
+          <p class="count-tag" id="countTag"></p>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Dia e hora</th>
+                  <th>Nome</th>
+                  <th>CPF</th>
+                  <th>2FA utilizado</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyLogs"></tbody>
+            </table>
+          </div>
+
+          <div class="empty-state" id="emptyState" style="display:none;">
+            <span class="emoji">🧾</span>
+            Nenhum registro de autenticação encontrado ainda.<br />
+            <small style="font-size:0.78rem;">Os registros aparecem aqui após um login com 2FA neste navegador.</small>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="./js/ui-theme.js"></script>
+    <script src="./js/eco-session.js"></script>
+    <script src="./js/eco-helpers.js"></script>
+    <script src="./js/eco-admin.js"></script>
+    <script>
+      initTheme();
+      initThemeToggle();
+
+      const sessao = getSession();
+      let acessoLiberado = true;
+      if (!sessao) {
+        window.location.replace("login.html");
+      } else if (!isMaster(sessao)) {
+        acessoLiberado = false;
+        document.getElementById("accessNote").style.display = "flex";
+        document.getElementById("content").style.display = "none";
+      }
+
+      function formatarData(iso) {
+        const d = new Date(iso);
+        return d.toLocaleString("pt-BR", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      }
+
+      function renderizar() {
+        if (!acessoLiberado) return;
+        const tipo = document.getElementById("filtroTipo").value;
+        const termo = cleanText(document.getElementById("termo").value).toLowerCase();
+        let logs = getLogsAutenticacao();
+
+        if (tipo !== "todos" && termo) {
+          logs = logs.filter((l) => {
+            const campo = tipo === "nome" ? (l.nome || "") : (l.cpf || "");
+            return campo.toLowerCase().includes(termo);
+          });
+        }
+
+        document.getElementById("countTag").textContent = `${logs.length} registro(s)`;
+        const tbody = document.getElementById("tbodyLogs");
+
+        if (logs.length === 0) {
+          tbody.innerHTML = "";
+          document.getElementById("emptyState").style.display = "block";
+          return;
+        }
+        document.getElementById("emptyState").style.display = "none";
+
+        tbody.innerHTML = logs
+          .map(
+            (l) => `
+          <tr>
+            <td>${formatarData(l.data)}</td>
+            <td>${l.nome}</td>
+            <td>${l.cpf}</td>
+            <td><span class="badge-pill">${l.metodo2fa}</span></td>
+          </tr>`,
+          )
+          .join("");
+      }
+
+      document.getElementById("filtroTipo").addEventListener("change", (e) => {
+        const termoInput = document.getElementById("termo");
+        termoInput.disabled = e.target.value === "todos";
+        if (termoInput.disabled) termoInput.value = "";
+        renderizar();
+      });
+      document.getElementById("termo").addEventListener("input", renderizar);
+
+      renderizar();
+    </script>
+  </body>
+</html>

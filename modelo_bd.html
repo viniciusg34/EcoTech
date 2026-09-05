@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./assets/fivecom.png" type="image/x-icon" />
+    <title>Modelo do Banco de Dados — EcoTech</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lora:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/admin-shared.css" />
+    <style>
+      .der-wrap {
+        background: #ffffff;
+        border-radius: var(--br-md);
+        border: 1.5px solid var(--sage-100);
+        overflow: auto;
+        padding: 10px;
+      }
+      .der-wrap img { width: 100%; min-width: 760px; display: block; }
+    </style>
+  </head>
+  <body>
+    <header class="admin-header">
+      <a href="index.html" class="brand">
+        <img src="./assets/logo.svg" alt="" />
+        <span><em>Eco</em>Tech</span>
+      </a>
+      <div class="header-actions">
+        <a href="perfil.html" class="icon-btn" aria-label="Perfil">👤</a>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">
+          <span id="theme-icon">☀️</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <a href="perfil.html" class="btn-back-pill" style="margin-bottom:20px;">← Voltar</a>
+      <h1 class="admin-title">Modelo do Banco de Dados</h1>
+      <p class="admin-subtitle">
+        Diagrama Entidade-Relacionamento (DER) utilizado pelo sistema EcoTech.
+      </p>
+
+      <div class="card">
+        <div class="der-wrap">
+          <img src="./assets/modelo-bd.svg" alt="Diagrama Entidade-Relacionamento do banco de dados EcoTech" />
+        </div>
+      </div>
+    </main>
+
+    <script src="./js/ui-theme.js"></script>
+    <script src="./js/eco-session.js"></script>
+    <script>
+      initTheme();
+      initThemeToggle();
+      requireAuth();
+    </script>
+  </body>
+</html>

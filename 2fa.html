@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./assets/fivecom.png" type="image/x-icon" />
+    <title>Segundo Fator de Autenticação — EcoTech</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lora:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/admin-shared.css" />
+    <style>
+      .twofa-shell {
+        max-width: 460px;
+        margin: 60px auto;
+        padding: 0 20px;
+      }
+      .twofa-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
+        background: var(--sage-50);
+        border: 1.5px solid var(--sage-100);
+        display: grid;
+        place-items: center;
+        font-size: 26px;
+        margin-bottom: 16px;
+      }
+      .question-box {
+        background: var(--sage-50);
+        border: 1.5px solid var(--sage-100);
+        border-radius: var(--br-md);
+        padding: 16px 18px;
+        margin-bottom: 18px;
+        font-weight: 700;
+        color: var(--ink-2);
+      }
+      .attempts-note {
+        font-size: 0.8rem;
+        color: var(--ink-3);
+        margin-top: 12px;
+        text-align: center;
+      }
+      .attempts-note strong { color: var(--danger); }
+    </style>
+  </head>
+  <body>
+    <header class="admin-header">
+      <a href="index.html" class="brand">
+        <img src="./assets/logo.svg" alt="" />
+        <span><em>Eco</em>Tech</span>
+      </a>
+      <div class="header-actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">
+          <span id="theme-icon">☀️</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="admin-main twofa-shell">
+      <div class="card">
+        <div class="twofa-icon">🔐</div>
+        <h1 class="admin-title" style="margin-bottom:6px;">Confirme que é você</h1>
+        <p class="admin-subtitle" style="margin-bottom:20px;">
+          Por segurança, pedimos uma segunda confirmação antes de liberar o acesso.
+        </p>
+
+        <div class="question-box" id="question-text">Carregando pergunta...</div>
+
+        <form id="form2fa">
+          <div class="field">
+            <label for="resposta">Sua resposta</label>
+            <input id="resposta" type="text" autocomplete="off" required />
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" id="btnConfirmar">
+            Confirmar
+          </button>
+        </form>
+
+        <p class="attempts-note" id="attemptsNote"></p>
+
+        <p style="text-align:center;margin-top:18px;">
+          <a href="login.html" class="btn-back-pill" id="btnCancelar">← Cancelar e voltar ao login</a>
+        </p>
+      </div>
+    </main>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="./js/ui-theme.js"></script>
+    <script src="./js/ui-toast.js"></script>
+    <script src="./js/eco-session.js"></script>
+    <script src="./js/eco-helpers.js"></script>
+    <script src="./js/eco-admin.js"></script>
+    <script>
+      initTheme();
+      initThemeToggle();
+
+      const PENDING_KEY = "ecotech_pending_2fa";
+      const MAX_TENTATIVAS = 3;
+
+      function lerPendente() {
+        try {
+          return JSON.parse(sessionStorage.getItem(PENDING_KEY) || "null");
+        } catch (_) {
+          return null;
+        }
+      }
+      function salvarPendente(p) {
+        sessionStorage.setItem(PENDING_KEY, JSON.stringify(p));
+      }
+
+      let pendente = lerPendente();
+      if (!pendente) {
+        window.location.replace("login.html");
+        throw new Error("Sem 2FA pendente — redirecionando para o login.");
+      }
+      if (typeof pendente.tentativas !== "number") pendente.tentativas = 0;
+
+      /* ── Monta o banco de perguntas disponíveis para este usuário ── */
+      function perguntasDisponiveis(p) {
+        const lista = [];
+        if (p.nomeMae) {
+          lista.push({
+            texto: "Qual o nome da sua mãe?",
+            placeholder: "Nome completo",
+            maxlength: "80",
+            inputmode: "text",
+            mascara: null,
+            verificar: (r) => cleanText(r).toLowerCase() === cleanText(p.nomeMae).toLowerCase(),
+          });
+        }
+        if (p.nascimento) {
+          lista.push({
+            texto: "Qual a data do seu nascimento?",
+            placeholder: "dd/mm/aaaa",
+            maxlength: "10",
+            inputmode: "numeric",
+            mascara: formatarDataBR,
+            verificar: (r) => {
+              const limpo = cleanText(r).replace(/\./g, "/").replace(/-/g, "/");
+              const partes = limpo.split("/");
+              if (partes.length !== 3) return false;
+              let [d, m, a] = partes;
+              if (a.length === 2) a = "20" + a;
+              const normalizado = `${a.padStart(4, "0")}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
+              return normalizado === p.nascimento;
+            },
+          });
+        }
+        if (p.cep) {
+          lista.push({
+            texto: "Qual o CEP do seu endereço?",
+            placeholder: "00000-000",
+            maxlength: "9",
+            inputmode: "numeric",
+            mascara: formatarCEP,
+            verificar: (r) => cleanText(r).replace(/[^\d]/g, "") === cleanText(p.cep).replace(/[^\d]/g, ""),
+          });
+        }
+        return lista;
+      }
+
+      let perguntaAtual = null;
+
+      /* ── Máscara dinâmica no campo de resposta: um único listener
+         fixo que aplica, a cada tecla, a máscara da pergunta atual
+         (a mesma lógica de cadastro.html, preservando o cursor). ── */
+      const inputResposta = document.getElementById("resposta");
+      inputResposta.addEventListener("input", () => {
+        const mascara = perguntaAtual && perguntaAtual.mascara;
+        if (!mascara) return; // pergunta de texto livre (ex: nome da mãe) — sem máscara
+
+        const posAntes = inputResposta.selectionStart || 0;
+        const digitosAntesCursor = inputResposta.value
+          .slice(0, posAntes)
+          .replace(/[^\d]/g, "").length;
+
+        const formatado = mascara(inputResposta.value);
+        inputResposta.value = formatado;
+
+        let pos = 0;
+        let vistos = 0;
+        while (pos < formatado.length && vistos < digitosAntesCursor) {
+          if (/\d/.test(formatado[pos])) vistos++;
+          pos++;
+        }
+        inputResposta.setSelectionRange(pos, pos);
+      });
+
+      function sortearPergunta() {
+        const opcoes = perguntasDisponiveis(pendente);
+        inputResposta.value = "";
+        if (opcoes.length === 0) {
+          // Sem dado cadastrado suficiente para 2FA — libera com aviso.
+          document.getElementById("question-text").textContent =
+            "Não há dados suficientes para o segundo fator — confirme clicando abaixo.";
+          perguntaAtual = { texto: "", mascara: null, verificar: () => true };
+          inputResposta.placeholder = "";
+          inputResposta.removeAttribute("maxlength");
+          inputResposta.setAttribute("inputmode", "text");
+          return;
+        }
+        perguntaAtual = opcoes[Math.floor(Math.random() * opcoes.length)];
+        document.getElementById("question-text").textContent = perguntaAtual.texto;
+        inputResposta.placeholder = perguntaAtual.placeholder || "";
+        if (perguntaAtual.maxlength) inputResposta.setAttribute("maxlength", perguntaAtual.maxlength);
+        else inputResposta.removeAttribute("maxlength");
+        inputResposta.setAttribute("inputmode", perguntaAtual.inputmode || "text");
+      }
+      sortearPergunta();
+
+      function atualizarNotaTentativas() {
+        const restantes = MAX_TENTATIVAS - pendente.tentativas;
+        const nota = document.getElementById("attemptsNote");
+        nota.innerHTML =
+          pendente.tentativas > 0
+            ? `Tentativas restantes: <strong>${restantes}</strong>`
+            : "";
+      }
+      atualizarNotaTentativas();
+
+      function finalizarLogin() {
+        const sessao = {
+          id: pendente.id,
+          nome: pendente.nome,
+          email: pendente.email,
+          avatar: pendente.avatar || null,
+          coins: pendente.coins || "0.00",
+          cpf: pendente.cpf || "",
+          tipo: pendente.tipo || "pessoa",
+          perfil: pendente.perfil || "comum",
+          logadoEm: new Date().toISOString(),
+        };
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+        if (pendente.lembrar) localStorage.setItem(SESSION_KEY, JSON.stringify(sessao));
+        localStorage.setItem("ecotech_user_id", sessao.id);
+
+        registrarLogAutenticacao({
+          nome: sessao.nome,
+          cpf: sessao.cpf,
+          metodo2fa: perguntaAtual.texto || "Sem pergunta (dados insuficientes)",
+        });
+
+        sessionStorage.removeItem(PENDING_KEY);
+        showToast("Identidade confirmada! Entrando...");
+        setTimeout(() => {
+          window.location.href = pendente.redirectTo || "coleta.html";
+        }, 900);
+      }
+
+      document.getElementById("form2fa").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const resposta = document.getElementById("resposta").value;
+        if (!resposta.trim()) {
+          showToast("Preencha a resposta.");
+          return;
+        }
+
+        if (perguntaAtual.verificar(resposta)) {
+          finalizarLogin();
+          return;
+        }
+
+        pendente.tentativas += 1;
+        salvarPendente(pendente);
+
+        if (pendente.tentativas >= MAX_TENTATIVAS) {
+          sessionStorage.removeItem(PENDING_KEY);
+          showToast("3 tentativas sem sucesso! Favor realizar Login novamente.");
+          setTimeout(() => (window.location.href = "login.html"), 1600);
+          return;
+        }
+
+        showToast("Resposta incorreta. Tente novamente.");
+        document.getElementById("resposta").value = "";
+        sortearPergunta();
+        atualizarNotaTentativas();
+      });
+    </script>
+  </body>
+</html>

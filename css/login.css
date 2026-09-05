@@ -1,3 +1,54 @@
+/* ══════════════════════════════════════════════════════════
+   login.css — Tela de Login
+   Reescrito para usar o mesmo sistema de tokens (--sage/--cream/
+   --ink) e suporte a tema claro/escuro já usado no resto do site.
+══════════════════════════════════════════════════════════ */
+
+:root {
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --cream: #faf9f6;
+  --cream2: #f3f0ea;
+  --white: #ffffff;
+  --sage-50: #eef5ee;
+  --sage-100: #d6ebd6;
+  --sage-200: #acd4ac;
+  --sage-400: #5aab5a;
+  --sage-500: #3d9140;
+  --sage-600: #2d7230;
+  --sage-700: #1e5220;
+  --ink: #1a2e1b;
+  --ink-2: #3b5e3d;
+  --ink-3: #6b8f6c;
+  --ink-4: #a8c4a9;
+  --sh-xs: 0 1px 3px rgba(30, 82, 32, 0.06);
+  --sh-sm: 0 2px 12px rgba(30, 82, 32, 0.08);
+  --sh-md: 0 8px 32px rgba(30, 82, 32, 0.11);
+  --sh-lg: 0 20px 56px rgba(30, 82, 32, 0.14);
+  --br-sm: 12px;
+  --br-md: 20px;
+  --br-lg: 26px;
+  --br-pill: 99px;
+}
+
+[data-theme="dark"] {
+  --cream: #1d261e;
+  --cream2: #1a201b;
+  --white: #1e251f;
+  --sage-50: #282f28;
+  --sage-100: #2d422e;
+  --sage-200: #406142;
+  --sage-400: #5aab5a;
+  --sage-600: #82d182;
+  --ink: #f0f5f0;
+  --ink-2: #d0e0d1;
+  --ink-3: #a0b8a2;
+  --ink-4: #708a72;
+  --sh-xs: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --sh-sm: 0 2px 12px rgba(0, 0, 0, 0.5);
+  --sh-md: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --sh-lg: 0 20px 56px rgba(0, 0, 0, 0.7);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -7,9 +58,10 @@
 
 body {
   min-height: 100vh;
-  background: #f5f7f5;
-  color: #24452f;
+  background: var(--cream);
+  color: var(--ink);
   overflow-x: hidden;
+  transition: background 0.3s, color 0.3s;
 }
 
 .page {
@@ -20,57 +72,11 @@ body {
 }
 
 .app {
-  background: #fff;
-  border-radius: 26px;
+  background: var(--white);
+  border-radius: var(--br-lg);
   overflow: hidden;
-}
-
-.topbar {
-  height: 76px;
-  background: #173d27;
-  border-radius: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 90px;
-  color: white;
-}
-
-.logo {
-  font-size: 24px;
-  font-weight: 800;
-}
-
-nav {
-  display: flex;
-  align-items: center;
-  gap: 38px;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  font-size: 19px;
-  font-weight: 700;
-  transition: 0.25s;
-}
-
-nav a:hover {
-  transform: translateY(-2px);
-  color: #bff0bf;
-}
-
-nav .active {
-  background: #9bdf9e;
-  color: white;
-  padding: 12px 34px;
-  border-radius: 30px;
-}
-
-nav .pill {
-  background: #2f963b;
-  padding: 12px 34px;
-  border-radius: 30px;
+  box-shadow: var(--sh-lg);
+  transition: background 0.3s;
 }
 
 .content {
@@ -80,10 +86,11 @@ nav .pill {
   padding-top: 28px;
 }
 
+/* ── Painel esquerdo (foto + texto) ── */
 .hero {
   position: relative;
   height: 860px;
-  border-radius: 24px;
+  border-radius: var(--br-lg);
   overflow: hidden;
   padding: 58px 46px;
   color: white;
@@ -94,7 +101,11 @@ nav .pill {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(5, 35, 14, 0.48);
+  background: linear-gradient(
+    180deg,
+    rgba(5, 35, 14, 0.35) 0%,
+    rgba(5, 35, 14, 0.62) 100%
+  );
 }
 
 .hero > * {
@@ -104,27 +115,32 @@ nav .pill {
 
 .tag {
   display: inline-block;
-  background: #bfe6bf;
-  color: #24452f;
-  padding: 9px 34px;
-  border-radius: 20px;
+  background: var(--sage-100);
+  color: var(--ink);
+  padding: 9px 30px;
+  border-radius: var(--br-pill);
   font-weight: 800;
-  margin-bottom: 34px;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  margin-bottom: 32px;
 }
 
 .hero h1 {
-  font-size: 43px;
+  font-size: 42px;
   line-height: 1.25;
-  color: #a9dfa3;
-  margin-bottom: 28px;
+  color: #bdeabd;
+  margin-bottom: 26px;
   max-width: 390px;
+  font-weight: 800;
 }
 
 .hero p {
   width: 370px;
-  font-weight: 700;
-  line-height: 1.55;
+  max-width: 100%;
+  font-weight: 600;
+  line-height: 1.6;
   font-size: 16px;
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .stat-card {
@@ -133,83 +149,95 @@ nav .pill {
   bottom: 230px;
   width: 260px;
   min-height: 120px;
-  border-radius: 22px;
-  background: rgba(40, 70, 45, 0.64);
-  backdrop-filter: blur(8px);
+  border-radius: var(--br-md);
+  background: rgba(30, 50, 32, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   gap: 18px;
   padding: 20px;
+  transition: transform 0.3s var(--ease);
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
 }
 
 .stat-card strong {
-  width: 76px;
-  height: 76px;
+  width: 74px;
+  height: 74px;
   border-radius: 50%;
-  border: 8px solid #9ee89f;
+  border: 6px solid var(--sage-400);
   display: grid;
   place-items: center;
-  font-size: 25px;
+  font-size: 23px;
   color: white;
+  flex-shrink: 0;
 }
 
 .stat-card p {
   width: auto;
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 700;
+  line-height: 1.4;
 }
 
 .hero-card {
   position: absolute;
   left: 46px;
-  right: 80px;
+  right: 46px;
   bottom: 60px;
-  min-height: 110px;
-  border-radius: 20px;
-  background: rgba(60, 80, 60, 0.64);
-  backdrop-filter: blur(8px);
+  min-height: 100px;
+  border-radius: var(--br-md);
+  background: rgba(30, 50, 32, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding: 22px 26px;
+  gap: 22px;
+  padding: 20px 24px;
 }
 
 .hero-card div {
-  min-width: 64px;
-  height: 64px;
+  min-width: 58px;
+  height: 58px;
   border-radius: 50%;
-  background: rgba(190, 255, 190, 0.28);
+  background: rgba(255, 255, 255, 0.14);
   display: grid;
   place-items: center;
-  font-size: 34px;
+  font-size: 30px;
+  flex-shrink: 0;
 }
 
 .hero-card p {
   width: auto;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
 }
 
+/* ── Painel direito (formulário) ── */
 .login {
   min-height: 860px;
-  padding: 45px 70px;
+  padding: 45px 68px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: #fff;
-  border-radius: 24px;
+  background: var(--white);
+  border-radius: var(--br-lg);
 }
 
 .eco-logo {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 22px;
-  height: 160px;
+  margin-bottom: 18px;
+  height: 140px;
 }
 
 .eco-logo img {
-  width: 420px;
+  width: 380px;
   max-width: 100%;
   height: auto;
   display: block;
@@ -217,191 +245,217 @@ nav .pill {
 
 .login h2 {
   text-align: center;
-  font-size: 34px;
-  margin-bottom: 10px;
-  color: #173d27;
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--ink);
 }
 
 .login > p {
   text-align: center;
-  color: #777;
-  font-size: 17px;
-  margin-bottom: 34px;
+  color: var(--ink-3);
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 30px;
 }
 
 .login > label {
-  font-weight: 800;
-  color: #24452f;
+  display: block;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink-2);
   margin: 14px 0 8px;
 }
 
 .input-box {
-  height: 58px;
-  border: 1px solid #ccc;
-  border-radius: 12px;
+  height: 56px;
+  border: 1.5px solid var(--sage-100);
+  background: var(--cream);
+  border-radius: var(--br-sm);
   display: flex;
   align-items: center;
-  gap: 15px;
-  padding: 0 15px;
-  margin-bottom: 18px;
-  transition: 0.25s;
+  gap: 14px;
+  padding: 0 16px;
+  margin-bottom: 16px;
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
 }
 
-.input-box:hover,
+.input-box:hover {
+  border-color: var(--sage-200);
+}
+
 .input-box:focus-within {
-  border-color: #2d8738;
-  box-shadow: 0 0 0 4px rgba(45, 135, 56, 0.12);
+  border-color: var(--sage-400);
+  box-shadow: 0 0 0 4px rgba(61, 145, 64, 0.12);
+  background: var(--white);
 }
 
 .input-box input {
   border: 0;
   outline: 0;
   width: 100%;
-  font-size: 16px;
+  height: 100%;
+  font-size: 15.5px;
+  background: transparent;
+  color: var(--ink);
+  font-family: inherit;
+}
+
+.input-box input::placeholder {
+  color: var(--ink-4);
 }
 
 .input-box span {
-  color: #3d8843;
+  color: var(--sage-500);
+  font-size: 17px;
+  flex-shrink: 0;
 }
 
 .eye {
   cursor: pointer;
+  user-select: none;
+  transition: transform 0.2s;
+}
+
+.eye:hover {
+  transform: scale(1.15);
+}
+
+/* Remove o "olho" nativo do Edge/IE nos campos de senha — ele
+   ficava sobreposto ao nosso ícone customizado, parecendo dois
+   botões no mesmo lugar. */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
 }
 
 .options {
   display: flex;
   justify-content: space-between;
-  margin: 24px 0;
+  align-items: center;
+  margin: 20px 0 26px;
   font-weight: 600;
   font-size: 14px;
+  color: var(--ink-2);
+}
+
+.options label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.options input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--sage-500);
+  cursor: pointer;
 }
 
 .options a,
 small a {
-  color: #278337;
+  color: var(--sage-600);
   text-decoration: none;
   font-weight: 800;
-  transition: 0.25s;
+  transition: color 0.2s;
 }
 
 .options a:hover,
 small a:hover {
-  color: #145c21;
+  color: var(--sage-700);
   text-decoration: underline;
 }
 
 .primary {
-  height: 58px;
+  width: 100%;
+  height: 56px;
   border: 0;
-  border-radius: 14px;
-  background: #2d8738;
+  border-radius: var(--br-sm);
+  background: var(--sage-500);
   color: white;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 800;
   cursor: pointer;
-  transition: 0.25s;
+  transition: background 0.25s, transform 0.15s, box-shadow 0.25s;
+  font-family: inherit;
 }
 
 .primary:hover {
-  background: #239135;
-  transform: translateY(-3px);
-  box-shadow: 0 12px 24px rgba(45, 135, 56, 0.35);
+  background: var(--sage-600);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(45, 135, 56, 0.3);
 }
 
 .primary:active {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 
-.divider {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin: 26px 0;
-  color: #777;
-}
-
-.divider span {
-  height: 1px;
-  background: #ccc;
-  flex: 1;
-}
-
-.social {
-  height: 52px;
-  border: 1px solid #aaa;
-  background: white;
-  border-radius: 14px;
-  margin-bottom: 14px;
-  font-size: 16px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  cursor: pointer;
-  transition: 0.25s;
-}
-
-.social:hover {
-  transform: translateY(-3px);
-  border-color: #2d8738;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
-}
-
-.social:active {
-  transform: scale(0.97);
-}
-
-.social img {
-  width: 22px;
+.primary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
 }
 
 small {
+  display: block;
   text-align: center;
   margin-top: 18px;
-  color: #777;
-  font-size: 15px;
+  color: var(--ink-3);
+  font-size: 14.5px;
 }
 
 .toast {
   position: fixed;
-  top: 20px;
-  right: 20px;
-  background: #1b5e20;
-  color: white;
-  padding: 12px 20px;
-  border-radius: 8px;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink);
+  color: var(--cream);
+  padding: 13px 24px;
+  border-radius: var(--br-pill);
+  font-size: 14.5px;
+  font-weight: 600;
   opacity: 0;
-  transform: translateY(-8px);
-  transition: 0.25s;
-  z-index: 99;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  z-index: 999;
+  max-width: 90vw;
+  text-align: center;
 }
 
 .toast.show {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(0);
 }
 
-.btn-back {
+/* ── Botões flutuantes (voltar / tema) ── */
+.btn-back,
+.theme-toggle-float {
   position: fixed;
   top: 24px;
-  left: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 44px;
   height: 44px;
-  background: #173d27; /* no cadastro_empresarial.css usei var(--brand-green-primary) p/ respeitar o dark mode */
-  color: #fff;
   border-radius: 50%;
   text-decoration: none;
-  box-shadow: 0 4px 14px rgba(23, 61, 39, 0.28);
-  transition: 0.25s ease;
   z-index: 1000;
+  transition: 0.25s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-back {
+  left: 24px;
+  background: var(--ink);
+  color: var(--cream);
+  box-shadow: var(--sh-sm);
 }
 
 .btn-back:hover {
-  background: #0f2c1c; /* var(--brand-green-hover) no empresarial */
+  background: var(--sage-700);
   transform: translateX(-3px);
 }
 
@@ -411,27 +465,22 @@ small {
   stroke: currentColor;
 }
 
+.theme-toggle-float {
+  right: 24px;
+  background: var(--white);
+  border: 1.5px solid var(--sage-100);
+  box-shadow: var(--sh-sm);
+  font-size: 18px;
+}
+
+.theme-toggle-float:hover {
+  background: var(--sage-50);
+  transform: scale(1.06);
+}
 
 @media (max-width: 1050px) {
   .page {
     padding: 15px;
-  }
-
-  .topbar {
-    padding: 0 25px;
-  }
-
-  nav {
-    gap: 14px;
-  }
-
-  nav a {
-    font-size: 14px;
-  }
-
-  nav .active,
-  nav .pill {
-    padding: 10px 16px;
   }
 
   .content {
@@ -445,6 +494,75 @@ small {
   }
 
   .hero {
-    min-height: 760px;
+    min-height: 560px;
+    padding: 44px 30px;
+  }
+
+  .hero h1 {
+    font-size: 32px;
+  }
+
+  .hero p {
+    width: 100%;
+  }
+
+  .stat-card {
+    left: 24px;
+    bottom: auto;
+    top: 200px;
+    width: calc(100% - 48px);
+  }
+
+  .hero-card {
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+  }
+
+  .login {
+    padding: 36px 26px;
+  }
+
+  .btn-back,
+  .theme-toggle-float {
+    top: 16px;
+  }
+
+  .btn-back {
+    left: 16px;
+  }
+
+  .theme-toggle-float {
+    right: 16px;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero {
+    min-height: 460px;
+    padding: 80px 22px 200px;
+  }
+
+  .stat-card {
+    position: static;
+    width: 100%;
+    margin-bottom: 14px;
+  }
+
+  .hero-card {
+    position: static;
+    margin-top: 14px;
+  }
+
+  .eco-logo {
+    height: 100px;
+  }
+
+  .eco-logo img {
+    width: 260px;
+  }
+
+  .login h2 {
+    font-size: 26px;
   }
 }

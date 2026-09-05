@@ -1502,3 +1502,329 @@ footer p { font-size: 0.8rem; color: var(--footer-copy); }
   }
   .scan-line { animation: none; top: 50%; }
 }
+
+/* ══════════════════════════════════════════════════════════
+   CONTEÚDO DA PÁGINA "SOBRE NÓS"
+   (adicionado — o arquivo não tinha nenhuma regra para estas
+   classes, por isso a página aparecia sem estilo nenhum)
+══════════════════════════════════════════════════════════ */
+
+main { display: block; }
+
+/* ── Banner / topo ── */
+.container-imagem-topo {
+  position: relative;
+  width: 100%;
+  min-height: 420px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.imagem-topo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.container-imagem-topo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 30, 16, 0.45) 0%, rgba(15, 30, 16, 0.75) 100%);
+  z-index: 1;
+}
+.banner-content {
+  position: relative;
+  z-index: 2;
+  max-width: 620px;
+  margin: 0 auto 0 6%;
+  color: #fff;
+  padding: 100px 20px 60px;
+}
+.badge-essencia {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: var(--br-pill);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+}
+.banner-title {
+  font-family: "Lora", serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+.banner-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 480px;
+}
+
+.interactive-card {
+  position: relative;
+  z-index: 2;
+  background: var(--white);
+  border-radius: var(--br-lg);
+  box-shadow: var(--sh-lg);
+  padding: 24px 26px;
+  max-width: 300px;
+  margin: 0 6% 0 auto;
+  transform: translateY(60px);
+}
+.card-icons { display: flex; gap: 8px; margin-bottom: 10px; }
+.card-icons .icon { font-size: 1.4rem; }
+.card-subtitle {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 6px;
+}
+.card-counter {
+  font-family: "Lora", serif;
+  font-size: 1.6rem;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.progress-container {
+  width: 100%;
+  height: 8px;
+  border-radius: var(--br-pill);
+  background: var(--sage-50);
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  border-radius: var(--br-pill);
+  background: linear-gradient(90deg, var(--sage-400), var(--sage-600));
+  transition: width 1.2s var(--ease);
+}
+.card-percentage { font-size: 0.85rem; color: var(--ink-2); font-weight: 600; margin-bottom: 4px; }
+.card-percentage span { font-size: 1.1rem; color: var(--sage-600); font-weight: 800; }
+.card-footer-text { font-size: 0.7rem; color: var(--ink-4); }
+
+@media (max-width: 900px) {
+  .container-imagem-topo { min-height: 560px; flex-direction: column; align-items: stretch; }
+  .banner-content { margin: 0; padding: 90px 20px 20px; max-width: 100%; }
+  .interactive-card { margin: 20px auto 30px; transform: none; max-width: 320px; }
+}
+
+/* ── "Nossos pilares" ── */
+#ecotech {
+  font-family: "Lora", serif;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  color: var(--ink);
+  text-align: center;
+  margin: 64px auto 28px;
+  padding: 0 20px;
+}
+
+.carrossel { padding: 0 6% 60px; }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.card {
+  display: block;
+  text-align: left;
+  background: var(--white);
+  border: 1.5px solid var(--sage-100);
+  border-radius: var(--br-lg);
+  padding: 22px 20px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.25s;
+}
+.card:hover { transform: translateY(-4px); box-shadow: var(--sh-md); border-color: var(--sage-200); }
+.card h2 { font-family: "Lora", serif; font-size: 1.15rem; color: var(--ink); margin-bottom: 8px; }
+.card p { font-size: 0.88rem; color: var(--ink-3); line-height: 1.5; }
+
+@media (max-width: 900px) {
+  .cards { grid-template-columns: 1fr; }
+}
+
+/* ── "EcoTech em números" ── */
+.section-numeros { padding: 40px 6% 70px; background: var(--sage-50); }
+.numeros-header { text-align: center; max-width: 560px; margin: 0 auto 36px; }
+.numeros-header h2 { font-family: "Lora", serif; font-size: clamp(1.4rem, 3vw, 1.9rem); color: var(--ink); margin-bottom: 10px; }
+.numeros-header p { color: var(--ink-3); font-size: 0.95rem; line-height: 1.6; }
+.numeros-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.numero-item {
+  background: var(--white);
+  border-radius: var(--br-lg);
+  padding: 28px 20px;
+  text-align: center;
+  box-shadow: var(--sh-sm);
+}
+.numero-icon { font-size: 1.8rem; margin-bottom: 10px; }
+.numero-item h3 { font-family: "Lora", serif; font-size: 1.5rem; color: var(--sage-600); margin-bottom: 6px; }
+.numero-item p { font-size: 0.85rem; color: var(--ink-3); }
+
+@media (max-width: 700px) {
+  .numeros-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Documentos institucionais ── */
+.section-documentos { padding: 70px 6%; max-width: 1000px; margin: 0 auto; }
+.documentos-header { text-align: center; margin-bottom: 32px; }
+.documentos-header h2 { font-family: "Lora", serif; font-size: clamp(1.4rem, 3vw, 1.9rem); color: var(--ink); }
+.documentos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.doc-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--white);
+  border: 1.5px solid var(--sage-100);
+  border-radius: var(--br-md);
+  padding: 20px;
+}
+.doc-info { display: flex; align-items: center; gap: 12px; }
+.doc-icon-file { font-size: 1.6rem; }
+.doc-info h3 { font-size: 0.95rem; color: var(--ink); margin-bottom: 2px; }
+.doc-info span { font-size: 0.75rem; color: var(--ink-3); }
+.btn-download {
+  align-self: flex-start;
+  padding: 8px 16px;
+  border-radius: var(--br-pill);
+  background: var(--sage-50);
+  color: var(--sage-600);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1.5px solid var(--sage-100);
+  transition: background 0.2s;
+}
+.btn-download:hover { background: var(--sage-100); }
+
+@media (max-width: 900px) {
+  .documentos-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Newsletter ── */
+.section-newsletter { padding: 60px 6% 90px; }
+.news-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: var(--footer-bg);
+  border-radius: var(--br-lg);
+  padding: 44px 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: center;
+  color: #fff;
+}
+.news-text h2 { font-family: "Lora", serif; font-size: 1.5rem; margin-bottom: 10px; }
+.news-text p { font-size: 0.9rem; color: rgba(255, 255, 255, 0.75); line-height: 1.6; }
+.news-form { display: flex; flex-direction: column; gap: 14px; }
+.inputs-group { display: flex; gap: 10px; flex-wrap: wrap; }
+.inputs-group input {
+  flex: 1;
+  min-width: 160px;
+  padding: 12px 14px;
+  border-radius: var(--br-sm);
+  border: none;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+.inputs-group .btn-submit {
+  padding: 12px 22px;
+  border-radius: var(--br-sm);
+  border: none;
+  background: var(--sage-500);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.inputs-group .btn-submit:hover { background: var(--sage-400); }
+.checkbox-group { display: flex; flex-direction: column; gap: 8px; }
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+}
+.check-item input { margin-top: 3px; }
+.check-item a { color: var(--sage-200); }
+
+@media (max-width: 800px) {
+  .news-container { grid-template-columns: 1fr; padding: 32px 22px; }
+}
+
+/* ── Bottom sheet (detalhe dos pilares) ── */
+.sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 20, 11, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease);
+  z-index: 5000;
+}
+.sheet-overlay.open { opacity: 1; pointer-events: auto; }
+
+.bottom-sheet {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 100%);
+  width: 100%;
+  max-width: 560px;
+  max-height: 76vh;
+  overflow-y: auto;
+  background: var(--white);
+  border-radius: 24px 24px 0 0;
+  box-shadow: var(--sh-lg);
+  padding: 10px 26px 30px;
+  transition: transform 0.35s var(--ease);
+  z-index: 5001;
+}
+.bottom-sheet.open { transform: translate(-50%, 0); }
+
+.sheet-handle {
+  width: 40px;
+  height: 4px;
+  border-radius: var(--br-pill);
+  background: var(--sage-100);
+  margin: 10px auto 14px;
+}
+.sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.sheet-header h2 { font-family: "Lora", serif; font-size: 1.15rem; color: var(--ink); }
+.close-sheet {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid var(--sage-100);
+  background: var(--sage-50);
+  font-size: 1rem;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.sheet-content { color: var(--ink-2); font-size: 0.92rem; }

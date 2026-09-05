@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./assets/fivecom.png" type="image/x-icon" />
     <title>Perfil — EcoTech</title>
     <link rel="stylesheet" href="css/perfil.css" />
   </head>
@@ -72,6 +73,16 @@
             tabindex="0"
           >
             <div class="menu-row-left"><span>🔔</span>Notificações</div>
+            <span class="menu-arrow">›</span>
+          </div>
+          <div
+            class="menu-row"
+            id="btn-alterar-senha"
+            role="button"
+            tabindex="0"
+            onclick="window.location.href='alterar_senha.html'"
+          >
+            <div class="menu-row-left"><span>🔒</span>Alterar Senha</div>
             <span class="menu-arrow">›</span>
           </div>
         </div>
@@ -356,6 +367,7 @@
       aria-live="polite"
     ></div>
 
+    <script src="js/eco-admin.js"></script>
     <script>
       "use strict";
 

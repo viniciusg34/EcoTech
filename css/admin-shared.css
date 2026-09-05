@@ -1,0 +1,313 @@
+/* ══════════════════════════════════════════════════════════
+   admin-shared.css — Design system compartilhado das telas
+   novas (2FA, Consulta de Usuários, Log, Alterar Senha,
+   Modelo do BD). Reaproveita os tokens --sage/--cream/--ink
+   já usados em perfil.css / index.css / coleta.css.
+══════════════════════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --cream: #faf9f6;
+  --cream2: #f3f0ea;
+  --white: #ffffff;
+  --sage-50: #eef5ee;
+  --sage-100: #d6ebd6;
+  --sage-200: #acd4ac;
+  --sage-400: #5aab5a;
+  --sage-500: #3d9140;
+  --sage-600: #2d7230;
+  --sage-700: #1e5220;
+  --ink: #1a2e1b;
+  --ink-2: #3b5e3d;
+  --ink-3: #6b8f6c;
+  --ink-4: #a8c4a9;
+  --sun: #f5a623;
+  --sun-light: #fef3dc;
+  --danger: #c0392b;
+  --danger-light: #fbe4e1;
+  --sh-xs: 0 1px 3px rgba(30, 82, 32, 0.06);
+  --sh-sm: 0 2px 12px rgba(30, 82, 32, 0.08);
+  --sh-md: 0 8px 32px rgba(30, 82, 32, 0.11);
+  --sh-lg: 0 20px 56px rgba(30, 82, 32, 0.14);
+  --br-sm: 12px;
+  --br-md: 20px;
+  --br-lg: 28px;
+  --br-pill: 99px;
+}
+
+[data-theme="dark"] {
+  --cream: #1d261e;
+  --cream2: #1a201b;
+  --white: #1e251f;
+  --sage-50: #232b23;
+  --sage-100: #2d422e;
+  --sage-200: #3d5a3f;
+  --ink: #eef3ee;
+  --ink-2: #cfe0cf;
+  --ink-3: #a3c3a4;
+  --ink-4: #7c9a7d;
+  --sun-light: #3a3120;
+  --danger-light: #3a2422;
+}
+
+html { font-size: 100%; }
+body {
+  min-height: 100vh;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: "Plus Jakarta Sans", "Poppins", sans-serif;
+  transition: background 0.3s, color 0.3s;
+}
+
+a { color: inherit; }
+
+/* ── Header ── */
+.admin-header {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 28px;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border-bottom: 1.5px solid var(--sage-100);
+}
+[data-theme="dark"] .admin-header { background: rgba(29, 38, 30, 0.86); }
+
+.admin-header .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+.admin-header .brand img { width: 30px; height: 30px; }
+.admin-header .brand em { color: var(--sage-500); font-style: normal; }
+
+.admin-header .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-btn, .theme-toggle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--sage-50);
+  border: 1.5px solid var(--sage-100);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: background 0.2s, transform 0.2s;
+}
+.icon-btn:hover, .theme-toggle:hover { background: var(--sage-100); transform: scale(1.06); }
+
+.btn-back-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink-2);
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: var(--br-pill);
+  border: 1.5px solid var(--sage-100);
+  background: var(--sage-50);
+}
+.btn-back-pill:hover { background: var(--sage-100); }
+
+/* ── Layout shell ── */
+.admin-main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 36px 20px 80px;
+}
+.admin-title {
+  font-family: Lora, serif;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.admin-subtitle { color: var(--ink-3); font-size: 0.95rem; margin-bottom: 28px; }
+
+.card {
+  background: var(--white);
+  border: 1.5px solid var(--sage-100);
+  border-radius: var(--br-lg);
+  box-shadow: var(--sh-sm);
+  padding: 28px;
+}
+
+/* ── Form elements ── */
+.field { margin-bottom: 18px; }
+.field label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink-2);
+  margin-bottom: 6px;
+}
+.field input, .field select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--br-sm);
+  border: 1.5px solid var(--sage-100);
+  background: var(--cream);
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.field input:focus, .field select:focus { border-color: var(--sage-400); }
+.field small.hint { display: block; margin-top: 6px; color: var(--ink-3); font-size: 0.76rem; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 22px;
+  border-radius: var(--br-pill);
+  border: none;
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.15s, background 0.2s, opacity 0.2s;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--sage-500); color: #fff; }
+.btn-primary:hover { background: var(--sage-600); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-ghost { background: var(--sage-50); color: var(--ink-2); border: 1.5px solid var(--sage-100); }
+.btn-ghost:hover { background: var(--sage-100); }
+.btn-danger { background: var(--danger-light); color: var(--danger); }
+.btn-danger:hover { background: #f3c9c3; }
+.btn-block { width: 100%; }
+
+/* ── Table ── */
+.table-wrap { overflow-x: auto; border-radius: var(--br-md); border: 1.5px solid var(--sage-100); }
+table.data-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; min-width: 560px; }
+table.data-table thead th {
+  text-align: left;
+  padding: 12px 16px;
+  background: var(--sage-50);
+  color: var(--ink-2);
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border-bottom: 1.5px solid var(--sage-100);
+}
+table.data-table tbody td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--sage-50);
+  color: var(--ink);
+}
+table.data-table tbody tr:last-child td { border-bottom: none; }
+table.data-table tbody tr:hover { background: var(--sage-50); }
+
+.badge-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: var(--br-pill);
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: var(--sage-50);
+  color: var(--sage-600);
+  border: 1px solid var(--sage-100);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--ink-3);
+}
+.empty-state .emoji { font-size: 2.4rem; display: block; margin-bottom: 10px; }
+
+/* ── Toast ── */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink);
+  color: var(--cream);
+  padding: 13px 22px;
+  border-radius: var(--br-pill);
+  font-size: 0.88rem;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  z-index: 3000;
+  max-width: 90vw;
+  text-align: center;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── Modal (feedback elegante, sem alert()) ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 30, 20, 0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 4000;
+  padding: 20px;
+}
+.modal-overlay.show { display: flex; }
+.modal-box {
+  background: var(--white);
+  border-radius: var(--br-lg);
+  padding: 26px;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: var(--sh-lg);
+  text-align: center;
+}
+.modal-box h3 { font-family: Lora, serif; margin-bottom: 8px; color: var(--ink); }
+.modal-box p { color: var(--ink-3); font-size: 0.9rem; margin-bottom: 20px; }
+.modal-actions { display: flex; gap: 10px; }
+.modal-actions .btn { flex: 1; }
+
+/* ── Access-restricted note ── */
+.access-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--sun-light);
+  border: 1.5px solid var(--sage-100);
+  border-radius: var(--br-md);
+  padding: 14px 18px;
+  font-size: 0.85rem;
+  color: var(--ink-2);
+  margin-bottom: 22px;
+}
+
+@media (max-width: 640px) {
+  .admin-main { padding: 24px 14px 60px; }
+  .card { padding: 18px; }
+}
+
+/* ── Impressão (Desafio Plus: baixar lista em PDF) ── */
+@media print {
+  .admin-header, .no-print, .toast, .search-row .btn, .admin-subtitle { display: none !important; }
+  body { background: #fff; }
+  .card { box-shadow: none; border: none; padding: 0; }
+}
